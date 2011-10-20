@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article>
+   <articleinfo>
+      <title>Release notes for product </title>
+      <author>
+         <firstname>Marc</firstname>
+         <surname>Grimme</surname>
+         <affiliation>
+            <address>
+               <email>grimme (at) atix.de</email>
+            </address>
+         </affiliation>
+      </author>
+   </articleinfo>
+   <sect1 id="intro">
+      <title>Introduction</title>
+      <para>Test123</para>
+   </sect1>
+   <sect1>
+      <title>Release Notes for comoonics-bootimage</title>
+      <sect2>
+         <title>bootimage</title>
+         <sect3>
+            <title>comoonics-4.4</title>
+            <sect4>
+               <title>blocker</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>231: Fence_tool option -c is depricated in RHEL5U2</term>
+                     <listitem>
+                        <para>Updated current version to not use fence_tool -c but use it without.</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+            <sect4>
+               <title>major</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>156: &lt;scsi failover="mapper"/&gt; in cluster.conf does not activate multipath configuration</term>
+                     <listitem>
+                        <para>No release notes found.</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+            <sect4>
+               <title>critical</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>193: It happens, that the cluster gets stuck in activating volume groups</term>
+                     <listitem>
+                        <para>It can happen, that the cluster stucks inside the initrd when trying to
+activate lvm volumegroups after cman has been started.
+
+This happens when 3 of nodes are booted at the same time, i.e. without a quorum
+disk.</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+         </sect3>
+         <sect3>
+            <title>comoonics-pre-4.4</title>
+            <sect4>
+               <title>enhancement</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>54: [RFE] Feature Request: 64bit &amp; 32bit Modi</term>
+                     <listitem>
+                        <para>No release notes found.</para>
+                     </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                     <term>56: [RFE] Delete temporary files in /tmp/fence_tool</term>
+                     <listitem>
+                        <para>No tmpfiles will survive a reboot of a clustermachine.</para>
+                     </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                     <term>66: [RFE] shared root volume group with clusterd flag fails to boot with u5</term>
+                     <listitem>
+                        <para>No release notes found.</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+         </sect3>
+      </sect2>
+      <sect2>
+         <title>fenceacksv</title>
+         <sect3>
+            <title>comoonics-pre-4.4</title>
+            <sect4>
+               <title>enhancement</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>75: [RFE] Output of fenceacksv has to be rewritten</term>
+                     <listitem>
+                        <para>No release notes found.</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+         </sect3>
+      </sect2>
+   </sect1>
+</article>

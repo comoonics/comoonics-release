@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article>
+   <articleinfo>
+      <title>Release notes for product </title>
+      <author>
+         <firstname>Marc</firstname>
+         <surname>Grimme</surname>
+         <affiliation>
+            <address>
+               <email>grimme (at) atix.de</email>
+            </address>
+         </affiliation>
+      </author>
+   </articleinfo>
+   <sect1 id="intro">
+      <title>Introduction</title>
+      <para>Test123</para>
+   </sect1>
+   <sect1>
+      <title>Release Notes for comoonics-software</title>
+      <sect2>
+         <title>comoonics-clustersuite</title>
+         <sect3>
+            <title>comoonics-pre-4.4</title>
+            <sect4>
+               <title>normal</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>135: com-ec updateinitrd.xml does not work with new cluster-py</term>
+                     <listitem>
+                        <para>No release notes found.</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+            <sect4>
+               <title>enhancement</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>161: [RFE] Update copyright text from ATIX GmbH to ATIX AG</term>
+                     <listitem>
+                        <para>Moved GmbH to AG for ATIX</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+         </sect3>
+      </sect2>
+      <sect2>
+         <title>comoonics-enterprisecopy</title>
+         <sect3>
+            <title>comoonics-pre-4.4</title>
+            <sect4>
+               <title>blocker</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>191: com-ec localclone fails because ACLs can't be copied</term>
+                     <listitem>
+                        <para>added the necessary options if available. Not in Q&amp;A.</para>
+                     </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                     <term>168: localclone fails in RHEL5</term>
+                     <listitem>
+                        <para>localclone: with GFS it was failing fixed with new parameter.</para>
+                     </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                     <term>188: LVM cache file changed in RHEL 5 and com-ec archive clone fails</term>
+                     <listitem>
+                        <para>ComLVM: changed the code so that everything works with new location of cache files</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+         </sect3>
+         <sect3>
+            <title>comoonics-4.4</title>
+            <sect4>
+               <title>blocker</title>
+               <variablelist>
+                  <varlistentry>
+                     <term>199: com-ec fails when creating non clustered volume groups</term>
+                     <listitem>
+                        <para>No release notes found.</para>
+                     </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                     <term>235: vgchange fails during com-ec localclone: Can't deactivate volume group 'sharedroot' volumegroup</term>
+                     <listitem>
+                        <para>No release notes found.</para>
+                     </listitem>
+                  </varlistentry>
+               </variablelist>
+            </sect4>
+         </sect3>
+      </sect2>
+   </sect1>
+</article>

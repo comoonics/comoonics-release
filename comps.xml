@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--<!DOCTYPE comps PUBLIC "-//Red Hat, Inc.//DTD Comps info//EN" "comps.dtd">-->
+<comps>
+    <group>
+        <id>comoonics-clustersuite-gfs</id>
+        <name>com.oonics Cluster Suite GFS</name>
+        <description>Default packages for support for com.oonics open shared-root cluster on GFS as root filesystem.</description>
+        <default>false</default>
+        <uservisible>true</uservisible>
+        <biarchonly>false</biarchonly>
+        <packagelist>
+            <packagereq type='optional'>comoonics-backup-legato</packagereq>
+            <packagereq type='optional'>comoonics-backup-py</packagereq>
+            <packagereq type='default'>comoonics-bootimage</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-dm-multipath</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-iscsi</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-network</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-rdac-multipath</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-xen</packagereq>
+            <packagereq type='default'>comoonics-bootimage-fenceacksv</packagereq>
+            <packagereq type='default'>comoonics-bootimage-initscripts</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-all</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-rhel5</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-rhel</packagereq>
+            <packagereq type='default'>comoonics-cdsl-py</packagereq>
+            <packagereq type='default'>comoonics-cluster-py</packagereq>
+            <packagereq type='default'>comoonics-cluster-tools-py</packagereq>
+            <packagereq type='optional'>comoonics-cmdb-py</packagereq>
+            <packagereq type='optional'>comoonics-cs-xml</packagereq>
+            <packagereq type='optional'>comoonics-cs-xsl-ec</packagereq>
+            <packagereq type='optional'>comoonics-db-py</packagereq>
+            <packagereq type='optional'>comoonics-ec-py</packagereq>
+            <packagereq type='default'>comoonics-fenceacksv-plugins-py</packagereq>
+            <packagereq type='default'>comoonics-fenceacksv-py</packagereq>
+            <packagereq type='optional'>comoonics-scsi-py</packagereq>
+            <packagereq type='optional'>comoonics-storage-hp-py</packagereq>
+        </packagelist>
+    </group>
+    <group>
+        <id>comoonics-clustersuite-ext3</id>
+        <name>com.oonics Cluster Suite EXT3</name>
+        <description>Default packages for support for com.oonics open shared-root cluster on EXT3 as root filesystem.</description>
+        <default>false</default>
+        <uservisible>true</uservisible>
+        <biarchonly>false</biarchonly>
+        <packagelist>
+            <packagereq type='optional'>comoonics-backup-legato</packagereq>
+            <packagereq type='optional'>comoonics-backup-py</packagereq>
+            <packagereq type='default'>comoonics-bootimage</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-dm-multipath</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-iscsi</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-network</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-rdac-multipath</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-xen</packagereq>
+            <packagereq type='default'>comoonics-bootimage-initscripts</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-all</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-rhel5</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-rhel</packagereq>
+            <packagereq type='default'>comoonics-cdsl-py</packagereq>
+            <packagereq type='default'>comoonics-cluster-py</packagereq>
+            <packagereq type='optional'>comoonics-cluster-tools-py</packagereq>
+            <packagereq type='optional'>comoonics-cmdb-py</packagereq>
+            <packagereq type='optional'>comoonics-cs-xml</packagereq>
+            <packagereq type='optional'>comoonics-cs-xsl-ec</packagereq>
+            <packagereq type='optional'>comoonics-db-py</packagereq>
+            <packagereq type='optional'>comoonics-ec-py</packagereq>
+            <packagereq type='optional'>comoonics-scsi-py</packagereq>
+            <packagereq type='optional'>comoonics-storage-hp-py</packagereq>
+        </packagelist>
+    </group>
+    <group>
+        <id>comoonics-clustersuite-ext4</id>
+        <name>com.oonics Cluster Suite EXT4</name>
+        <description>Default packages for support for com.oonics open shared-root cluster on EXT4 as root filesystem.</description>
+        <default>false</default>
+        <uservisible>true</uservisible>
+        <biarchonly>false</biarchonly>
+        <packagelist>
+            <packagereq type='optional'>comoonics-backup-legato</packagereq>
+            <packagereq type='optional'>comoonics-backup-py</packagereq>
+            <packagereq type='default'>comoonics-bootimage</packagereq>
+            <packagereq type='default'>comoonics-bootimage-extras-ext4</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-dm-multipath</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-iscsi</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-network</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-rdac-multipath</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-xen</packagereq>
+            <packagereq type='default'>comoonics-bootimage-initscripts</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-all</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-rhel5</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-rhel</packagereq>
+            <packagereq type='default'>comoonics-cdsl-py</packagereq>
+            <packagereq type='default'>comoonics-cluster-py</packagereq>
+            <packagereq type='optional'>comoonics-cluster-tools-py</packagereq>
+            <packagereq type='optional'>comoonics-cmdb-py</packagereq>
+            <packagereq type='optional'>comoonics-cs-xml</packagereq>
+            <packagereq type='optional'>comoonics-cs-xsl-ec</packagereq>
+            <packagereq type='optional'>comoonics-db-py</packagereq>
+            <packagereq type='optional'>comoonics-ec-py</packagereq>
+            <packagereq type='optional'>comoonics-scsi-py</packagereq>
+            <packagereq type='optional'>comoonics-storage-hp-py</packagereq>
+        </packagelist>
+    </group>
+    <group>
+        <id>comoonics-clustersuite-nfs</id>
+        <name>com.oonics Cluster Suite NFS</name>
+        <description>Default packages for support for com.oonics open shared-root cluster based on NFS.</description>
+        <default>false</default>
+        <uservisible>true</uservisible>
+        <biarchonly>false</biarchonly>
+        <packagelist>
+            <packagereq type='optional'>comoonics-backup-legato</packagereq>
+            <packagereq type='optional'>comoonics-backup-py</packagereq>
+            <packagereq type='default'>comoonics-bootimage</packagereq>
+            <packagereq type='default'>comoonics-bootimage-extras-network</packagereq>
+            <packagereq type='default'>comoonics-bootimage-extras-nfs</packagereq>
+            <packagereq type='optional'>comoonics-bootimage-extras-xen</packagereq>
+            <packagereq type='default'>comoonics-bootimage-initscripts</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-all</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-rhel5</packagereq>
+            <packagereq type='default'>comoonics-bootimage-listfiles-rhel</packagereq>
+            <packagereq type='default'>comoonics-cdsl-py</packagereq>
+            <packagereq type='default'>comoonics-cluster-py</packagereq>
+            <packagereq type='optional'>comoonics-cmdb-py</packagereq>
+            <packagereq type='optional'>comoonics-cs-xml</packagereq>
+            <packagereq type='optional'>comoonics-cs-xsl-ec</packagereq>
+            <packagereq type='optional'>comoonics-db-py</packagereq>
+            <packagereq type='optional'>comoonics-ec-py</packagereq>
+            <packagereq type='optional'>comoonics-scsi-py</packagereq>
+            <packagereq type='optional'>comoonics-storage-hp-py</packagereq>
+        </packagelist>
+    </group>
+    <category>
+        <id>osr-node-gfs</id>
+        <name>Open Shared Root Node GFS</name>
+        <description>Default packages with minimum software required to install an open-sharedroot node based on GFS.</description>
+        <display_order>99</display_order>
+        <grouplist>
+<!--            <groupid>text-internet</groupid>-->
+            <groupid>GFS</groupid>
+<!--            <groupid>dialup</groupid>-->
+            <groupid>core</groupid>
+            <groupid>base</groupid>
+            <groupid>rhcs</groupid>
+            <groupid>cluster-storage</groupid>
+            <groupid>clusterstorage</groupid>
+            <groupid>comoonics-clustersuite</groupid>
+        </grouplist>
+    </category>
+    <category>
+        <id>osr-node-nfs</id>
+        <name>Open Shared Root Node NFS</name>
+        <description>Default packages with minimum software required to install an open-sharedroot node base on NFS root filesystem.</description>
+        <display_order>99</display_order>
+        <grouplist>
+<!--            <groupid>text-internet</groupid>-->
+<!--            <groupid>gfs</groupid>
+            <groupid>dialup</groupid>-->
+            <groupid>core</groupid>
+            <groupid>base</groupid>
+            <groupid>comoonics-clustersuite-nfs</groupid>
+        </grouplist>
+    </category>
+    <category>
+        <id>osr-node-ext3</id>
+        <name>Open Shared Root Node EXT3</name>
+        <description>Default packages with minimum software required to install an open-sharedroot node base on EXT3 root filesystem.</description>
+        <display_order>99</display_order>
+        <grouplist>
+<!--            <groupid>text-internet</groupid>-->
+<!--            <groupid>gfs</groupid>
+            <groupid>dialup</groupid>-->
+            <groupid>core</groupid>
+            <groupid>base</groupid>
+            <groupid>comoonics-clustersuite-ext3</groupid>
+        </grouplist>
+    </category>
+</comps>

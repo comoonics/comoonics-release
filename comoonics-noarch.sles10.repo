@@ -1,0 +1,20 @@
+[comoonics-preview]
+name=Packages for the com.oonics community version
+baseurl=http://download.atix.de/yum/comoonics/5.0/rhel5/preview/noarch/
+enabled=1
+gpgcheck=1
+gpgkey=http://download.atix.de/yum/comoonics/comoonics-RPM-GPG.key
+ 
+[comoonics-preview-$arch]
+name=Packages for the com.oonics community version
+baseurl=http://download.atix.de/yum/comoonics/5.0/rhel5/preview/$arch/
+enabled=1
+gpgcheck=1
+gpgkey=http://download.atix.de/yum/comoonics/comoonics-RPM-GPG.key
+ 
+[comoonics-addon]
+name=Addon Packages for the com.oonics community version
+baseurl=http://download.atix.de/yum/comoonics/5.0/rhel5/addons/noarch/
+enabled=1
+gpgcheck=1
+gpgkey=http://download.atix.de/yum/comoonics/comoonics-RPM-GPG.key
