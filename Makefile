@@ -220,7 +220,8 @@ PRODUCTVERSION=5.0
 CHANNELNAMES=preview:base addons:extras
 CHANNELDIR=$(CHANNELBASEDIR)/$(PRODUCTNAME)/$(PRODUCTVERSION)
 ARCHITECTURES=i386 x86_64 noarch SRPMS
-
+SHORTDISTRO=rhel5
+RELEASE=0
 TEST_DIR=tests
 
 .PHONY: install
@@ -344,12 +345,12 @@ test:
 rpmbuild: archive
 	@echo -n "Creating RPM"
 	cp ../$(ARCHIVE_FILE) $(RPM_PACKAGE_SOURCE_DIR)/
-	rpmbuild -ba --target=noarch ./$(PACKAGE_NAME).spec
+	rpmbuild -ba --target=noarch --define "RELEASE $(RELEASE)" --define "LINUXSHORTDISTRO $(SHORTDISTRO)" ./$(PACKAGE_NAME).spec
 	
 .PHONY:rpmsign
 rpmsign:
 	@echo "Signing packages"
-	rpm --resign $(RPM_PACKAGE_BIN_DIR)/$(PACKAGE_NAME)-*.rpm $(RPM_PACKAGE_SRC_DIR)/$(PACKAGE_NAME)-*.src.rpm
+	rpm --resign $(RPM_PACKAGE_BIN_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).noarch.rpm $(RPM_PACKAGE_SRC_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).src.rpm
 
 .PHONY: channelcopy
 channelcopy:
@@ -365,6 +366,9 @@ channelcopy:
 		   done; \
 		done; \
 	done;
+
+.PHONY:rpm	
+rpm: test rpmbuild rpmsign
 	
 .PHONY: channelbuild
 channelbuild:
@@ -375,9 +379,6 @@ channelbuild:
               $(CHANNELBASEDIR)/updaterepositories -s -r $(PRODUCTNAME)/$(PRODUCTVERSION)/$$channelname/$$distribution; \
 	    done; \
 	 done 
-
-.PHONY:rpm	
-rpm: test rpmbuild rpmsign
 
 .PHONY: channel
 channel: rpm channelcopy channelbuild
