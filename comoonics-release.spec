@@ -23,11 +23,11 @@
 
 %define RELEASENAME Gumpn
 %if %{RELEASE} > 0
-%define PRODUCTNAME OpenSharedRoot
+%define PRODUCTNAME Com.oonics Enterprise IT Platform
 %else
-%define PRODUCTNAME Com.oonis
+%define PRODUCTNAME Com.oonics Community
 %endif
-%define PRODUCTVERSION 5.0 pre
+%define PRODUCTVERSION 5.0
 %define DISTRIBUTIONNAME %{PRODUCTNAME} %{PRODUCTVERSION} (%{RELEASENAME})
 %define DISTRIBUTIONBASE %{DISTRIBUTIONNAME} Base
 %define DISTRIBUTIONEXTRAS %{DISTRIBUTIONNAME} Extras
@@ -43,12 +43,12 @@
 %define GROUPCHILDRHEL5 RHEL5
 %define GROUPCHILDRHEL6 RHEL6
 %define GROUPCHILDFEDORA Fedora
+%{?!LINUXSHORTDISTRO: define LINUXSHORTDISTRO rhel5}
 
 Group:          %{GROUPPARENT}/%{GROUPCHILDBASE}
-Distribution:   %{DISTRIBUTIONBASE}
 Name:           comoonics-release
 Version:        5.0
-Release:        1.pre
+Release:        2_%{LINUXSHORTDISTRO}
 Summary:        com.oonics release package
 License:        GPLv2+
 Vendor:         ATIX AG
@@ -72,7 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 # common
 #install -Dpm 644 comoonics-RPM-GPG.key $DOCDIR/comoonics-RPM-GPG.key
 %if %{RELEASE} > 0
-install -m 644 comoonics-release-$(echo %{?_dist} | tr [A-Z] [a-z]) $RPM_BUILD_ROOT/%{_sysconfdir}/comoonics-release
+install -Dm 644 comoonics-release.%{LINUXSHORTDISTRO} $RPM_BUILD_ROOT/%{_sysconfdir}/comoonics-release
 %else
 install -Dm 644 comoonics-release $RPM_BUILD_ROOT/%{_sysconfdir}/comoonics-release
 %endif
@@ -88,5 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644, root, root) %{_sysconfdir}/comoonics-release
 
 %changelog
-* Tue Aug 09 2011 Marc Grimme <grimme[AT]atix.de> - 0-1
+* Tue Nov 01 2011 Marc Grimme <grimme( at )atix.de> - 5.0-2
+- Rebase for com.oonics 5.0 and right names
+* Tue Aug 09 2011 Marc Grimme <grimme( AT )atix.de> - 5.0-1
 - initial release
