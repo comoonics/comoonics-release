@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<bugzilla>
+  <bug>
+    <bug_id>135</bug_id>
+    <short_desc>com-ec updateinitrd.xml does not work with new cluster-py</short_desc>
+    <bug_severity>normal</bug_severity>
+    <component>comoonics-clustersuite</component>
+    <product>comoonics-software</product>
+    <flag name="comoonics-4.5" status="+" setter="marc@atix.de"/>
+    <flag name="Production-Ready" status="+" setter="marc@atix.de"/>
+    <flag name="QA-Ready" status="+" setter="marc@atix.de"/>
+  </bug>
+  <bug>
+    <bug_id>191</bug_id>
+    <short_desc>com-ec localclone fails because ACLs can't be copied</short_desc>
+    <bug_severity>blocker</bug_severity>
+    <component>comoonics-enterprisecopy</component>
+    <product>comoonics-software</product>
+    <flag name="comoonics-pre-4.4" status="+" setter="marc@atix.de"/>
+    <flag name="QA-Excluded" status="+" setter="marc@atix.de"/>
+  </bug>
+  <bug>
+    <bug_id>161</bug_id>
+    <short_desc>[RFE] Update copyright text from ATIX GmbH to ATIX AG</short_desc>
+    <bug_severity>enhancement</bug_severity>
+    <component>comoonics-clustersuite</component>
+    <product>comoonics-software</product>
+    <flag name="comoonics-pre-4.4" status="+" setter="marc@atix.de"/>
+    <flag name="Production-Ready" status="+" setter="marc@atix.de"/>
+    <flag name="QA-Ready" status="+" setter="marc@atix.de"/>
+  </bug>
+  <bug>
+    <bug_id>168</bug_id>
+    <short_desc>localclone fails in RHEL5</short_desc>
+    <bug_severity>minor</bug_severity>
+    <component>comoonics-enterprisecopy</component>
+    <product>comoonics-software</product>
+    <flag name="comoonics-pre-4.4" status="+" setter="marc@atix.de"/>
+    <flag name="Production-Ready" status="+" setter="marc@atix.de"/>
+    <flag name="QA-Ready" status="+" setter="marc@atix.de"/>
+  </bug>
+  <bug>
+    <bug_id>188</bug_id>
+    <short_desc>LVM cache file changed in RHEL 5 and com-ec archive clone fails</short_desc>
+    <bug_severity>blocker</bug_severity>
+    <component>comoonics-enterprisecopy</component>
+    <product>comoonics-software</product>
+    <flag name="comoonics-pre-4.4" status="+" setter="marc@atix.de"/>
+    <flag name="Production-Ready" status="+" setter="marc@atix.de"/>
+    <flag name="QA-Ready" status="+" setter="marc@atix.de"/>
+  </bug>
+  <bug>
+    <bug_id>199</bug_id>
+    <short_desc>com-ec fails when creating non clustered volume groups</short_desc>
+    <bug_severity>blocker</bug_severity>
+    <component>comoonics-enterprisecopy</component>
+    <product>comoonics-software</product>
+    <flag name="comoonics-4.4" status="+" setter="marc@atix.de"/>
+    <flag name="QA-Ready" status="+" setter="marc@atix.de"/>
+  </bug>
+  <bug>
+    <bug_id>235</bug_id>
+    <short_desc>vgchange fails during com-ec localclone: Can't deactivate volume group 'sharedroot' volumegroup</short_desc>
+    <bug_severity>blocker</bug_severity>
+    <component>comoonics-enterprisecopy</component>
+    <product>comoonics-software</product>
+    <flag name="comoonics-4.4" status="+" setter="marc@atix.de"/>
+    <flag name="QA-Ready" status="+" setter="marc@atix.de"/>
+  </bug>
+</bugzilla>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROJECTS>
+  <PROROW>
+    <id>1</id><name>Customer 1</name><project_name>Project 1</project_name>
+  </PROROW>
+  <PROROW>
+    <id>2</id><name>Customer 1</name><project_name>Project 2</project_name>
+  </PROROW>
+  <PROROW>
+    <id>3</id><name>Customer 2</name><project_name>Project 1</project_name>
+  </PROROW>
+</PROJECTS>
