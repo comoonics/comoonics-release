@@ -369,7 +369,7 @@ channelcopy:
 	    for distribution in $(DISTROS); do \
 	       for architecture in $(ARCHITECTURES); do \
 		      echo -n "Copying rpms to channel $(CHANNELDIR)/$$channelname/$$distribution/$$architecture.."; \
-		      ./build/copy_rpms.sh $$distribution $(CHANNELDIR)/$$channelname $$channelalias $$architecture; \
+		      bash ./build/copy_rpms.sh $$distribution $(CHANNELDIR)/$$channelname $$channelalias $$architecture; \
 		      echo "(DONE)"; \
 		   done; \
 		done; \
