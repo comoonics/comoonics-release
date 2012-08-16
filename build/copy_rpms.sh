@@ -4,7 +4,7 @@ CHANNELDISTRIBUTION=${1}
 DESTDIR=$2
 CHANNELCLASS=${3:-extras}
 arch=${4:-noarch}
-FILENAMEFILTER=${5:-comoonics-bootimage*}
+FILENAMEFILTER=${5:-comoonics-release*}
 RPMBUILDDIR=$6
 
 is_newer() {
