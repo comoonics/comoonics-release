@@ -376,7 +376,7 @@ channelcopy:
 	done;
 
 .PHONY:rpm	
-rpm: test rpmbuild rpmsign
+rpm: test rpmbuild rpmsign rpmchecksig
 	
 .PHONY: channelbuild
 channelbuild:
