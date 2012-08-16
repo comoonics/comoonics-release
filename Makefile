@@ -224,6 +224,9 @@ SHORTDISTRO=rhel5
 RELEASE=0
 TEST_DIR=tests
 
+RPM_SIGN_COMMAND=rpm --addsign
+RPM_CHECKSIG_COMMAND=rpm --checksig
+
 .PHONY: install
 install: 
 	@echo -n "Installing executables..."
@@ -350,7 +353,12 @@ rpmbuild: archive
 .PHONY:rpmsign
 rpmsign:
 	@echo "Signing packages"
-	rpm --resign $(RPM_PACKAGE_BIN_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).noarch.rpm $(RPM_PACKAGE_SRC_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).src.rpm
+	$(RPM_SIGN_COMMAND) $(RPM_PACKAGE_BIN_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).noarch.rpm $(RPM_PACKAGE_SRC_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).src.rpm
+
+.PHONY:rpmchecksig
+rpmchecksig:
+	@echo "Checking signature of the packages"
+	$(RPM_CHECKSIG_COMMAND) $(RPM_PACKAGE_BIN_DIR)/$(PACKAGE_NAME)-*.rpm $(RPM_PACKAGE_SRC_DIR)/$(PACKAGE_NAME)-*.src.rpm | grep -v "dsa sha1 md5 gpg OK" 2>/dev/null && { echo "FAILED"; exit 1;} || true
 
 .PHONY: channelcopy
 channelcopy:
