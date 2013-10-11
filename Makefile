@@ -224,6 +224,9 @@ SHORTDISTRO=rhel5
 RELEASE=0
 TEST_DIR=tests
 
+RPM_SIGN_COMMAND=rpm --addsign
+RPM_CHECKSIG_COMMAND=rpm --checksig
+
 .PHONY: install
 install: 
 	@echo -n "Installing executables..."
@@ -350,36 +353,37 @@ rpmbuild: archive
 .PHONY:rpmsign
 rpmsign:
 	@echo "Signing packages"
-	rpm --resign $(RPM_PACKAGE_BIN_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).noarch.rpm $(RPM_PACKAGE_SRC_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).src.rpm
+	$(RPM_SIGN_COMMAND) $(RPM_PACKAGE_BIN_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).noarch.rpm $(RPM_PACKAGE_SRC_DIR)/$(PACKAGE_NAME)-*$(SHORTDISTRO).src.rpm
+
+.PHONY:rpmchecksig
+rpmchecksig:
+	@echo "Checking signature of the packages"
+	$(RPM_CHECKSIG_COMMAND) $(RPM_PACKAGE_BIN_DIR)/$(PACKAGE_NAME)-*.rpm $(RPM_PACKAGE_SRC_DIR)/$(PACKAGE_NAME)-*.src.rpm | grep -v "dsa sha1 md5 gpg OK" 2>/dev/null && { echo "FAILED"; exit 1;} || true
 
 .PHONY: channelcopy
 channelcopy:
 	# Create an array of all CHANNELDIRS distros (second dir in path) and one without numbers at the end ready to be feeded in find
 	@for channel in $(CHANNELNAMES); do \
-	    channelname=`echo $$channel | cut -f1 -d:`; \
-	    channelalias=`echo $$channel | cut -f2 -d:`; \
-	    for distribution in $(DISTROS); do \
-	       for architecture in $(ARCHITECTURES); do \
-		      echo -n "Copying rpms to channel $(CHANNELDIR)/$$channelname/$$distribution/$$architecture.."; \
-		      ./build/copy_rpms.sh $$distribution $(CHANNELDIR)/$$channelname $$channelalias $$architecture; \
-		      echo "(DONE)"; \
-		   done; \
-		done; \
+	   channelname=`echo $$channel | cut -f1 -d:`; \
+	   channelalias=`echo $$channel | cut -f2 -d:`; \
+       for architecture in $(ARCHITECTURES); do \
+	      echo -n "Copying rpms to channel $(CHANNELDIR)/$$channelname/$(SHORTDISTRO)/$$architecture.."; \
+	      bash ./build/copy_rpms.sh $(SHORTDISTRO) $(CHANNELDIR)/$$channelname $$channelalias $$architecture; \
+	      echo "(DONE)"; \
+	   done; \
 	done;
-
-.PHONY:rpm	
-rpm: test rpmbuild rpmsign
 	
 .PHONY: channelbuild
 channelbuild:
 	@echo "Rebuilding channels.."
 	@for channel in $(CHANNELNAMES); do \
-        channelname=`echo $$channel | cut -f1 -d:`; \
-	    for distribution in $(DISTROS); do \
-              $(CHANNELBASEDIR)/updaterepositories -s -r $(PRODUCTNAME)/$(PRODUCTVERSION)/$$channelname/$$distribution; \
-	    done; \
-	 done 
+    	channelname=`echo $$channel | cut -f1 -d:`; \
+    	$(CHANNELBASEDIR)/updaterepositories -s -r $(PRODUCTNAME)/$(PRODUCTVERSION)/$$channelname/$(SHORTDISTRO); \
+	done 
 
+.PHONY:rpm	
+rpm: test rpmbuild rpmsign rpmchecksig
+	
 .PHONY: channel
 channel: rpm channelcopy channelbuild
 

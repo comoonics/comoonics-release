@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--<!DOCTYPE bugzilla SYSTEM "https://bugzilla-test.gallien.atix/bugzilla.dtd">-->
+
+<bugzilla version="3.2rc1"
+          urlbase="https://bugzilla-test.gallien.atix/"
+          maintainer="marc@atix.de"
+>
+
+    <bug>
+          <bug_id>255</bug_id>
+          
+          <creation_ts>2008-09-04 09:05</creation_ts>
+          <short_desc>testenhancement</short_desc>
+          <delta_ts>2008-09-04 09:14:58</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>TestProduct</product>
+          <component>TestComponent</component>
+          <version>testproduct_version2</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>Linux</op_sys>
+          <bug_status>RESOLVED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>enhancement</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Marc Grimme">marc@atix.de</reporter>
+          <assigned_to name="Marc Grimme">marc@atix.de</assigned_to>
+          
+          <qa_contact name="Marc Grimme">marc@atix.de</qa_contact>
+          <cf_releasenotes>Releasenotes of testenhancement</cf_releasenotes>
+
+      
+
+      
+          <flag name="testproduct_version_2"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-04 09:05:09</bug_when>
+            <thetext>Description of testenhancement</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+    <bug>
+          <bug_id>254</bug_id>
+          
+          <creation_ts>2008-09-04 09:02</creation_ts>
+          <short_desc>Testbug1</short_desc>
+          <delta_ts>2008-09-04 09:14:40</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>TestProduct</product>
+          <component>TestComponent</component>
+          <version>testproduct_version2</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>Linux</op_sys>
+          <bug_status>RESOLVED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>major</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Marc Grimme">marc@atix.de</reporter>
+          <assigned_to name="Marc Grimme">marc@atix.de</assigned_to>
+          
+          <qa_contact name="Marc Grimme">marc@atix.de</qa_contact>
+          <cf_releasenotes>Testbug1 releasenotes</cf_releasenotes>
+
+      
+
+      
+          <flag name="testproduct_version_2"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-04 09:02:54</bug_when>
+            <thetext>Description of testbug1</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-04 09:14:40</bug_when>
+            <thetext>done</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+
+</bugzilla>
