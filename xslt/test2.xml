@@ -1,0 +1,2609 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--<!DOCTYPE bugzilla SYSTEM "http://bugzilla.atix.de/bugzilla.dtd">-->
+
+<?xml-stylesheet type="text/xsl" href="bugzilla2docbook-releasenotes.xsl"?>
+<bugzilla version="3.2rc1"
+          urlbase="http://bugzilla.atix.de/"
+          maintainer="support@atix.de"
+>
+
+    <bug>
+          <bug_id>135</bug_id>
+          
+          <creation_ts>2007-10-08 16:35</creation_ts>
+          <short_desc>com-ec updateinitrd.xml does not work with new cluster-py</short_desc>
+          <delta_ts>2008-09-15 13:27:11</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>comoonics-software</product>
+          <component>comoonics-clustersuite</component>
+          <version>unspecified</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>Linux</op_sys>
+          <bug_status>CLOSED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>normal</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Mark Hlawatschek">mark@atix.de</reporter>
+          <assigned_to name="Marc Grimme">marc@atix.de</assigned_to>
+          <cc>marc@atix.de</cc>
+          <qa_contact name="Reiner Rottmann">reiner@atix.de</qa_contact>
+          
+
+      
+
+      
+          <flag name="comoonics-4.5"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="Production-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="QA-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2007-10-08 16:35:23</bug_when>
+            <thetext>the clusterquery command has to be replaced for new versions.
+
+The new command to set the config version should be:
+cman_tool version -r $(/usr/bin/com-queryclusterconf -q query_value &quot;/cluster/@config_version&quot;)</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2007-10-16 17:20:53</bug_when>
+            <thetext>fixed in comoonics-cs-xsl-ec-0.5-17</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-10 16:26:46</bug_when>
+            <thetext>closed</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+    <bug>
+          <bug_id>191</bug_id>
+          
+          <creation_ts>2008-01-25 11:00</creation_ts>
+          <short_desc>com-ec localclone fails because ACLs can&apos;t be copied</short_desc>
+          <delta_ts>2008-09-15 11:39:59</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>comoonics-software</product>
+          <component>comoonics-enterprisecopy</component>
+          <version>unspecified</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>Linux</op_sys>
+          <bug_status>CLOSED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>blocker</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Reiner Rottmann">reiner@atix.de</reporter>
+          <assigned_to name="Marc Grimme">marc@atix.de</assigned_to>
+          <cc>mark@atix.de</cc>
+          <qa_contact name="Reiner Rottmann">reiner@atix.de</qa_contact>
+          <cf_releasenotes>added the necessary options if available. Not in Q&amp;A.</cf_releasenotes>
+
+      
+
+      
+          <flag name="comoonics-pre-4.4"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="QA-Excluded"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-01-25 11:00:49</bug_when>
+            <thetext>Description of problem:
+QA executed com-ec to create a localclone. /boot is not mounted with ACL option and the rsync copy process that is triggered by com-ec fails. Error message:
+
+...
+set_acl: sys_acl_get_file(.initrd_sr-2.6.18-53.el5.img.6hV8gN, SMB_ACL_TYPE_ACCESS): Operation not supported
+...
+rsync error: some files could not be transferred (code 23) at main.c(892) [sender=2.6.8]
+
+
+Version-Release number of selected component (if applicable):
+release candidate
+
+How reproducible:
+Always
+
+Steps to Reproduce:
+1. /boot mounted without ACL option
+2. com-ec -d  -x /opt/atix/comoonics-cs/xsl/localclone.xsl /root/com-ec-tests/local-clone.xm
+3.
+  
+Actual results:
+Files can&apos;t be copied with ACLs -&gt; rsync fails -&gt; com-ec fails.
+
+Expected results:
+Files should be copied.
+
+Additional info:
+Quick fix with the following rsync command
+
+/usr/bin/rsync --archive --update --one-file-system --delete --xattrs /var/lib/com-ec/source/ /var/lib/com-ec/dest/
+
+succeeds. --xattrs option for copying selinux context is available. However ACLs are not copied.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-01-25 13:15:22</bug_when>
+            <thetext>Bug seems to be fixed in new version. Timing tests are scheduled because the copy process seems to take much longer when copying with extended attributes.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-02-21 11:21:07</bug_when>
+            <thetext>Bug is fixed and now files could be optionally copied with full ACL inclusion.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-10 16:26:50</bug_when>
+            <thetext>closed</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+    <bug>
+          <bug_id>161</bug_id>
+          
+          <creation_ts>2007-11-28 08:24</creation_ts>
+          <short_desc>[RFE] Update copyright text from ATIX GmbH to ATIX AG</short_desc>
+          <delta_ts>2008-09-15 13:26:28</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>comoonics-software</product>
+          <component>comoonics-clustersuite</component>
+          <version>unspecified</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>Linux</op_sys>
+          <bug_status>CLOSED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>enhancement</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Reiner Rottmann">reiner@atix.de</reporter>
+          <assigned_to name="Mark Hlawatschek">mark@atix.de</assigned_to>
+          <cc>marc@atix.de</cc>
+          <qa_contact name="Reiner Rottmann">reiner@atix.de</qa_contact>
+          <cf_releasenotes>Moved GmbH to AG for ATIX</cf_releasenotes>
+
+      
+
+      
+          <flag name="comoonics-pre-4.4"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="Production-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="QA-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2007-11-28 08:24:56</bug_when>
+            <thetext>Created an attachment (id=1)
+Occurances of the string &apos;ATIX GmbH&apos;
+
+Description of problem:
+A whole bunch of sourcecode files still contain ATIX GmbH as copyright holder. This should be updated to ATIX AG. Also there should be a GPL statement attached to the sourcecode.
+
+Version-Release number of selected component (if applicable):
+
+
+How reproducible:
+Always
+
+Steps to Reproduce:
+1. $ find /home/user/cvs/* | xargs grep ATIX\ GmbH 
+  
+Actual results:
+ATIX GmbH
+
+Expected results:
+ATIX AG
+
+Additional info: 
+See attachment for a printout of affected files.</thetext>
+          </long_desc>
+      
+          <attachment
+              isobsolete="0"
+              ispatch="0"
+              isprivate="0"
+          >
+            <attachid>1</attachid>
+            <date>2007-11-28 08:24</date>
+            <desc>Occurances of the string &apos;ATIX GmbH&apos;</desc>
+            <filename>atix-gmbh.txt</filename>
+            <type>text/plain</type>
+            <size>65429</size>
+            <attacher>reiner@atix.de</attacher>
+            <data encoding="base64">Y29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL3Rlc3QvY29tb29uaWNzL2Fn
+ZW50cy9UZXN0Q0lNQ2xpZW50LmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+Y29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL3Rlc3QvY29tb29uaWNzL2Nvbm5lY3Rpb25zZXJ2
+ZXIvVGVzdENvbm5lY3Rpb25TZXJ2ZXIuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvdGVzdC9hdGl4L2RvbS9UZXN0RE9NV3Jp
+dGVyLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZl
+bG9wbWVudC9qYXZhL3Rlc3QvYXRpeC9kb20vVGVzdERPTVBhcnNlci5qYXZhOiAqIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS90ZXN0L2F0
+aXgvZG9tL1Rlc3RET00uamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20u
+b29uaWNzL2RldmVsb3BtZW50L2phdmEvdGVzdC93YmVtL2xpbnV4X3N5c3RlbS90ZXN0X0xpbnV4
+X0ZhaWxzYWZlQ2x1c3Rlci5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNv
+bS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS90ZXN0L3hhbGFuL1Rlc3RYYWxhbkxpYi5qYXZhOiAq
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2
+YS9kZS9jb21vb25pY3Mvc2VydmxldHMvYWdlbnRzL1NEQ0FnZW50LmphdmE6ICogQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9v
+bmljcy9zZXJ2bGV0cy9Mb2dpblNlcnZsZXQuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL3NlcnZsZXRz
+L1NlcnZlckNvbmZpZ1NlcnZsZXQuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJI
+Lgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL3NlcnZsZXRzL0Fic3Ry
+YWN0U2VydmxldC5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25p
+Y3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3Mvc2VydmxldHMvWFNMVFNlcnZsZXQuamF2
+YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50
+L2phdmEvZGUvY29tb29uaWNzL0NJTS9JbnN0YW5jZVByb3BlcnRpZXNNYXAuamF2YTogKiBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUv
+Y29tb29uaWNzL0NJTS9JbnN0YW5jZUFjdGlvbnMuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL2xpbnV4
+L3Byb2MvVGNwX2xvb2suamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20u
+b29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL2xpbnV4L3Byb2MvTW9kdWxlc19s
+b29rLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZl
+bG9wbWVudC9qYXZhL2RlL2NvbW9vbmljcy9saW51eC9wcm9jL1JvdXRlX2xvb2suamF2YTogKiBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEv
+ZGUvY29tb29uaWNzL2xpbnV4L3Byb2MvTW91bnRzX2xvb2suamF2YTogKiBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNz
+L2xpbnV4L3Byb2MvTG9hZGF2Z19sb29rLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVgg
+R21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9vbmljcy9saW51eC9wcm9j
+L0FycF9sb29rLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmlj
+cy9kZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9vbmljcy9saW51eC9wcm9jL1VkcF9sb29rLmphdmE6
+ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9q
+YXZhL2RlL2NvbW9vbmljcy9saW51eC9wcm9jL1VwdGltZV9sb29rLmphdmE6ICogQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9v
+bmljcy9saW51eC9wcm9jL1N0YXRfbG9vay5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvbGludXgvcHJv
+Yy9EZXZfbG9vay5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25p
+Y3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvbGludXgvcHJvYy9WZXJzaW9uX2xvb2su
+amF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3Bt
+ZW50L2phdmEvZGUvY29tb29uaWNzL3NkY2FnZW50cy9TZW5zb3JEYXRhTGlzdGVuZXIuamF2YTog
+KiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2ph
+dmEvZGUvY29tb29uaWNzL3NkY2FnZW50cy9TRENBZ2VudC5qYXZhOiAqIENvcHlyaWdodCAoYykg
+MjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3Mv
+c2RjYWdlbnRzL1NlbnNvckRhdGFFdmVudC5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvY2xpZW50L0Ns
+aWVudEFwcGxldC5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25p
+Y3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvY2xpZW50L0NsaWVudC5qYXZhOiAqIENv
+cHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9k
+ZS9jb21vb25pY3Mvc2VjdXJpdHkvQ29tb29uaWNzUHJpbmNpcGFsLmphdmE6ICogQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9v
+bmljcy9zZWN1cml0eS9wZXJtaXNzaW9uL0Nvbm5lY3Rpb25TZXJ2ZXJQZXJtaXNzaW9uLmphdmE6
+ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9q
+YXZhL2RlL2NvbW9vbmljcy9zZWN1cml0eS9hY3Rpb24vQ29tb29uaWNzUHJpdmlsZWdlZEFjdGlv
+bi5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxv
+cG1lbnQvamF2YS9kZS9jb21vb25pY3Mvc2VjdXJpdHkvYXV0aC9Db21vb25pY3NMb2dpbk1vZHVs
+ZS5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxv
+cG1lbnQvamF2YS9kZS9jb21vb25pY3MvdWkvVUlDb250cm9sbGVyUmVzb3VyY2VzX2RlLmphdmE6
+ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9q
+YXZhL2RlL2NvbW9vbmljcy91aS9TdGF0dXNCYXJSZXNvdXJjZXMuamF2YTogKiBDb3B5cmlnaHQg
+KGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29u
+aWNzL3VpL1VJQ29udHJvbGxlci5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvdWkvVUlDb250cm9sbGVy
+UmVzb3VyY2VzLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmlj
+cy9kZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9vbmljcy91aS9ldmVudC9TdGF0dXNCYXJMaXN0ZW5l
+ci5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxv
+cG1lbnQvamF2YS9kZS9jb21vb25pY3MvdWkvZXZlbnQvU3RhdHVzQmFyRXZlbnQuamF2YTogKiBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEv
+ZGUvY29tb29uaWNzL3VpL0NvbW9vbmljc1RyZWVDZWxsUmVuZGVyZXIuamF2YTogKiBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29t
+b29uaWNzL3VpL0hlbHBJdGVtcy5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvdWkvU3RhdHVzQmFyLmph
+dmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVu
+dC9qYXZhL2RlL2NvbW9vbmljcy91aS9Db21vb25pY3NUcmVlTm9kZUZpbHRlci5qYXZhOiAqIENv
+cHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9k
+ZS9jb21vb25pY3MvdWkvY29uZi9DbGllbnRDb25maWd1cmF0aW9uLmphdmE6ICogQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9v
+bmljcy91aS9jb25mL0NvbmZpZ3VyYXRpb24uamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL3V0aWxzL0Nv
+bW9vbmljc05vZGVGb3JtYXRlci5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvY29ubmVjdGlvbi9OYW1l
+U2VydmVyLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9k
+ZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9vbmljcy9jb25uZWN0aW9uL0Nvbm5lY3Rpb25TZXJ2ZXIu
+amF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3Bt
+ZW50L2phdmEvZGUvY29tb29uaWNzL2Nvbm5lY3Rpb24vcGx1Z2lucy9TZW5zb3JEYXRhUGx1Z2lu
+LmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9w
+bWVudC9qYXZhL2RlL2NvbW9vbmljcy9jb25uZWN0aW9uL3BsdWdpbnMvVmFsdWVCYWNrVG9Ob3Jt
+YWxFeGNlcHRpb24uamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29u
+aWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL2Nvbm5lY3Rpb24vcGx1Z2lucy9QbHVn
+aW5BZGFwdGVyLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmlj
+cy9kZXZlbG9wbWVudC9qYXZhL2RlL2NvbW9vbmljcy9jb25uZWN0aW9uL3BsdWdpbnMvTWVzc2Fn
+ZXNQbHVnaW4uamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNz
+L2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL2Nvbm5lY3Rpb24vcGx1Z2lucy9WYWx1ZU91
+dE9mSHlzdGVyZXNpc0V4Y2VwdGlvbi5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvY29ubmVjdGlvbi9w
+bHVnaW5zL1BsdWdpbi5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5v
+b25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvY29ubmVjdGlvbi9TRENBZ2VudENv
+bm5lY3Rpb24uamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNz
+L2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL2Nvbm5lY3Rpb24vVVJJQ29ubmVjdGlvbi5q
+YXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1l
+bnQvamF2YS9kZS9jb21vb25pY3MvY29ubmVjdGlvbi9Db25uZWN0aW9uLmphdmE6ICogQ29weXJp
+Z2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2Nv
+bW9vbmljcy9jb25uZWN0aW9uL0NJTUNvbm5lY3Rpb24uamF2YTogKiBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL2Nv
+bm5lY3Rpb24vQ29ubmVjdGlvbkFkYXB0ZXIuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL2Nvbm5lY3Rp
+b24vU2ltcGxlTmFtZVNlcnZlci5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvY29ubmVjdGlvbi9ybWkv
+Q29ubmVjdGlvblNlcnZlclNrZWwuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJI
+Lgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvY29tb29uaWNzL2Nvbm5lY3Rpb24vV2F0
+Y2hlci5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2
+ZWxvcG1lbnQvamF2YS9kZS9jb21vb25pY3MvY29ubmVjdGlvbi9jb25mL1NlcnZlckNvbmZpZ3Vy
+YXRpb24uamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2Rl
+dmVsb3BtZW50L2phdmEvZGUvYXRpeC9zd2luZy9EZWZhdWx0VHJlZU5vZGVBY3Rpb25zLmphdmE6
+ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9q
+YXZhL2RlL2F0aXgvc3dpbmcvR2VuZXJpY1RyZWVDZWxsUmVuZGVyZXIuamF2YTogKiBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvYXRp
+eC9zd2luZy9UcmVlTm9kZUFjdGlvbnMuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvYXRpeC9kb20vRE9NSW1wbC5qYXZh
+OiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQv
+amF2YS9kZS9hdGl4L2RvbS9Ob2RlTGlzdEVudW1lcmF0aW9uLmphdmE6ICogQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2F0aXgvZG9t
+L0RPTVV0aWxzLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmlj
+cy9kZXZlbG9wbWVudC9qYXZhL2RlL2F0aXgvZG9tL05vZGVMaXN0SXRlcmF0b3IuamF2YTogKiBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEv
+ZGUvYXRpeC9kb20vWGVyY2VzMkRPTUltcGwuamF2YX46ICogQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2F0aXgvZG9tL0FUSVhET01X
+cml0ZXIuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2Rl
+dmVsb3BtZW50L2phdmEvZGUvYXRpeC9kb20vWGVyY2VzRE9NSW1wbC5qYXZhOiAqIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9hdGl4
+L2RvbS9YZXJjZXMyRE9NSW1wbC5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9hdGl4L2RvbS9Ob2RlRm9ybWF0ZXIuamF2
+YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50
+L2phdmEvZGUvYXRpeC9kb20vRE9NTm9kZUFjdGlvbnMuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvYXRpeC91aS9FcnJv
+clBhbmVsLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9k
+ZXZlbG9wbWVudC9qYXZhL2RlL2F0aXgvdWkvU2ltcGxlWE1MQnJvd3NlclBhbmUuamF2YTogKiBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEv
+ZGUvYXRpeC91aS9FcnJvclBhbmVsUmVzb3VyY2UuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2phdmEvZGUvYXRpeC91aS9TaW1wbGVY
+TUxCcm93c2VyUGFuZVJlc291cmNlcy5qYXZhOiAqIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCmNvbS5vb25pY3MvZGV2ZWxvcG1lbnQvamF2YS9kZS9hdGl4L3V0aWxzL0RlZmF1bHROb2Rl
+Rm9ybWF0ZXIuamF2YTogKiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNz
+L2RldmVsb3BtZW50L2phdmEvZGUvYXRpeC91dGlscy9SZWdFeHBDb21wYXJhdG9yLmphdmE6ICog
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZh
+L2RlL2F0aXgvdXRpbHMvTm9kZUZvcm1hdGVyLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9qYXZhL2RlL2F0aXgvdXRpbHMvQ29udGVu
+dFR5cGVzLmphdmE6ICogQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9k
+ZXZlbG9wbWVudC9qYXZhL2RlL2F0aXgvY29uZi9BYnN0cmFjdENvbmZpZ3VyYXRpb24uamF2YTog
+KiBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpjb20ub29uaWNzL2RldmVsb3BtZW50L2ph
+dmEvZGUvYXRpeC9jb25mL0NvbmZpZ3VyYXRpb25GYWN0b3J5LmphdmE6ICogQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KY29tLm9vbmljcy9kZXZlbG9wbWVudC9NYWtlZmlsZTojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCmdhbGxpZW4tYXRpeC9hcmNoaXZpbmcvZmlsdGVyX2Zp
+bGVzMm91dC5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmdhbGxpZW4tYXRpeC9h
+cmNoaXZpbmcvYXJjaGl2ZWZpbGVzLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+Z2FsbGllbi1hdGl4L2FyY2hpdmluZy9saXN0X2ZpbGVzMmV4Y2x1ZGUuc2g6IyBDb3B5cmlnaHQg
+KGMpIDIwMDEgQVRJWCBHbWJILgpnYWxsaWVuLWF0aXgvYXJjaGl2aW5nL2ZpbGVzMmRiLnNoOiMg
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KZ2FsbGllbi1hdGl4L2FyY2hpdmluZy9saWIv
+ZmlsZXMyc3FsLmF3azojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmdhbGxpZW4tYXRp
+eC9hcmNoaXZpbmcvbGliL2ZpbGVzX2FkZF9tZWRpYW5hbWUuYXdrOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KZ2FsbGllbi1hdGl4L2FyY2hpdmluZy9saWIvZmluZF9maWxlcy5hd2s6
+IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpnYWxsaWVuLWF0aXgvYXJjaGl2aW5nL2xp
+Yi9maWxlczJodG1sLmF3azojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmdhbGxpZW4t
+YXRpeC9hcmNoaXZpbmcvbGliL2FyY2hpdmVfbGliLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KZ2FsbGllbi1hdGl4L2ZheC1zZXJ2ZXIvYmluZC5zaDojIENvcHlyaWdodCAoYykg
+MjAwMSBBVElYIEdtYkguCmdhbGxpZW4tYXRpeC9mYXgtc2VydmVyL2RlbGV0ZS5zaDojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCmdhbGxpZW4tYXRpeC9mYXgtc2VydmVyL21vZGlmeS5z
+aDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmdhbGxpZW4tYXRpeC9mYXgtc2VydmVy
+L2xkYXAyc3FsLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KZ2FsbGllbi1hdGl4
+L2ZheC1zZXJ2ZXIvbW9kcmRuLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KZ2Fs
+bGllbi1hdGl4L2ZheC1zZXJ2ZXIvYWRkLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KZ2FsbGllbi1hdGl4L2Rpdi9zY3JpcHRzL2xpbnV4L2Jpbi9zaXN0aW5hX21haWxjb25mLnBs
+OiRhYnNuYW1lPSJBVElYIEdtYkgiOwpnYWxsaWVuLWF0aXgvZGl2L3NjcmlwdHMvbGludXgvYmlu
+L3Npc3RpbmFfbWFpbGNvbmYucGw6JHN1YmplY3Q9IkdGUyBEZW1vbnN0cmF0aW9uIGF1ZiBkZW0g
+TGludXh0YWctU3RhbmQgZGVyIEFUSVggR21iSCAvIEdGUyBhdCBBVElYJ3MgYm9vdGggb24gTGlu
+dXh0YWcgMjAwMyI7CmdhbGxpZW4tYXRpeC9kaXYvc2NyaXB0cy9saW51eC9iaW4vc2lzdGluYV9t
+YWlsY29uZi5wbDpUaGlzIGVtYWlsIHdhcyBzZW50IGJ5IEFUSVggR21iSCwgRWluc3RlaW5zdHJh
+c3NlIDEwLCA4NTcxNiBVbnRlcnNjaGxlaXNzaGVpbSwgCmdhbGxpZW4tYXRpeC9iYWNrdXAvcnN5
+bmMvYmFja3VwLW1ldGh1c2FsaXguc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpn
+YWxsaWVuLWF0aXgvbmFnaW9zL3BsdWdpbnMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgpnYWxsaWVuLWF0aXgvbmFnaW9zL3BsdWdpbnMvY29tb29uaWNzX25hZ2lvcy5z
+cGVjOlZlbmRvcjogQVRJWCBHbWJICmdhbGxpZW4tYXRpeC9uYWdpb3MvZXZlbnRoYW5kbGVycy9N
+YWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmdhbGxpZW4tYXRpeC9uYWdp
+b3MvZXZlbnRoYW5kbGVycy9zbm1wdHQybmFnaW9zLnBsOiMgQXV0aG9yOiBNYXJjIEdyaW1tZSA8
+Z3JpbW1lQGF0aXguZGU+LCAyMDA0IChjKTIwMDQgQVRJWCBHbWJICmludGVybmFsL2NvbmZpZGVu
+dGlhbC9hdGl4LXN0cmF0ZWdpZS9jb25jZXB0LXBhcGVyL01ha2VmaWxlLnNmeDojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2NvbmZpZGVudGlhbC9hdGl4LXN0cmF0ZWdp
+ZS9jb25jZXB0LXBhcGVyL01ha2VmaWxlLWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCmludGVybmFsL2NvbmZpZGVudGlhbC9hdGl4LXN0cmF0ZWdpZS9jb25jZXB0LXBh
+cGVyL3NlYy1PdmVydmlldy5zZ206CTxwYXJhPkRhcyBEb2t1bWVudCBkaWVudCBhbHMgSGlsZmVz
+dGVsbHVuZyBkaWUgdW50ZXJuZWhtZW5zcGxhbmVyaXNjaGVuIEFrdGl2aXTkdGVuIGRlciBGaXJt
+YSBBVElYIEdtYkggenUgc3RldWVybiB1bmQgenUga29vcmRpbmllcmVuLiBEaWVzZXMgRG9rdW1l
+bnQgdmVyc3RlaHQgc2ljaCBhbHMgQXJiZWl0c3BhcGllciwgd2VsY2hlcyBlaW5lbSBzdORuZGln
+ZW4gxG5lcnVuZ3Nwcm96ZXNzIGF1c2dlc2V0enQgc2VpbiBzb2xsLiA8L3BhcmE+CmludGVybmFs
+L2NvbmZpZGVudGlhbC9hdGl4LXN0cmF0ZWdpZS9jb25jZXB0LXBhcGVyL3NlYy1PdmVydmlldy5z
+Z206CSAgPHBhcmE+SW0gQWJzY2huaXR0IDEgc29sbGVuIGRpZSBhbGxnZW1laW5lbiBwbGFuZXJp
+c2NoZW4gWmllbGUgdW5kIFp1c3TkbmRpZ2tlaXRlbiBkZXIgQVRJWCBHbWJIIGRlZmluaWVydCB3
+ZXJkZW4uIEQuaC4gZXMgc29sbCBkZWZpbmllcnQgd2VyZGVuLCB3ZWxjaGUgUGxhbnVuZ3MgdW5k
+IFN0ZXVlcnVuc2F1ZmdhYmVuIGVybGVkaWd0IHdlcmRlbiB1bmQgd2VyIGRhZvxyIHZlcmFudHdv
+cnRsaWNoIGlzdC48L3BhcmE+CmludGVybmFsL2NvbmZpZGVudGlhbC9hdGl4LXN0cmF0ZWdpZS9j
+b25jZXB0LXBhcGVyL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCmludGVybmFsL2NvbmZpZGVudGlhbC9hdGl4LXN0cmF0ZWdpZS9jb25jZXB0LXBhcGVyL01h
+a2VmaWxlLmluYzojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2NvbmZp
+ZGVudGlhbC9hdGl4LXN0cmF0ZWdpZS9jb25jZXB0LXBhcGVyL01ha2VmaWxlOiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvY29uZmlkZW50aWFsL2F0aXgtc3RyYXRlZ2ll
+L2NvbmNlcHQtcGFwZXIvc2VjLUF0aXhTdGF0dXNRdW8uc2dtOgk8cGFyYT5EaWVzZXMgS2FwaXRl
+bCBiZXNjaHJlaWJ0IGRlbiBha3R1ZWxsZW4gWnVzdGFuZCBkZXIgQVRJWCBHbWJILiBIaWVyIHdp
+cmQgZGFzIGJlc3RlaGVuZGUgQnVzaW5lcyBNb2RlbGwsIGRhcyBNYXJrZXRpbmdrb256ZXB0IHVz
+dy4gYmVzY2hyaWViZW4uPC9wYXJhPgppbnRlcm5hbC9jb25maWRlbnRpYWwvYXRpeC1zdHJhdGVn
+aWUvY29uY2VwdC1wYXBlci9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgppbnRlcm5hbC9jb25maWRlbnRpYWwvYXRpeC1zdHJhdGVnaWUvY29uY2VwdC1wYXBlci9j
+b25jZXB0LXBhcGVyLnNnbTogICAgPHRpdGxlPkFUSVggR21iSCBLb256ZXB0IFBhcGllcjwvdGl0
+bGU+CmludGVybmFsL2dhbGxpZW4tYXRpeC9hcmNoaXZpbmcvZmlsdGVyX2ZpbGVzMm91dC5zaDoj
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2dhbGxpZW4tYXRpeC9hcmNo
+aXZpbmcvYXJjaGl2ZWZpbGVzLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50
+ZXJuYWwvZ2FsbGllbi1hdGl4L2FyY2hpdmluZy9saXN0X2ZpbGVzMmV4Y2x1ZGUuc2g6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9nYWxsaWVuLWF0aXgvYXJjaGl2aW5n
+L2ZpbGVzMmRiLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZ2Fs
+bGllbi1hdGl4L2FyY2hpdmluZy9saWIvZmlsZXMyc3FsLmF3azojIENvcHlyaWdodCAoYykgMjAw
+MSBBVElYIEdtYkguCmludGVybmFsL2dhbGxpZW4tYXRpeC9hcmNoaXZpbmcvbGliL2ZpbGVzX2Fk
+ZF9tZWRpYW5hbWUuYXdrOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwv
+Z2FsbGllbi1hdGl4L2FyY2hpdmluZy9saWIvZmluZF9maWxlcy5hd2s6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9nYWxsaWVuLWF0aXgvYXJjaGl2aW5nL2xpYi9maWxl
+czJodG1sLmF3azojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2dhbGxp
+ZW4tYXRpeC9hcmNoaXZpbmcvbGliL2FyY2hpdmVfbGliLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KaW50ZXJuYWwvZ2FsbGllbi1hdGl4L2ZheC1zZXJ2ZXIvYmluZC5zaDojIENv
+cHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2dhbGxpZW4tYXRpeC9mYXgtc2Vy
+dmVyL2RlbGV0ZS5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2dh
+bGxpZW4tYXRpeC9mYXgtc2VydmVyL21vZGlmeS5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmludGVybmFsL2dhbGxpZW4tYXRpeC9mYXgtc2VydmVyL2xkYXAyc3FsLnNoOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZ2FsbGllbi1hdGl4L2ZheC1zZXJ2
+ZXIvbW9kcmRuLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZ2Fs
+bGllbi1hdGl4L2ZheC1zZXJ2ZXIvYWRkLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KaW50ZXJuYWwvZ2FsbGllbi1hdGl4L2Rpdi9zY3JpcHRzL2xpbnV4L2Jpbi9zaXN0aW5hX21h
+aWxjb25mLnBsOiRhYnNuYW1lPSJBVElYIEdtYkgiOwppbnRlcm5hbC9nYWxsaWVuLWF0aXgvZGl2
+L3NjcmlwdHMvbGludXgvYmluL3Npc3RpbmFfbWFpbGNvbmYucGw6JHN1YmplY3Q9IkdGUyBEZW1v
+bnN0cmF0aW9uIGF1ZiBkZW0gTGludXh0YWctU3RhbmQgZGVyIEFUSVggR21iSCAvIEdGUyBhdCBB
+VElYJ3MgYm9vdGggb24gTGludXh0YWcgMjAwMyI7CmludGVybmFsL2dhbGxpZW4tYXRpeC9kaXYv
+c2NyaXB0cy9saW51eC9iaW4vc2lzdGluYV9tYWlsY29uZi5wbDpUaGlzIGVtYWlsIHdhcyBzZW50
+IGJ5IEFUSVggR21iSCwgRWluc3RlaW5zdHJhc3NlIDEwLCA4NTcxNiBVbnRlcnNjaGxlaXNzaGVp
+bSwgCmludGVybmFsL2dhbGxpZW4tYXRpeC9iYWNrdXAvcnN5bmMvYmFja3VwLW1ldGh1c2FsaXgu
+c2g6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9nYWxsaWVuLWF0aXgv
+bmFnaW9zL3BsdWdpbnMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpp
+bnRlcm5hbC9nYWxsaWVuLWF0aXgvbmFnaW9zL3BsdWdpbnMvY29tb29uaWNzX25hZ2lvcy5zcGVj
+OlZlbmRvcjogQVRJWCBHbWJICmludGVybmFsL2dhbGxpZW4tYXRpeC9uYWdpb3MvZXZlbnRoYW5k
+bGVycy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2dh
+bGxpZW4tYXRpeC9uYWdpb3MvZXZlbnRoYW5kbGVycy9zbm1wdHQybmFnaW9zLnBsOiMgQXV0aG9y
+OiBNYXJjIEdyaW1tZSA8Z3JpbW1lQGF0aXguZGU+LCAyMDA0IChjKTIwMDQgQVRJWCBHbWJICmlu
+dGVybmFsL2RvY3Mvc2NodWx1bmdlbi9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3NjaHVsdW5nZW4vTWFrZWZpbGUtZ2xvYmFsLm1rOiMg
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9zY2h1bHVuZ2VuL3By
+b2plY3QtcGxhbi5tcnByb2plY3Q6PHByb2plY3QgbmFtZT0iUHJvamVrdHBsYW4gVm9ybGFnZSIg
+Y29tcGFueT0iQVRJWCBHbWJIIiBtYW5hZ2VyPSIiIHBoYXNlPSIiIHByb2plY3Qtc3RhcnQ9IjIw
+MDMwNjI0VDAwMDAwMFoiIG1ycHJvamVjdC12ZXJzaW9uPSIyIiBjYWxlbmRhcj0iMSI+CmludGVy
+bmFsL2RvY3Mvc2NodWx1bmdlbi9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgppbnRlcm5hbC9kb2NzL3NjaHVsdW5nZW4vTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9jdnMvTWFrZWZpbGUuc2Z4OiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9jdnMvTWFrZWZpbGUtZ2xv
+YmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9jdnMv
+aW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwv
+ZG9jcy9jdnMvcHJvamVjdC1wbGFuLm1ycHJvamVjdDo8cHJvamVjdCBuYW1lPSJQcm9qZWt0cGxh
+biBWb3JsYWdlIiBjb21wYW55PSJBVElYIEdtYkgiIG1hbmFnZXI9IiIgcGhhc2U9IiIgcHJvamVj
+dC1zdGFydD0iMjAwMzA2MjRUMDAwMDAwWiIgbXJwcm9qZWN0LXZlcnNpb249IjIiIGNhbGVuZGFy
+PSIxIj4KaW50ZXJuYWwvZG9jcy9jdnMvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9jdnMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2N2cy9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQg
+KGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3dlYnNpdGUvTWFrZWZpbGUuc2Z4OiMg
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy93ZWJzaXRlL01ha2Vm
+aWxlLWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2Rv
+Y3Mvd2Vic2l0ZS9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJI
+LgppbnRlcm5hbC9kb2NzL3dlYnNpdGUvcHJvamVjdC1wbGFuLm1ycHJvamVjdDo8cHJvamVjdCBu
+YW1lPSJQcm9qZWt0cGxhbiBWb3JsYWdlIiBjb21wYW55PSJBVElYIEdtYkgiIG1hbmFnZXI9IiIg
+cGhhc2U9IiIgcHJvamVjdC1zdGFydD0iMjAwMzA2MjRUMDAwMDAwWiIgbXJwcm9qZWN0LXZlcnNp
+b249IjIiIGNhbGVuZGFyPSIxIj4KaW50ZXJuYWwvZG9jcy93ZWJzaXRlL01ha2VmaWxlLmluYzoj
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3Mvd2Vic2l0ZS9NYWtl
+ZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3Mvd2Vic2l0
+ZS9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9k
+b2NzL3NhbWJhLWNsdXN0ZXJpbmcvTWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KaW50ZXJuYWwvZG9jcy9zYW1iYS1jbHVzdGVyaW5nL01ha2VmaWxlLWdsb2JhbC5t
+azojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3Mvc2FtYmEtY2x1
+c3RlcmluZy9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpp
+bnRlcm5hbC9kb2NzL3NhbWJhLWNsdXN0ZXJpbmcvcHJvamVjdC1wbGFuLm1ycHJvamVjdDo8cHJv
+amVjdCBuYW1lPSJJUC1UZWNoIDIwMDQgUGxhbnVuZyBmJiN4RkM7ciBBVElYIGludGVybiIgY29t
+cGFueT0iQVRJWCBHbWJIIiBtYW5hZ2VyPSJNYXJjIEdyaW1tZSIgcGhhc2U9IiIgcHJvamVjdC1z
+dGFydD0iMjAwNDA3MTlUMDAwMDAwWiIgbXJwcm9qZWN0LXZlcnNpb249IjIiIGNhbGVuZGFyPSIx
+Ij4KaW50ZXJuYWwvZG9jcy9zYW1iYS1jbHVzdGVyaW5nL01ha2VmaWxlLmluYzojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3Mvc2FtYmEtY2x1c3RlcmluZy9NYWtl
+ZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3Mvc2FtYmEt
+Y2x1c3RlcmluZy9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpp
+bnRlcm5hbC9kb2NzL2F0aXgtYWdlbmRhMjAxMC9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2F0aXgtYWdlbmRhMjAxMC9NYWtlZmlsZS1n
+bG9iYWwubWs6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2F0
+aXgtYWdlbmRhMjAxMC9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgppbnRlcm5hbC9kb2NzL2F0aXgtYWdlbmRhMjAxMC9wcm9qZWN0LXBsYW4ubXJwcm9qZWN0
+Ojxwcm9qZWN0IG5hbWU9IlByb2pla3RwbGFuIFZvcmxhZ2UiIGNvbXBhbnk9IkFUSVggR21iSCIg
+bWFuYWdlcj0iIiBwaGFzZT0iIiBwcm9qZWN0LXN0YXJ0PSIyMDAzMDYyNFQwMDAwMDBaIiBtcnBy
+b2plY3QtdmVyc2lvbj0iMiIgY2FsZW5kYXI9IjEiPgppbnRlcm5hbC9kb2NzL2F0aXgtYWdlbmRh
+MjAxMC9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5h
+bC9kb2NzL2F0aXgtYWdlbmRhMjAxMC9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmludGVybmFsL2RvY3MvYXRpeC1hZ2VuZGEyMDEwL01ha2VmaWxlLnJsczojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvZG9jdW1lbnRhdGlvbnMvTWFr
+ZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9k
+b2N1bWVudGF0aW9ucy9NYWtlZmlsZS1nbG9iYWwubWs6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgppbnRlcm5hbC9kb2NzL2RvY3VtZW50YXRpb25zL2ltYWdlcy9NYWtlZmlsZTojIENv
+cHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvZG9jdW1lbnRhdGlvbnMv
+TWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9j
+cy9kb2N1bWVudGF0aW9ucy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CmludGVybmFsL2RvY3MvZG9jdW1lbnRhdGlvbnMvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9zaXN0aW5hLWZvbGxvd3Vwcy9NYWtlZmls
+ZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3Npc3Rp
+bmEtZm9sbG93dXBzL01ha2VmaWxlLWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmludGVybmFsL2RvY3Mvc2lzdGluYS1mb2xsb3d1cHMvaW1hZ2VzL01ha2VmaWxlOiMg
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9zaXN0aW5hLWZvbGxv
+d3Vwcy9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5h
+bC9kb2NzL3Npc3RpbmEtZm9sbG93dXBzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KaW50ZXJuYWwvZG9jcy9zaXN0aW5hLWZvbGxvd3Vwcy9NYWtlZmlsZS5ybHM6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2ZheGVuL01ha2VmaWxl
+LnNmeDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvZmF4ZW4v
+TWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJu
+YWwvZG9jcy9mYXhlbi9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgppbnRlcm5hbC9kb2NzL2ZheGVuL3Byb2plY3QtcGxhbi5tcnByb2plY3Q6PHByb2plY3Qg
+bmFtZT0iUHJvamVrdHBsYW4gVm9ybGFnZSIgY29tcGFueT0iQVRJWCBHbWJIIiBtYW5hZ2VyPSIi
+IHBoYXNlPSIiIHByb2plY3Qtc3RhcnQ9IjIwMDMwNjI0VDAwMDAwMFoiIG1ycHJvamVjdC12ZXJz
+aW9uPSIyIiBjYWxlbmRhcj0iMSI+CmludGVybmFsL2RvY3MvZmF4ZW4vTWFrZWZpbGUuaW5jOiMg
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9mYXhlbi9NYWtlZmls
+ZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvZmF4ZW4vTWFr
+ZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9s
+ZGFwLWFkZHJlc3NidWNoL01ha2VmaWxlLnNmeDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCmludGVybmFsL2RvY3MvbGRhcC1hZGRyZXNzYnVjaC9NYWtlZmlsZS1nbG9iYWwubWs6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2xkYXAtYWRkcmVzc2J1
+Y2gvaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJu
+YWwvZG9jcy9sZGFwLWFkZHJlc3NidWNoL3Byb2plY3QtcGxhbi5tcnByb2plY3Q6PHByb2plY3Qg
+bmFtZT0iUHJvamVrdHBsYW4gVm9ybGFnZSIgY29tcGFueT0iQVRJWCBHbWJIIiBtYW5hZ2VyPSIi
+IHBoYXNlPSIiIHByb2plY3Qtc3RhcnQ9IjIwMDMwNjI0VDAwMDAwMFoiIG1ycHJvamVjdC12ZXJz
+aW9uPSIyIiBjYWxlbmRhcj0iMSI+CmludGVybmFsL2RvY3MvbGRhcC1hZGRyZXNzYnVjaC9NYWtl
+ZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2xk
+YXAtYWRkcmVzc2J1Y2gvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpp
+bnRlcm5hbC9kb2NzL2xkYXAtYWRkcmVzc2J1Y2gvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9nYWxsaWVuLWF0aXgvTWFrZWZpbGUuc2Z4
+OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9nYWxsaWVuLWF0
+aXgvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50
+ZXJuYWwvZG9jcy9nYWxsaWVuLWF0aXgvaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9nYWxsaWVuLWF0aXgvTWFrZWZpbGUuaW5jOiMg
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9nYWxsaWVuLWF0aXgv
+TWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2dh
+bGxpZW4tYXRpeC9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpp
+bnRlcm5hbC9kb2NzL3pldGFuZXR6L01ha2VmaWxlLnNmeDojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCmludGVybmFsL2RvY3MvemV0YW5ldHovTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy96ZXRhbmV0ei9NYWtlZmls
+ZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3pldGFu
+ZXR6L01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFs
+L2RvY3MvcGFzc3dvcmRzL01ha2VmaWxlLnNmeDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCmludGVybmFsL2RvY3MvcGFzc3dvcmRzL01ha2VmaWxlLWdsb2JhbC5tazojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvcGFzc3dvcmRzL2ltYWdlcy9NYWtl
+ZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvcGFzc3dv
+cmRzL01ha2VmaWxlLmluYzojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFs
+L2RvY3MvcGFzc3dvcmRzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+aW50ZXJuYWwvZG9jcy9wYXNzd29yZHMvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy94ZW1hY3MvTWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy94ZW1hY3MvTWFrZWZpbGUtZ2xvYmFs
+Lm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy94ZW1hY3Mv
+aW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwv
+ZG9jcy94ZW1hY3MvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+aW50ZXJuYWwvZG9jcy94ZW1hY3MvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgppbnRlcm5hbC9kb2NzL3hlbWFjcy9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2ZhaWxzYWZlL01ha2VmaWxlLnNmeDojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvZmFpbHNhZmUvTWFrZWZpbGUt
+Z2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9m
+YWlsc2FmZS9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpp
+bnRlcm5hbC9kb2NzL2ZhaWxzYWZlL01ha2VmaWxlLmluYzojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCmludGVybmFsL2RvY3MvZmFpbHNhZmUvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2ZhaWxzYWZlL01ha2VmaWxlLnJsczojIENv
+cHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3Mvd2JlbS1ucGktaG93dG8v
+TWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9j
+cy93YmVtLW5waS1ob3d0by9NYWtlZmlsZS1nbG9iYWwubWs6IyBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3diZW0tbnBpLWhvd3RvL2ltYWdlcy9NYWtlZmlsZToj
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3Mvd2JlbS1ucGktaG93
+dG8vTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwv
+ZG9jcy93YmVtLW5waS1ob3d0by9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCmludGVybmFsL2RvY3Mvd2JlbS1ucGktaG93dG8vTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9nZW5lcmljLWJvb3QvTWFrZWZpbGUu
+c2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9nZW5lcmlj
+LWJvb3QvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+aW50ZXJuYWwvZG9jcy9nZW5lcmljLWJvb3QvaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9nZW5lcmljLWJvb3QvcHJvamVjdC1wbGFu
+Lm1ycHJvamVjdDo8cHJvamVjdCBuYW1lPSJQcm9qZWt0cGxhbiBWb3JsYWdlIiBjb21wYW55PSJB
+VElYIEdtYkgiIG1hbmFnZXI9IiIgcGhhc2U9IiIgcHJvamVjdC1zdGFydD0iMjAwMzA2MjRUMDAw
+MDAwWiIgbXJwcm9qZWN0LXZlcnNpb249IjIiIGNhbGVuZGFyPSIxIj4KaW50ZXJuYWwvZG9jcy9n
+ZW5lcmljLWJvb3QvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+aW50ZXJuYWwvZG9jcy9nZW5lcmljLWJvb3QvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2dlbmVyaWMtYm9vdC9NYWtlZmlsZS5ybHM6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2F0aXgtY2MvTWFrZWZpbGUu
+c2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9hdGl4LWNj
+L01ha2VmaWxlLWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVy
+bmFsL2RvY3MvYXRpeC1jYy9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgppbnRlcm5hbC9kb2NzL2F0aXgtY2MvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9hdGl4LWNjL01ha2VmaWxlOiMgQ29weXJp
+Z2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9hdGl4LWNjL01ha2VmaWxlLnJs
+czojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvbGludXgtc2Nz
+aS1rbm93bGVkZ2UvTWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+aW50ZXJuYWwvZG9jcy9saW51eC1zY3NpLWtub3dsZWRnZS9NYWtlZmlsZS1nbG9iYWwubWs6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2xpbnV4LXNjc2kta25v
+d2xlZGdlL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmlu
+dGVybmFsL2RvY3MvbGludXgtc2NzaS1rbm93bGVkZ2UvcHJvamVjdC1wbGFuLm1ycHJvamVjdDo8
+cHJvamVjdCBuYW1lPSJQcm9qZWt0cGxhbiBWb3JsYWdlIiBjb21wYW55PSJBVElYIEdtYkgiIG1h
+bmFnZXI9IiIgcGhhc2U9IiIgcHJvamVjdC1zdGFydD0iMjAwMzA2MjRUMDAwMDAwWiIgbXJwcm9q
+ZWN0LXZlcnNpb249IjIiIGNhbGVuZGFyPSIxIj4KaW50ZXJuYWwvZG9jcy9saW51eC1zY3NpLWtu
+b3dsZWRnZS9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRl
+cm5hbC9kb2NzL2xpbnV4LXNjc2kta25vd2xlZGdlL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9saW51eC1zY3NpLWtub3dsZWRnZS9NYWtlZmls
+ZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2xvY2Fs
+LWRpc3QtbWlycm9yL01ha2VmaWxlLnNmeDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CmludGVybmFsL2RvY3MvbG9jYWwtZGlzdC1taXJyb3IvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9sb2NhbC1kaXN0LW1pcnJv
+ci9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5h
+bC9kb2NzL2xvY2FsLWRpc3QtbWlycm9yL3Byb2plY3QtcGxhbi5tcnByb2plY3Q6PHByb2plY3Qg
+bmFtZT0iSVAtVGVjaCAyMDA0IFBsYW51bmcgZiYjeEZDO3IgQVRJWCBpbnRlcm4iIGNvbXBhbnk9
+IkFUSVggR21iSCIgbWFuYWdlcj0iTWFyYyBHcmltbWUiIHBoYXNlPSIiIHByb2plY3Qtc3RhcnQ9
+IjIwMDQwNzE5VDAwMDAwMFoiIG1ycHJvamVjdC12ZXJzaW9uPSIyIiBjYWxlbmRhcj0iMSI+Cmlu
+dGVybmFsL2RvY3MvbG9jYWwtZGlzdC1taXJyb3IvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9sb2NhbC1kaXN0LW1pcnJvci9NYWtlZmls
+ZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvbG9jYWwtZGlz
+dC1taXJyb3IvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50
+ZXJuYWwvZG9jcy9zYWxlc2J1aWxkZXJ1cGRhdGUtemV0YS9NYWtlZmlsZS5zZng6IyBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3NhbGVzYnVpbGRlcnVwZGF0ZS16
+ZXRhL01ha2VmaWxlLWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmlu
+dGVybmFsL2RvY3Mvc2FsZXNidWlsZGVydXBkYXRlLXpldGEvaW1hZ2VzL01ha2VmaWxlOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9zYWxlc2J1aWxkZXJ1cGRh
+dGUtemV0YS9wcm9qZWN0LXBsYW4ubXJwcm9qZWN0Ojxwcm9qZWN0IG5hbWU9IklQLVRlY2ggMjAw
+NCBQbGFudW5nIGYmI3hGQztyIEFUSVggaW50ZXJuIiBjb21wYW55PSJBVElYIEdtYkgiIG1hbmFn
+ZXI9Ik1hcmMgR3JpbW1lIiBwaGFzZT0iIiBwcm9qZWN0LXN0YXJ0PSIyMDA0MDcxOVQwMDAwMDBa
+IiBtcnByb2plY3QtdmVyc2lvbj0iMiIgY2FsZW5kYXI9IjEiPgppbnRlcm5hbC9kb2NzL3NhbGVz
+YnVpbGRlcnVwZGF0ZS16ZXRhL01ha2VmaWxlLmluYzojIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmludGVybmFsL2RvY3Mvc2FsZXNidWlsZGVydXBkYXRlLXpldGEvTWFrZWZpbGU6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3NhbGVzYnVpbGRlcnVw
+ZGF0ZS16ZXRhL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmlu
+dGVybmFsL2RvY3Mvc2FtYmEtYWRzLW1lbWJlci9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3NhbWJhLWFkcy1tZW1iZXIvTWFrZWZpbGUt
+Z2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9z
+YW1iYS1hZHMtbWVtYmVyL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmludGVybmFsL2RvY3Mvc2FtYmEtYWRzLW1lbWJlci9wcm9qZWN0LXBsYW4ubXJwcm9q
+ZWN0Ojxwcm9qZWN0IG5hbWU9IklQLVRlY2ggMjAwNCBQbGFudW5nIGYmI3hGQztyIEFUSVggaW50
+ZXJuIiBjb21wYW55PSJBVElYIEdtYkgiIG1hbmFnZXI9Ik1hcmMgR3JpbW1lIiBwaGFzZT0iIiBw
+cm9qZWN0LXN0YXJ0PSIyMDA0MDcxOVQwMDAwMDBaIiBtcnByb2plY3QtdmVyc2lvbj0iMiIgY2Fs
+ZW5kYXI9IjEiPgppbnRlcm5hbC9kb2NzL3NhbWJhLWFkcy1tZW1iZXIvTWFrZWZpbGUuaW5jOiMg
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9zYW1iYS1hZHMtbWVt
+YmVyL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9j
+cy9zYW1iYS1hZHMtbWVtYmVyL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmludGVybmFsL2RvY3Mvc2NzaS1kZXZlbG9wbWVudC9NYWtlZmlsZS5zZng6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL3Njc2ktZGV2ZWxvcG1lbnQv
+TWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJu
+YWwvZG9jcy9zY3NpLWRldmVsb3BtZW50L2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykg
+MjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3Mvc2NzaS1kZXZlbG9wbWVudC9wcm9qZWN0LXBs
+YW4ubXJwcm9qZWN0Ojxwcm9qZWN0IG5hbWU9IlByb2pla3RwbGFuIFZvcmxhZ2UiIGNvbXBhbnk9
+IkFUSVggR21iSCIgbWFuYWdlcj0iIiBwaGFzZT0iIiBwcm9qZWN0LXN0YXJ0PSIyMDAzMDYyNFQw
+MDAwMDBaIiBtcnByb2plY3QtdmVyc2lvbj0iMiIgY2FsZW5kYXI9IjEiPgppbnRlcm5hbC9kb2Nz
+L3Njc2ktZGV2ZWxvcG1lbnQvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVgg
+R21iSC4KaW50ZXJuYWwvZG9jcy9zY3NpLWRldmVsb3BtZW50L01ha2VmaWxlOiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9zY3NpLWRldmVsb3BtZW50L01ha2Vm
+aWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvbGV4
+d2FyZS9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5h
+bC9kb2NzL2xleHdhcmUvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KaW50ZXJuYWwvZG9jcy9sZXh3YXJlL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvbGV4d2FyZS9wcm9qZWN0LXBsYW4u
+bXJwcm9qZWN0Ojxwcm9qZWN0IG5hbWU9IlByb2pla3RwbGFuIFZvcmxhZ2UiIGNvbXBhbnk9IkFU
+SVggR21iSCIgbWFuYWdlcj0iIiBwaGFzZT0iIiBwcm9qZWN0LXN0YXJ0PSIyMDAzMDYyNFQwMDAw
+MDBaIiBtcnByb2plY3QtdmVyc2lvbj0iMiIgY2FsZW5kYXI9IjEiPgppbnRlcm5hbC9kb2NzL2xl
+eHdhcmUvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJu
+YWwvZG9jcy9sZXh3YXJlL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+aW50ZXJuYWwvZG9jcy9sZXh3YXJlL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCmludGVybmFsL2RvY3MvdGVtcGxhdGVzL01ha2VmaWxlLnNmeDojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvdGVtcGxhdGVzL01ha2VmaWxlLWds
+b2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvdGVt
+cGxhdGVzL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmlu
+dGVybmFsL2RvY3MvdGVtcGxhdGVzL3Byb2plY3QtcGxhbi5tcnByb2plY3Q6PHByb2plY3QgbmFt
+ZT0iSVAtVGVjaCAyMDA0IFBsYW51bmcgZiYjeEZDO3IgQVRJWCBpbnRlcm4iIGNvbXBhbnk9IkFU
+SVggR21iSCIgbWFuYWdlcj0iTWFyYyBHcmltbWUiIHBoYXNlPSIiIHByb2plY3Qtc3RhcnQ9IjIw
+MDQwNzE5VDAwMDAwMFoiIG1ycHJvamVjdC12ZXJzaW9uPSIyIiBjYWxlbmRhcj0iMSI+CmludGVy
+bmFsL2RvY3MvdGVtcGxhdGVzL01ha2VmaWxlLmluYzojIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCmludGVybmFsL2RvY3MvdGVtcGxhdGVzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy90ZW1wbGF0ZXMvTWFrZWZpbGUucmxzOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9uYXNoZWFkMjAwNC9kZXZl
+bC1ndWlkZS9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRl
+cm5hbC9kb2NzL25hc2hlYWQyMDA0L2RldmVsLWd1aWRlL01ha2VmaWxlLWdsb2JhbC5tazojIENv
+cHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvbmFzaGVhZDIwMDQvZGV2
+ZWwtZ3VpZGUvaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+aW50ZXJuYWwvZG9jcy9uYXNoZWFkMjAwNC9kZXZlbC1ndWlkZS9zdHlsZS1ndWlkZS5zZ206IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL25hc2hlYWQyMDA0L2Rl
+dmVsLWd1aWRlL01ha2VmaWxlLmluYzojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmlu
+dGVybmFsL2RvY3MvbmFzaGVhZDIwMDQvZGV2ZWwtZ3VpZGUvTWFrZWZpbGU6IyBDb3B5cmlnaHQg
+KGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL25hc2hlYWQyMDA0L2RldmVsLWd1aWRl
+L01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2Rv
+Y3MvbmFzaGVhZDIwMDQvYWRtaW4tZ3VpZGUvc2VydmljZS1ndWFyZC9NYWtlZmlsZTojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvbmFzaGVhZDIwMDQvYWRtaW4t
+Z3VpZGUvTWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJu
+YWwvZG9jcy9uYXNoZWFkMjAwNC9hZG1pbi1ndWlkZS9NYWtlZmlsZS1nbG9iYWwubWs6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL25hc2hlYWQyMDA0L2FkbWlu
+LWd1aWRlL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmlu
+dGVybmFsL2RvY3MvbmFzaGVhZDIwMDQvYWRtaW4tZ3VpZGUvTWFrZWZpbGUuaW5jOiMgQ29weXJp
+Z2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9uYXNoZWFkMjAwNC9hZG1pbi1n
+dWlkZS9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2Rv
+Y3MvbmFzaGVhZDIwMDQvYWRtaW4tZ3VpZGUvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9oYS1lcXVhdGlvbi9NYWtlZmlsZS5zZng6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2hhLWVxdWF0aW9uL01h
+a2VmaWxlLWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFs
+L2RvY3MvaGEtZXF1YXRpb24vaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KaW50ZXJuYWwvZG9jcy9oYS1lcXVhdGlvbi9NYWtlZmlsZS5pbmM6IyBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2hhLWVxdWF0aW9uL01ha2VmaWxl
+OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KaW50ZXJuYWwvZG9jcy9oYS1lcXVhdGlv
+bi9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9k
+b2NzL2xpbnV4LWZpbGVzeXN0ZW1zLWFuZC12b2x1bWVzL01ha2VmaWxlLnNmeDojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL2RvY3MvbGludXgtZmlsZXN5c3RlbXMtYW5k
+LXZvbHVtZXMvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KaW50ZXJuYWwvZG9jcy9saW51eC1maWxlc3lzdGVtcy1hbmQtdm9sdW1lcy9NYWtlZmlsZS5p
+bmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC9kb2NzL2xpbnV4LWZp
+bGVzeXN0ZW1zLWFuZC12b2x1bWVzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVgg
+R21iSC4KaW50ZXJuYWwvZG9jcy9saW51eC1maWxlc3lzdGVtcy1hbmQtdm9sdW1lcy9NYWtlZmls
+ZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgppbnRlcm5hbC90ZW1wbGF0ZXMv
+ZG9jYm9vay54bWwvaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KaW50ZXJuYWwvdGVtcGxhdGVzL2RvY2Jvb2sueG1sL2RvYy9NYWtlZmlsZTojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL3RlbXBsYXRlcy9kb2Nib29rLnhtbC9pbnRl
+cm5hbC9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCmludGVybmFsL3Rl
+bXBsYXRlcy9kb2Nib29rLnhtbC9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgppbnRlcm5hbC90ZW1wbGF0ZXMvZG9jYm9vay54bWwvTWFrZWZpbGU6IyBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9pc2NzaS10YXJnZXQvZG9jcy9SRUFE
+TUUuYXRpeDpBVElYIEdtYkgsIFVudGVyc2NobGVpc3NoZWltLCBHZXJtYW55Cm5hc2hlYWQyMDA0
+L2lzY3NpLXRhcmdldC9pbml0c2NyaXB0cy9ldGMvaW5pdC5kL2lzY3Npc2VydmVyOiMgQ29weXJp
+Z2h0IChjKSAyMDA0IEFUSVggR21iSCwgR2VybWFueS4gIEFsbCByaWdodHMgcmVzZXJ2ZWQuCm5h
+c2hlYWQyMDA0L2lzY3NpLXRhcmdldC9pbml0c2NyaXB0cy9ldGMvaW5pdC5kL2lzY3Npc2VydmVy
+LXJlZGhhdDojIENvcHlyaWdodCAoYykgMjAwNCBBVElYIEdtYkgsIEdlcm1hbnkuICBBbGwgcmln
+aHRzIHJlc2VydmVkLgpuYXNoZWFkMjAwNC9yaC1jbHVtYW5hZ2VyL3NyYy9zdG9uaXRobGliL2Nv
+bW9vbmljcy5jOiAqIENvcHlyaWdodCAoYykgMjAwNSBBVElYIEdtYkggCm5hc2hlYWQyMDA0L2Nv
+bS1zdG9uaXRoL3N0b25pdGgtY21kLmRpZmY6KyAqIENvcHlyaWdodCAoYykgMjAwNCBBVElYIEdt
+YkgKbmFzaGVhZDIwMDQvY29tLXN0b25pdGgvY21kLmM6ICogQ29weXJpZ2h0IChjKSAyMDA0IEFU
+SVggR21iSApuYXNoZWFkMjAwNC9jb21vb25pY3MtbGl2ZWNkL3NjcmlwdHMvY3JlYXRlX2xpdmVj
+aHJvb3Quc2g6ICAgICAgICBlY2hvICJieSBBVElYIEdtYkggMjAwNC0yMDA2IgpuYXNoZWFkMjAw
+NC9ib290aW1hZ2UvYm9vdC1zY3JpcHRzL2V4ZWNfcGFydF9mcm9tX2Jhc2guc2g6IyBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2UvYm9vdC1zY3JpcHRz
+L3Jlc2N1ZS5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L2Jv
+b3RpbWFnZS9ib290LXNjcmlwdHMvbGludXhyYy5nZW5lcmljLnNoOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvYm9vdGltYWdlL2Jvb3Qtc2NyaXB0cy9saW51eHJj
+LnBhcnQudXJsc291cmNlLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVh
+ZDIwMDQvYm9vdGltYWdlL2Jvb3Qtc2NyaXB0cy9saW51eHJjLmJhc2g6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2UvYm9vdC1zY3JpcHRzL2xpbnV4
+cmMucGFydC5pc2NzaS5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQy
+MDA0L2Jvb3RpbWFnZS9ib290LXNjcmlwdHMvZXRjL2dmcy1saWIuc2g6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEtMjAwNyBBVElYIEdtYkguCm5hc2hlYWQyMDA0L2Jvb3RpbWFnZS9ib290LXNjcmlwdHMv
+ZXRjL2V4dDMtbGliLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIw
+MDQvYm9vdGltYWdlL2Jvb3Qtc2NyaXB0cy9ldGMvcmhlbDQvbmV0d29yay1saWIuc2g6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2UvYm9vdC1zY3Jp
+cHRzL2V0Yy9yaGVsNC9oYXJkd2FyZS1saWIuc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2UvYm9vdC1zY3JpcHRzL2V0Yy9pc2NzaS1saWIuc2g6
+IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2UvYm9v
+dC1zY3JpcHRzL2V0Yy9uZnMtbGliLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+bmFzaGVhZDIwMDQvYm9vdGltYWdlL2Jvb3Qtc2NyaXB0cy9ldGMvc3RkLWxpYi5zaDojIENvcHly
+aWdodCAoYykgMjAwNyBBVElYIEdtYkguCm5hc2hlYWQyMDA0L2Jvb3RpbWFnZS9ib290LXNjcmlw
+dHMvZXRjL3N0ZGZzLWxpYi5zaDojIENvcHlyaWdodCAoYykgMjAwNyBBVElYIEdtYkguCm5hc2hl
+YWQyMDA0L2Jvb3RpbWFnZS9ib290LXNjcmlwdHMvZXRjL2F0aXgudHh0OkFUSVggR21iSApuYXNo
+ZWFkMjAwNC9ib290aW1hZ2UvYm9vdC1zY3JpcHRzL2V0Yy9jbHVzdGVyZnMtbGliLnNoOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxLTIwMDcgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2UvYm9v
+dC1zY3JpcHRzL2V0Yy9zbGVzOC9uZXR3b3JrLWxpYi5zaDojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCm5hc2hlYWQyMDA0L2Jvb3RpbWFnZS9ib290LXNjcmlwdHMvZXRjL3NsZXM4L2hh
+cmR3YXJlLWxpYi5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0
+L2Jvb3RpbWFnZS9ib290LXNjcmlwdHMvZXRjL25ldHdvcmstbGliLnNoOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvYm9vdGltYWdlL2Jvb3Qtc2NyaXB0cy9ldGMv
+Ym9vdC1saWIuc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9i
+b290aW1hZ2UvYm9vdC1zY3JpcHRzL2V0Yy9jaHJvb3QtbGliLnNoOiMgQ29weXJpZ2h0IChjKSAy
+MDA3IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvYm9vdGltYWdlL2Jvb3Qtc2NyaXB0cy9ldGMveGVu
+LWxpYi5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L2Jvb3Rp
+bWFnZS9ib290LXNjcmlwdHMvZXRjL2hhcmR3YXJlLWxpYi5zaDojIENvcHlyaWdodCAoYykgMjAw
+MSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L2Jvb3RpbWFnZS9ib290LXNjcmlwdHMvbGludXhyYzoj
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L2Jvb3RpbWFnZS9jb21v
+b25pY3MtYm9vdGltYWdlLWluaXRzY3JpcHRzLWVsNC5zcGVjOiMgQ29weXJpZ2h0IChjKSAyMDA3
+IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvYm9vdGltYWdlL2hvdGZpeGVzL2NvbWhmLXN5c3JlcG9y
+dC0wLjEvY29taGYtdXBkYXRlX2ZlbmNlZF9jaHJvb3Quc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDcg
+QVRJWCBHbWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2UvaG90Zml4ZXMvY29taGYtc3lzcmVwb3J0
+LTAuMS9jb21oZi1zeXNyZXBvcnQuc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDcgQVRJWCBHbWJILgpu
+YXNoZWFkMjAwNC9ib290aW1hZ2UvbWFuYWdlX2Nocm9vdC5zaDojIENvcHlyaWdodCAoYykgMjAw
+NyBBVElYIEdtYkguCm5hc2hlYWQyMDA0L2Jvb3RpbWFnZS9jb21vb25pY3MtYm9vdGltYWdlLnNw
+ZWM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2Uv
+Y3JlYXRlLWdmcy1pbml0cmQtZ2VuZXJpYy5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCm5hc2hlYWQyMDA0L2Jvb3RpbWFnZS9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCm5hc2hlYWQyMDA0L2Jvb3RpbWFnZS9jcmVhdGUtZ2ZzLWluaXRyZC1saWIuc2g6
+IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9ib290aW1hZ2UvY29t
+b29uaWNzLWJvb3RpbWFnZS1pbml0c2NyaXB0cy1lbDUuc3BlYzojIENvcHlyaWdodCAoYykgMjAw
+NyBBVElYIEdtYkguCm5hc2hlYWQyMDA0L3BocC9SRUFETUU6VGhpcyBwYXRjaCB3YXMgY3JlYXRl
+ZCBieSBBVElYIEdtYkgsIFVudGVyc2NobGVpc3NoZWltLCBHZXJtYW55Cm5hc2hlYWQyMDA0L3Bo
+cC9waHAuc3BlYzpQYWNrYWdlcjogQVRJWCBHbWJIIDxodHRwOi8vd3d3LmF0aXguZGU+Cm5hc2hl
+YWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLWNsdXN0ZXJzdWl0ZS9jY3NfeG1sLnBtOiMgQ29w
+eXJpZ2h0IChjKSAyMDA1IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25p
+Y3MtY2x1c3RlcnN1aXRlL2NvbW9vbmljcy1jcy5zcGVjOlZlbmRvcjogQVRJWCBHbWJICm5hc2hl
+YWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLWNsdXN0ZXJzdWl0ZS9NYWtlZmlsZTojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNz
+LWNsdXN0ZXJzdWl0ZS9zaC9saWIvbGliLWZzLnNoOiMgQ29weXJpZ2h0IChjKSAyMDA2IEFUSVgg
+R21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25pY3MtY2x1c3RlcnN1aXRlL3NoL2xp
+Yi9saWItbHZtLnNoOiMgQ29weXJpZ2h0IChjKSAyMDA2IEFUSVggR21iSC4KbmFzaGVhZDIwMDQv
+bWFuYWdlbWVudC9jb21vb25pY3MtY2x1c3RlcnN1aXRlL3NoL2xpYi9saWItYm9vdGxvYWRlci5z
+aDojIENvcHlyaWdodCAoYykgMjAwNiBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQv
+Y29tb29uaWNzLWNsdXN0ZXJzdWl0ZS9zaC9saWIvbGliLWxvZy5zaDojIENvcHlyaWdodCAoYykg
+MjAwNiBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLWNsdXN0ZXJz
+dWl0ZS9zaC9saWIvbGliLXN0ZC5zaDojIENvcHlyaWdodCAoYykgMjAwNiBBVElYIEdtYkguCm5h
+c2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLWNsdXN0ZXJzdWl0ZS9zaC9saWIvbGliLWZz
+LWdmcy5zaDojIENvcHlyaWdodCAoYykgMjAwNiBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFn
+ZW1lbnQvY29tb29uaWNzLWNsdXN0ZXJzdWl0ZS9zaC9saWIvbGliLXNjc2kuc2g6IyBDb3B5cmln
+aHQgKGMpIDIwMDYgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1i
+YWNrdXAvc3luYy9jb20tYmFja3VwLWdmcy5zaDoJZWNobyAiYnkgQVRJWCBHbWJIIDIwMDQtMjAw
+NSIKbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25pY3MtYmFja3VwL3N5bmMvY29tLWJhY2t1
+cC1nZnMuc2g6bG9nICJieSBBVElYIEdtYkggMjAwNC0yMDA1IgpuYXNoZWFkMjAwNC9tYW5hZ2Vt
+ZW50L2NvbW9vbmljcy1iYWNrdXAvbGliL2NvbS1zdGQtbGliLnNoOiMgKGMpIDIwMDQgQVRJWCBH
+bWJICm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLWJhY2t1cC9saWIvY29tLWdmcy1s
+aWIuc2g6IyAoYykgMjAwNCBBVElYIEdtYkgKbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25p
+Y3MtYmFja3VwL2xpYi9jb20tZ2ZzLWxpYi5zaDoJbmV3X3BhZ2UgIldlbGNvbWUgdG8gdGhlIEFU
+SVggQ29tb29uaWNzIEdGUyBDbHVzdGVyIEluc3RhbGxhdGlvbiBQcm9jZWR1cmUgIVxuIChjKSAy
+MDA0IEFUSVggR21iSCIgIlxFWzM0OzQ3bSIKbmFzaGVhZDIwMDQvbWFuYWdlbWVudC93ZWJtaW4v
+Y29tX3dlYm1pbl9jbHVzdGVyL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC93ZWJtaW4vTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3dlYm1pbi9jb21fd2VibWlu
+X3F1b3Rhcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQy
+MDA0L21hbmFnZW1lbnQvd2VibWluL2NvbW9vbmljcy1sdm0vY3JlYXRlLXNuYXAtdXNlci5zaDoj
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29t
+b29uaWNzLW1vbml0b3JpbmcvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJI
+LgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1tb25pdG9yaW5nL2NvbW9vbmljcy1t
+b25pdG9yaW5nLnNwZWM6VmVuZG9yOiBBVElYIEdtYkgKbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9j
+b21vb25pY3Mtc2NyaXB0cy9nZXRSZWFsTHVuRm9yU3BkZXYuc2g6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1zY3JpcHRzL2Nv
+bS12ZXJpZnktbWV0YWRhdGEucGw6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNo
+ZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1zY3JpcHRzL21ldGFkYXRhLWxpYi5wbTojIENv
+cHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29u
+aWNzLXNjcmlwdHMvY29tLWxhYmVsLWxpYi5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLXNjcmlwdHMvY29tLWdldFBhcnRp
+dGlvbnMuc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5h
+Z2VtZW50L2NvbW9vbmljcy1zY3JpcHRzL2NvbS1sdnJlbW92ZS5zaDojIENvcHlyaWdodCAoYykg
+MjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLXNjcmlwdHMv
+Y29tLWx2Y3JlYXRlLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIw
+MDQvbWFuYWdlbWVudC9jb21vb25pY3Mtc2NyaXB0cy9jb20tcmVzY2FuLXNjc2kuc2g6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmlj
+cy1zY3JpcHRzL2NvbS1sYWJlbC1kaXNrLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25pY3Mtc2NyaXB0cy9jb20tdmdyZW1vdmUu
+c2g6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50
+L2NvbW9vbmljcy1zY3JpcHRzL2NvbS11bW91bnQuc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1zY3JpcHRzL01ha2VmaWxl
+OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9j
+b21vb25pY3Mtc2NyaXB0cy9jb20tbHZyZW1vdmUtc2NoZWR1bGVzLnNoOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25pY3Mtc2NyaXB0
+cy9jb20tZ2V0LW1ldGFkYXRhLnBsOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFz
+aGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25pY3Mtc2NyaXB0cy9jb20tbW91bnQuc2g6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmlj
+cy1zY3JpcHRzL2NvbW9vbmljcy1zY3JpcHRzLnNwZWM6VmVuZG9yOiBBVElYIEdtYkgKbmFzaGVh
+ZDIwMDQvbWFuYWdlbWVudC9jb21vb25pY3Mtc2NyaXB0cy9jaGVja0ZvclNlY3VyZVBhdGguc2g6
+IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2Nv
+bW9vbmljcy1zY3JpcHRzL2NvbS1sdmV4dGVuZC5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElY
+IEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLXNjcmlwdHMvY29tLXdyaXRl
+LW1ldGFkYXRhLnBsOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQv
+bWFuYWdlbWVudC9jb21vb25pY3Mtc2NyaXB0cy9jb20tdW5sYWJlbC1kaXNrLnNoOiMgQ29weXJp
+Z2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25pY3Mt
+c2NyaXB0cy9nZXRTUERldkZyb21TRC5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+Cm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLXNjcmlwdHMvY29tLWx2Y3JlYXRlLXNj
+aGVkdWxlcy5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21h
+bmFnZW1lbnQvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFk
+MjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1zYW1iYS93aW51c2VyLW1hcHBpbmcvd2ludXNlci1t
+YXAuc2g6IyAoYykgQVRJWCBHbWJIIDIwMDQKbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25p
+Y3Mtc2FtYmEvd2ludXNlci1tYXBwaW5nL3dpbmdyb3VwLW1hcC5zaDojIChjKSBBVElYIEdtYkgg
+MjAwNApuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1zYW1iYS93aW51c2VyLW1hcHBp
+bmcvd2ludXNlci12ZXJpZnktZmlsZS5zaDojIChjKSBBVElYIEdtYkggMjAwNApuYXNoZWFkMjAw
+NC9tYW5hZ2VtZW50L2NvbW9vbmljcy1zYW1iYS93aW51c2VyLW1hcHBpbmcvd2luZ3JvdXAtdmVy
+aWZ5LWZpbGUuc2g6IyAoYykgQVRJWCBHbWJIIDIwMDQKbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9j
+b21vb25pY3Mtc2FtYmEvc2hhcmUtY29uZmlnL3NhbWJhLnBtOgkJcHJpbnQgIk1vZHVsZTogJGZ1
+bmN0aW9uIC0tLSBWZXJzaW9uICR2ZXJzaW9uIC0tLSAoYykgQVRJWCBHbWJIXG4iOwpuYXNoZWFk
+MjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1zYW1iYS9zaGFyZS1jb25maWcvY2xzYW1iYS9zYW1i
+YS5wbToJCXByaW50ICJNb2R1bGU6ICRmdW5jdGlvbiAtLS0gVmVyc2lvbiAkdmVyc2lvbiAtLS0g
+KGMpIEFUSVggR21iSFxuIjsKbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21fbWdtdF9uZnNzZy9u
+ZnNzZ19saWIucG06IyBDb3B5cmlnaHQgKGMpIDIwMDUgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9t
+YW5hZ2VtZW50L2NvbV9tZ210X25mc3NnL2NvbV9tZ210X25mc3NnLnBsOiMgQ29weXJpZ2h0IChj
+KSAyMDA1IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9M
+aWJzLnBtOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdl
+bWVudC9wZXJsL0NvbW9vbmljcy9TYW1iYS9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvTGlicy9Qcm9w
+ZXJ0aWVzLnBtOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFu
+YWdlbWVudC9wZXJsL0NvbW9vbmljcy9MaWJzL0NvbV9XYXJuaW5nLnBtOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9M
+aWJzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQv
+bWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9MaWJzL3Rlc3QvdGVzdEhUTUxMaWIucGw6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29t
+b29uaWNzL0xpYnMvdGVzdC90ZXN0UHJvcGVydGllcy5wbDojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvTGlicy90ZXN0
+L3Rlc3RMb2c0UGVybC5jb25mOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVh
+ZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9MaWJzL3Rlc3QvdGVzdENvbW1hbmQyRC5w
+bDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQv
+cGVybC9Db21vb25pY3MvTGlicy90ZXN0L3Rlc3RMb2c0UGVybC5wbDojIENvcHlyaWdodCAoYykg
+MjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvTGli
+cy90ZXN0L3Rlc3RDb21vb25pY3MucGw6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpu
+YXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNzL0xpYnMvdGVzdC90ZXN0RXhjZXB0
+aW9ucy5wbDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFn
+ZW1lbnQvcGVybC9Db21vb25pY3MvTGlicy9Db21fRXhjZXB0aW9uLnBtOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9M
+aWJzL3BlcmwtQ29tb29uaWNzLUxpYnMuc3BlYzpWZW5kb3I6IEFUSVggR21iSApuYXNoZWFkMjAw
+NC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNzL0NsdXN0ZXIvTkZTRXhwb3J0UmVzb3VyY2UucG06
+IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVy
+bC9Db21vb25pY3MvQ2x1c3Rlci9EZXZpY2VSZXNvdXJjZS5wbTojIENvcHlyaWdodCAoYykgMjAw
+IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVzdGVy
+L0R1bW15UmVzb3VyY2UucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQy
+MDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9SZXNvdXJjZS5wbTojIENvcHly
+aWdodCAoYykgMjAwIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9v
+bmljcy9DbHVzdGVyL1JlZGhhdENsdXN0ZXIucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdt
+YkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9EZWZhdWx0
+RmFpbG92ZXJEb21haW4ucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQy
+MDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9SZWRoYXRDbHVzdGVyU2FtYmFF
+eHBvcnRSZXNvdXJjZS5wbTojIENvcHlyaWdodCAoYykgMjAwIEFUSVggR21iSC4KbmFzaGVhZDIw
+MDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVzdGVyL1NhbWJhRXhwb3J0UmVzb3VyY2Uu
+cG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQv
+cGVybC9Db21vb25pY3MvQ2x1c3Rlci9GYWlsb3ZlckRvbWFpbi5wbTojIENvcHlyaWdodCAoYykg
+MjAwIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVz
+dGVyL1NlcnZpY2VHdWFyZC5wbTojIENvcHlyaWdodCAoYykgMjAwIEFUSVggR21iSC4KbmFzaGVh
+ZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVzdGVyL1JlZGhhdENsdXN0ZXJGaWxl
+c3lzdGVtUmVzb3VyY2UucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQy
+MDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9SZWRoYXRDbHVzdGVySVBBZGRy
+ZXNzUmVzb3VyY2UucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0
+L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9EZXBlbmRlbnRSZXNvdXJjZS5wbToj
+IENvcHlyaWdodCAoYykgMjAwIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJs
+L0NvbW9vbmljcy9DbHVzdGVyL0R1bW15Q2x1c3Rlci5wbTojIENvcHlyaWdodCAoYykgMjAwIEFU
+SVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVzdGVyL1Nl
+cnZpY2VHdWFyZE5vZGUucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQy
+MDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9SZWRoYXRDbHVzdGVyUmVzb3Vy
+Y2UucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1l
+bnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci90
+ZXN0L3Rlc3RTZXJ2aWNlR3VhcmQucGw6IyBDb3B5cmlnaHQgKGMpIDIwMDUgQVRJWCBHbWJILgpu
+YXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNzL0NsdXN0ZXIvSVBBZGRyZXNzUmVz
+b3VyY2UucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFn
+ZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9Ob2RlLnBtOiMgQ29weXJpZ2h0IChjKSAyMDAg
+QVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNzL0NsdXN0ZXIv
+UmVkaGF0Q2x1c3Rlck5vZGUucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hl
+YWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9SZWRoYXRDbHVzdGVyRmFp
+bG92ZXJEb21haW4ucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0
+L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvQ2x1c3Rlci9EdW1teU5vZGUucG06IyBDb3B5cmln
+aHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25p
+Y3MvQ2x1c3Rlci9TZXJ2aWNlR3VhcmRSZXNvdXJjZS5wbTojIENvcHlyaWdodCAoYykgMjAwIEFU
+SVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVzdGVyL1Jl
+ZGhhdENsdXN0ZXJORlNFeHBvcnRSZXNvdXJjZS5wbTojIENvcHlyaWdodCAoYykgMjAwIEFUSVgg
+R21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVzdGVyL1JlZGhh
+dENsdXN0ZXJEZXZpY2VSZXNvdXJjZS5wbTojIENvcHlyaWdodCAoYykgMjAwIEFUSVggR21iSC4K
+bmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVzdGVyL0ZpbGVzeXN0ZW1S
+ZXNvdXJjZS5wbTojIENvcHlyaWdodCAoYykgMjAwIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFu
+YWdlbWVudC9wZXJsL0NvbW9vbmljcy9DbHVzdGVyL3BlcmwtQ29tb29uaWNzLUNsdXN0ZXIuc3Bl
+YzpWZW5kb3I6IEFUSVggR21iSApuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNz
+L1NDU0kucG06IyBDb3B5cmlnaHQgKGMpIDIwMDUgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5h
+Z2VtZW50L3BlcmwvQ29tb29uaWNzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVgg
+R21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9TQ1NJL01ha2VmaWxl
+OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9w
+ZXJsL0NvbW9vbmljcy9TQ1NJL3BlcmwtQ29tb29uaWNzLVNDU0kuc3BlYzpWZW5kb3I6IEFUSVgg
+R21iSApuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNzL1NDU0kvRGV2aWNlLnBt
+OiMgQ29weXJpZ2h0IChjKSAyMDA1IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9w
+ZXJsL0NvbW9vbmljcy9RdW90YS5wbTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5h
+c2hlYWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvTkZTLnBtOiMgQ29weXJpZ2h0IChj
+KSAyMDA1IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9O
+RlMvcGVybC1Db21vb25pY3MtTkZTLnNwZWM6VmVuZG9yOiBBVElYIEdtYkgKbmFzaGVhZDIwMDQv
+bWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9ORlMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNzL05GUy9F
+eHBvcnQucG06IyBDb3B5cmlnaHQgKGMpIDIwMDUgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5h
+Z2VtZW50L3BlcmwvQ29tb29uaWNzL05GUy9ORlNSZWRIYXQucG06IyBDb3B5cmlnaHQgKGMpIDIw
+MDUgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNzL0NsdXN0
+ZXIucG06IyBDb3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1l
+bnQvcGVybC9Db21vb25pY3MvUXVvdGEvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvQ29tb29uaWNzL1F1b3RhL3Blcmwt
+Q29tb29uaWNzLVF1b3RhLnNwZWM6VmVuZG9yOiBBVElYIEdtYkgKbmFzaGVhZDIwMDQvbWFuYWdl
+bWVudC9wZXJsL0NvbW9vbmljcy9RdW90YS90ZXN0L3Rlc3RRdW90YS5wbDojIENvcHlyaWdodCAo
+YykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3Mv
+UXVvdGEvdGVzdC90ZXN0UXVvdGFMaXN0LnBsOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL0NvbW9vbmljcy9RdW90YS90ZXN0L3Rlc3RT
+ZXRHcnBRdW90YS5wbDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0
+L21hbmFnZW1lbnQvcGVybC9Db21vb25pY3MvUXVvdGEvdGVzdC90ZXN0QmFzaWNRdW90YS5wbDoj
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvcGVy
+bC9Db21vb25pY3MvUXVvdGEvdGVzdC90ZXN0U2V0VXNyUXVvdGEucGw6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvTWFrZWZpbGU6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3Blcmwv
+Y2xpL2NvbV9uZnM6IyBDb3B5cmlnaHQgKGMpIDIwMDUgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9t
+YW5hZ2VtZW50L3BlcmwvY2xpL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9wZXJsL2NsaS9wZXJsLUNvbW9vbmljcy1jbGkuc3Bl
+YzpWZW5kb3I6IEFUSVggR21iSApuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L3BlcmwvY2xpL2NvbV9j
+bHVzdGVyOiMgQ29weXJpZ2h0IChjKSAyMDAgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2Vt
+ZW50L3BlcmwvY2xpL2NvbV9yZXBxdW90YTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+Cm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tX21nbXRfbGlicy9TZXJ2aWNlR3VhcmQucG06IyBD
+b3B5cmlnaHQgKGMpIDIwMCBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tX21n
+bXRfbGlicy9Qcm9wZXJ0aWVzLnBtOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFz
+aGVhZDIwMDQvbWFuYWdlbWVudC9jb21fbWdtdF9saWJzL0NvbV9XYXJuaW5nLnBtOiMgQ29weXJp
+Z2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21fbWdtdF9s
+aWJzL2xvZzRwZXJsLmNvbmY6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNoZWFk
+MjAwNC9tYW5hZ2VtZW50L2NvbV9tZ210X2xpYnMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbV9tZ210X2xpYnMvQ29tb29u
+aWNzLnBtOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdl
+bWVudC9jb21fbWdtdF9saWJzL3Rlc3QvdGVzdEhUTUxMaWIucGw6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbV9tZ210X2xpYnMvdGVzdC90
+ZXN0UHJvcGVydGllcy5wbDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQy
+MDA0L21hbmFnZW1lbnQvY29tX21nbXRfbGlicy90ZXN0L3Rlc3RMb2c0UGVybC5jb25mOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21fbWdt
+dF9saWJzL3Rlc3QvdGVzdENvbW1hbmQyRC5wbDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tX21nbXRfbGlicy90ZXN0L3Rlc3RMb2c0UGVy
+bC5wbDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1l
+bnQvY29tX21nbXRfbGlicy90ZXN0L3Rlc3RDb21vb25pY3MucGw6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbV9tZ210X2xpYnMvdGVzdC90
+ZXN0RXhjZXB0aW9ucy5wbDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQy
+MDA0L21hbmFnZW1lbnQvY29tX21nbXRfbGlicy90ZXN0L3Rlc3RTZXJ2aWNlR3VhcmQucGw6IyBD
+b3B5cmlnaHQgKGMpIDIwMDUgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbV9t
+Z210X2xpYnMvQ29tX0V4Y2VwdGlvbi5wbTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+Cm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tX21nbXRfcXVvdGEvY29tX2xpYl9xdW90YS5wbToj
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29t
+X21nbXRfcXVvdGEvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpuYXNo
+ZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1idXNpbmVzcy1jb3B5L2xpYi9saWItZnMuc2g6
+IyBDb3B5cmlnaHQgKGMpIDIwMDYgQVRJWCBHbWJILgpuYXNoZWFkMjAwNC9tYW5hZ2VtZW50L2Nv
+bW9vbmljcy1idXNpbmVzcy1jb3B5L2xpYi9saWItbHZtLnNoOiMgQ29weXJpZ2h0IChjKSAyMDA2
+IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVudC9jb21vb25pY3MtYnVzaW5lc3MtY29w
+eS9saWIvbGliLWJvb3Rsb2FkZXIuc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDYgQVRJWCBHbWJILgpu
+YXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1idXNpbmVzcy1jb3B5L2xpYi9saWItbG9n
+LnNoOiMgQ29weXJpZ2h0IChjKSAyMDA2IEFUSVggR21iSC4KbmFzaGVhZDIwMDQvbWFuYWdlbWVu
+dC9jb21vb25pY3MtYnVzaW5lc3MtY29weS9saWIvbGliLXN0ZC5zaDojIENvcHlyaWdodCAoYykg
+MjAwNiBBVElYIEdtYkguCm5hc2hlYWQyMDA0L21hbmFnZW1lbnQvY29tb29uaWNzLWJ1c2luZXNz
+LWNvcHkvbGliL2xpYi1mcy1nZnMuc2g6IyBDb3B5cmlnaHQgKGMpIDIwMDYgQVRJWCBHbWJILgpu
+YXNoZWFkMjAwNC9tYW5hZ2VtZW50L2NvbW9vbmljcy1idXNpbmVzcy1jb3B5L2xpYi9saWItc2Nz
+aS5zaDojIENvcHlyaWdodCAoYykgMjAwNiBBVElYIEdtYkguCm5hc2hlYWQyMDA0L2dmcy9SRUFE
+TUU6QVRJWCBHbWJILCBVbnRlcnNjaGxlaXNzaGVpbSwgR2VybWFueQpwcm9qZWN0cy9zZS9zaWVt
+ZW5zLWljbi9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9q
+ZWN0cy9zZS9zaWVtZW5zLWljbi9NYWtlZmlsZS1nbG9iYWwubWs6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9zaWVtZW5zLWljbi9pbWFnZXMvTWFrZWZpbGU6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9zaWVtZW5zLWljbi9kb2Mv
+TWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9zaWVt
+ZW5zLWljbi9kb2MvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+cHJvamVjdHMvc2Uvc2llbWVucy1pY24vaW50ZXJuYWwvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9zaWVtZW5zLWljbi9pbnRlcm5hbC9NYWtlZmls
+ZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9zaWVtZW5z
+LWljbi9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0
+cy9zZS9zaWVtZW5zLWljbi9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CnByb2plY3RzL3NlL3NpZW1lbnMtaWNuL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAw
+MSBBVElYIEdtYkguCnByb2plY3RzL3NlL2lmci9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pZnIvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvaWZyL2ltYWdlcy9NYWtlZmls
+ZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2lmci9kb2MvTWFr
+ZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pZnIvZG9j
+L01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3Nl
+L2lmci9pbnRlcm5hbC9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnBy
+b2plY3RzL3NlL2lmci9pbnRlcm5hbC9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pZnIvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvaWZyL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvaWZyL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAo
+YykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL3N5c3RlbWF0aXMvY29uZmlnL3JlYWxzZXJ2
+ZXI0L2V0Yy9zbm1wL3NubXBkLmNvbmY6c3lzY29udGFjdCBBVElYIEdtYkgsICs0OTg5IDQ1MiAz
+NTM4IDEwLCBzeXN0ZW1hdGlzQGhlbHBkZXNrLmF0aXguZGUKcHJvamVjdHMvc2Uvc3lzdGVtYXRp
+cy9jb25maWcvY2x1c3Rlci9ldGMvc25tcC9zbm1wZC5jb25mOnN5c2NvbnRhY3QgQVRJWCBHbWJI
+LCArNDk4OSA0NTIgMzUzOCAxMCwgc3lzdGVtYXRpc0BoZWxwZGVzay5hdGl4LmRlCnByb2plY3Rz
+L3NlL21lc3NlX211ZW5jaGVuL2NvbmZpZy9qYXZhL2NsdXN0ZXIvY2RzbC9uOC9ldGMvc25tcC9z
+bm1wZC5jb25mOnN5c2NvbnRhY3QgQVRJWCBHbWJILCArNDk4OSAxMjEgNDA5IDUwLCBtbWdAaGVs
+cGRlc2suYXRpeC5kZQpwcm9qZWN0cy9zZS9tZXNzZV9tdWVuY2hlbi9jb25maWcvamF2YS9jbHVz
+dGVyL2Nkc2wvbjkvZXRjL3NubXAvc25tcGQuY29uZjpzeXNjb250YWN0IEFUSVggR21iSCwgKzQ5
+ODkgMTIxIDQwOSA1MCwgbW1nQGhlbHBkZXNrLmF0aXguZGUKcHJvamVjdHMvc2UvbWVzc2VfbXVl
+bmNoZW4vY29uZmlnL2phdmEvZXRjL3NubXAvc25tcGQuY29uZjpzeXNjb250YWN0IEFUSVggR21i
+SCwgKzQ5ODkgMTIxIDQwOSA1MCwgbW1nQGhlbHBkZXNrLmF0aXguZGUKcHJvamVjdHMvc2UvbWVz
+c2VfbXVlbmNoZW4vY29uZmlnL2dyYXloZWFkL2V0Yy9zbm1wL3NubXBkLmNvbmY6c3lzY29udGFj
+dCBBVElYIEdtYkgsICs0OTg5IDEyMSA0MDkgNTAsIG1tZ0BoZWxwZGVzay5hdGl4LmRlCnByb2pl
+Y3RzL3NlL21lc3NlX211ZW5jaGVuL2NvbmZpZy9zdGFnZS91c3IvbG9jYWwvYXRpeC9zaC9iYXNl
+LWxpYi5zaDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL21lc3Nl
+X211ZW5jaGVuL2NvbmZpZy9zdGFnZS91c3IvbG9jYWwvYXRpeC9zaC9iYXNlLWxpYi5zaDogICAg
+ZWNobyAiYnkgQVRJWCBHbWJIIDIwMDQtMjAwNSIKcHJvamVjdHMvc2UvbWVzc2VfbXVlbmNoZW4v
+Y29uZmlnL3N0YWdlL3Vzci9sb2NhbC9hdGl4L3NoL3V0aWxzLWxpYi5zaDojIENvcHlyaWdodCAo
+YykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL21lc3NlX211ZW5jaGVuL2NvbmZpZy9zdGFn
+ZS91c3IvbG9jYWwvYXRpeC9zaC9jdnMtbGliLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVgg
+R21iSC4KcHJvamVjdHMvc2UvbWVzc2VfbXVlbmNoZW4vY29uZmlnL3N0YWdlL3Vzci9sb2NhbC9h
+dGl4L3NoL2RvbWFpbnMtbGliLnNoOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJv
+amVjdHMvc2UvbWVzc2VfbXVlbmNoZW4vY29uZmlnL3N0YWdlL3Vzci9sb2NhbC9iaW4vbW92ZV90
+b190cmFzaDogICAgICAgIGVjaG8gImJ5IEFUSVggR21iSCAyMDA0LTIwMDUiCnByb2plY3RzL3Nl
+L21lc3NlX211ZW5jaGVuL2NvbmZpZy9zdGFnZS91c3IvbG9jYWwvcm1pLXNlcnZlci9hY3Rpb25l
+eGVjdXRvcjogICAgICAgIGVjaG8gImJ5IEFUSVggR21iSCAyMDA0LTIwMDUiCnByb2plY3RzL3Nl
+L21lc3NlX211ZW5jaGVuL2NvbmZpZy9zdGFnZS91c3IvbG9jYWwvcm1pLXNlcnZlci9vbXNybWlk
+czogICAgICAgIGVjaG8gImJ5IEFUSVggR21iSCAyMDA0LTIwMDUiCnByb2plY3RzL3NlL21lc3Nl
+X211ZW5jaGVuL2NvbmZpZy9zdGFnZS9ldGMvc25tcC9zbm1wZC5jb25mOnN5c2NvbnRhY3QgQVRJ
+WCBHbWJILCArNDk4OSAxMjEgNDA5IDUwLCBtbWdAaGVscGRlc2suYXRpeC5kZQpwcm9qZWN0cy9z
+ZS9tZXNzZV9tdWVuY2hlbi9jb25maWcvbG9hZGJhbGFuY2VyL2V0Yy9zbm1wL3NubXBkLmNvbmY6
+c3lzY29udGFjdCBBVElYIEdtYkgsICs0OTg5IDEyMSA0MDkgNTAsIG1tZ0BoZWxwZGVzay5hdGl4
+LmRlCnByb2plY3RzL3NlL21lc3NlX211ZW5jaGVuL2NvbmZpZy9tYWlsL2V0Yy9zbm1wL3NubXBk
+LmNvbmY6c3lzY29udGFjdCBBVElYIEdtYkgsICs0OTg5IDEyMSA0MDkgNTAsIG1tZ0BoZWxwZGVz
+ay5hdGl4LmRlCnByb2plY3RzL3NlL21lc3NlX211ZW5jaGVuL2NvbmZpZy9teXNxbC9ldGMvc25t
+cC9zbm1wZC5jb25mOnN5c2NvbnRhY3QgQVRJWCBHbWJILCArNDk4OSAxMjEgNDA5IDUwLCBtbWdA
+aGVscGRlc2suYXRpeC5kZQpwcm9qZWN0cy9zZS9tZXNzZV9tdWVuY2hlbi9jb25maWcvcGhwL2V0
+Yy9zbm1wL3NubXBkLmNvbmY6c3lzY29udGFjdCBBVElYIEdtYkgsICs0OTg5IDEyMSA0MDkgNTAs
+IG1tZ0BoZWxwZGVzay5hdGl4LmRlCnByb2plY3RzL3NlL21lc3NlX211ZW5jaGVuL2NvbmZpZy9i
+YWNrdXAvZXRjL3NubXAvc25tcGQuY29uZjpzeXNjb250YWN0IEFUSVggR21iSCwgKzQ5ODkgMTIx
+IDQwOSA1MCwgbW1nQGhlbHBkZXNrLmF0aXguZGUKcHJvamVjdHMvc2UvbWVzc2VfbXVlbmNoZW4v
+Y29uZmlnL2JhY2t1cC9vcHQvYXRpeC9jb21vb25pY3MtYmFja3VwL3N5bmMvY29tLXRyaWdnZXIu
+c2g6IyB2MS4wIChjKSBBVElYIEdtYkgKcHJvamVjdHMvc2UvbWVzc2VfbXVlbmNoZW4vY29uZmln
+L2JhY2t1cC9vcHQvYXRpeC9jb21vb25pY3MtYmFja3VwL3N5bmMvY29tLW15c3FsLWZyZWV6ZS5z
+aDojIChjKSBBVElYIEdtYkgsIFRob21hcyBNZXJ6CnByb2plY3RzL3NlL21lc3NlX211ZW5jaGVu
+L2NvbmZpZy9iYWNrdXAvb3B0L2F0aXgvY29tb29uaWNzLWJhY2t1cC9zeW5jL2NvbS1iYWNrdXAt
+Y3RybC5zaDojIHYxLjAgKGMpIEFUSVggR21iSApwcm9qZWN0cy9zZS9tZXNzZV9tdWVuY2hlbi9j
+b25maWcvYmFja3VwL29wdC9hdGl4L2NvbW9vbmljcy1iYWNrdXAvc3luYy9jb20tYmFja3VwLWN0
+cmwuc2g6CQllY2hvIE1NRyB2ZXJzaW9uIDEuMCBieSBBVElYIEdtYkggPj4gJHppZWxkYXRlaQpw
+cm9qZWN0cy9zZS9tZXNzZV9tdWVuY2hlbi9jb25maWcvbG9hZGJhbGFuY2VyLWludGVybi9ldGMv
+c25tcC9zbm1wZC5jb25mOnN5c2NvbnRhY3QgQVRJWCBHbWJILCArNDk4OSAxMjEgNDA5IDUwLCBt
+bWdAaGVscGRlc2suYXRpeC5kZQpwcm9qZWN0cy9zZS9tZXNzZV9tdWVuY2hlbi9zY3JpcHRzL2xv
+Y2tkdW1wL2NyZWF0ZV9sb2NrZHVtcC5zaDogICAgICAgIGVjaG8gImJ5IEFUSVggR21iSCAiCnBy
+b2plY3RzL3NlL3J0bC9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJI
+Lgpwcm9qZWN0cy9zZS9ydGwvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KcHJvamVjdHMvc2UvcnRsL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAo
+YykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL3J0bC9kb2MvTWFrZWZpbGU6IyBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9ydGwvZG9jL01ha2VmaWxlLnJsczoj
+IENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL3J0bC9pbnRlcm5hbC9N
+YWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL3J0bC9p
+bnRlcm5hbC9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9q
+ZWN0cy9zZS9ydGwvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+cHJvamVjdHMvc2UvcnRsL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+cHJvamVjdHMvc2UvcnRsL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCnByb2plY3RzL3NlL2NjLWVyb2VmZm51bmcwMjA2MTMvTWFrZWZpbGUuc2Z4OiMgQ29weXJp
+Z2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvY2MtZXJvZWZmbnVuZzAyMDYxMy9N
+YWtlZmlsZS1nbG9iYWwubWs6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0
+cy9zZS9jYy1lcm9lZmZudW5nMDIwNjEzL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykg
+MjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2NjLWVyb2VmZm51bmcwMjA2MTMvZG9jL01ha2Vm
+aWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvY2MtZXJvZWZm
+bnVuZzAyMDYxMy9kb2MvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KcHJvamVjdHMvc2UvY2MtZXJvZWZmbnVuZzAyMDYxMy9pbnRlcm5hbC9NYWtlZmlsZTojIENv
+cHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2NjLWVyb2VmZm51bmcwMjA2
+MTMvaW50ZXJuYWwvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+cHJvamVjdHMvc2UvY2MtZXJvZWZmbnVuZzAyMDYxMy9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQg
+KGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jYy1lcm9lZmZudW5nMDIwNjEzL01ha2Vm
+aWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvY2MtZXJvZWZm
+bnVuZzAyMDYxMy9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpw
+cm9qZWN0cy9zZS9pbmctZWJjbi9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpwcm9qZWN0cy9zZS9pbmctZWJjbi9NYWtlZmlsZS1nbG9iYWwubWs6IyBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pbmctZWJjbi9pbWFnZXMvTWFrZWZp
+bGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pbmctZWJjbi9k
+b2MvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9p
+bmctZWJjbi9kb2MvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+cHJvamVjdHMvc2UvaW5nLWViY24vaW50ZXJuYWwvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pbmctZWJjbi9pbnRlcm5hbC9NYWtlZmlsZS5ybHM6
+IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pbmctZWJjbi9NYWtl
+ZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pbmct
+ZWJjbi9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3Nl
+L2luZy1lYmNuL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnBy
+b2plY3RzL3NlL2xoLXN5c3RlbXMvTWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KcHJvamVjdHMvc2UvbGgtc3lzdGVtcy9NYWtlZmlsZS1nbG9iYWwubWs6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9saC1zeXN0ZW1zL2ltYWdlcy9N
+YWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2xoLXN5
+c3RlbXMvZG9jL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVj
+dHMvc2UvbGgtc3lzdGVtcy9kb2MvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KcHJvamVjdHMvc2UvbGgtc3lzdGVtcy9pbnRlcm5hbC9NYWtlZmlsZTojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2xoLXN5c3RlbXMvaW50ZXJuYWwv
+TWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2Uv
+bGgtc3lzdGVtcy9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpw
+cm9qZWN0cy9zZS9saC1zeXN0ZW1zL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVgg
+R21iSC4KcHJvamVjdHMvc2UvbGgtc3lzdGVtcy9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMp
+IDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jZW5peC9NYWtlZmlsZS5zZng6IyBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jZW5peC9NYWtlZmlsZS1nbG9iYWwu
+bWs6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jZW5peC9pbWFn
+ZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9j
+ZW5peC9kb2MvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0
+cy9zZS9jZW5peC9kb2MvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21i
+SC4KcHJvamVjdHMvc2UvY2VuaXgvaW50ZXJuYWwvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jZW5peC9pbnRlcm5hbC9NYWtlZmlsZS5ybHM6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jZW5peC9NYWtlZmlsZS5p
+bmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jZW5peC9NYWtl
+ZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2Nlbml4L01h
+a2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2ts
+LXJ1cHBlcnQvY29uZmlnL2dyYXloZWFkL2V0Yy9zbm1wL3NubXBkLmNvbmY6c3lzY29udGFjdCBB
+VElYIEdtYkgsICs0OTg5IDQ1MiAzNTM4IDEwLCB0cmVuZG1pY3JvQGhlbHBkZXNrLmF0aXguZGUK
+cHJvamVjdHMvc2UvY2l0aXdvcmtzL3Nhbi9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIw
+MDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jaXRpd29ya3Mvc2FuL01ha2VmaWxlLWdsb2JhbC5t
+azojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2NpdGl3b3Jrcy9z
+YW4vaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVj
+dHMvc2UvY2l0aXdvcmtzL3Nhbi9kb2MvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpwcm9qZWN0cy9zZS9jaXRpd29ya3Mvc2FuL2RvYy9NYWtlZmlsZS5ybHM6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jaXRpd29ya3Mvc2FuL2ludGVy
+bmFsL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2Uv
+Y2l0aXdvcmtzL3Nhbi9pbnRlcm5hbC9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jaXRpd29ya3Mvc2FuL01ha2VmaWxlLmluYzojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2NpdGl3b3Jrcy9zYW4vTWFrZWZp
+bGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jaXRpd29ya3Mv
+c2FuL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3Rz
+L3NlL2NpdGl3b3Jrcy9mYWlsc2FmZS9NYWtlZmlsZS5zZng6IyBDb3B5cmlnaHQgKGMpIDIwMDEg
+QVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jaXRpd29ya3MvZmFpbHNhZmUvTWFrZWZpbGUtZ2xvYmFs
+Lm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvY2l0aXdvcmtz
+L2ZhaWxzYWZlL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkgu
+CnByb2plY3RzL3NlL2NpdGl3b3Jrcy9mYWlsc2FmZS9kb2MvTWFrZWZpbGU6IyBDb3B5cmlnaHQg
+KGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jaXRpd29ya3MvZmFpbHNhZmUvZG9jL01h
+a2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2Np
+dGl3b3Jrcy9mYWlsc2FmZS9pbnRlcm5hbC9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCnByb2plY3RzL3NlL2NpdGl3b3Jrcy9mYWlsc2FmZS9pbnRlcm5hbC9NYWtlZmls
+ZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9jaXRpd29y
+a3MvZmFpbHNhZmUvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+cHJvamVjdHMvc2UvY2l0aXdvcmtzL2ZhaWxzYWZlL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvY2l0aXdvcmtzL2ZhaWxzYWZlL01ha2VmaWxlLnJs
+czojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL3Rlc3RpbmcvTWFr
+ZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGVz
+dGluZy9NYWtlZmlsZS1nbG9iYWwubWs6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpw
+cm9qZWN0cy9zZS90ZXN0aW5nL2ltYWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBB
+VElYIEdtYkguCnByb2plY3RzL3NlL3Rlc3RpbmcvZG9jL01ha2VmaWxlOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGVzdGluZy9kb2MvTWFrZWZpbGUucmxzOiMg
+Q29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGVzdGluZy9pbnRlcm5h
+bC9wcm9qZWN0LXBsYW4ubXJwcm9qZWN0Ojxwcm9qZWN0IG5hbWU9IlByb2pla3RwbGFuIFZvcmxh
+Z2UiIGNvbXBhbnk9IkFUSVggR21iSCIgbWFuYWdlcj0iIiBwaGFzZT0iIiBwcm9qZWN0LXN0YXJ0
+PSIyMDAzMDYyNFQwMDAwMDBaIiBtcnByb2plY3QtdmVyc2lvbj0iMiIgY2FsZW5kYXI9IjEiPgpw
+cm9qZWN0cy9zZS90ZXN0aW5nL2ludGVybmFsL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGVzdGluZy9pbnRlcm5hbC9NYWtlZmlsZS5ybHM6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS90ZXN0aW5nL01ha2VmaWxl
+LmluYzojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL3Rlc3Rpbmcv
+TWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS90ZXN0
+aW5nL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3Rz
+L3NlL2hpbHRpL2RvYy90cm91YmxlLXNob290aW5nL2luY2lkZW50LW1hbmFnZW1lbnQvZG9jL2lt
+YWdlcy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3Nl
+L2hpbHRpL2RvYy90cm91YmxlLXNob290aW5nL2luY2lkZW50LW1hbmFnZW1lbnQvZG9jL2Fib3V0
+LnhtbDogICAgICBpcyBjb3B5cmlnaHRlZCAoYykgMjAwNyBieSA8ZW1waGFzaXM+QVRJWCBHbWJI
+PC9lbXBoYXNpcz4uIFBlcm1pc3Npb24gaXMgZ3JhbnRlZCB0byBjb3B5LApwcm9qZWN0cy9zZS9o
+aWx0aS9kb2MvdHJvdWJsZS1zaG9vdGluZy9pbmNpZGVudC1tYW5hZ2VtZW50L2RvYy9NYWtlZmls
+ZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2hpbHRpL2RvYy90
+cm91YmxlLXNob290aW5nL2luY2lkZW50LW1hbmFnZW1lbnQvZG9jL2Fib3V0LWdlbi54bWw6ICAg
+ICBpcyBjb3B5cmlnaHRlZCAoYykgMjAwNyBieSA8ZW1waGFzaXM+QVRJWCBHbWJIPC9lbXBoYXNp
+cz4uCnByb2plY3RzL3NlL2hpbHRpL2RvYy90cm91YmxlLXNob290aW5nL2luY2lkZW50LW1hbmFn
+ZW1lbnQvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVj
+dHMvc2UvaGlsdGkvZG9jL3Ryb3VibGUtc2hvb3RpbmcvaW5jaWRlbnQtbWFuYWdlbWVudC9NYWtl
+ZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2hpbHRpL2Rv
+Yy9jb21vb25pY3MtZW50ZXJwcmlzZWNvcHkvdXNlci1ndWlkZS91c2VyLWd1aWRlLnhtbDogICAg
+IGlzIGNvcHlyaWdodGVkIChjKSAyMDA2IGJ5IDxlbXBoYXNpcz5BVElYIEdtYkg8L2VtcGhhc2lz
+Pi4KcHJvamVjdHMvc2UvaGlsdGkvZG9jL2NvbW9vbmljcy1lbnRlcnByaXNlY29weS91c2VyLWd1
+aWRlL01ha2VmaWxlLWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnBy
+b2plY3RzL3NlL2hpbHRpL2RvYy9jb21vb25pY3MtZW50ZXJwcmlzZWNvcHkvdXNlci1ndWlkZS9p
+bWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9z
+ZS9oaWx0aS9kb2MvY29tb29uaWNzLWVudGVycHJpc2Vjb3B5L3VzZXItZ3VpZGUvZG9jL2ltYWdl
+cy9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2hp
+bHRpL2RvYy9jb21vb25pY3MtZW50ZXJwcmlzZWNvcHkvdXNlci1ndWlkZS9kb2MvaHRtbC9pbmRl
+eC5odG1sOiAgICAgaXMgY29weXJpZ2h0ZWQgKGMpIDIwMDcgYnkgPHNwYW4gY2xhc3M9ImVtcGhh
+c2lzIj48ZW0+QVRJWCBHbWJIPC9lbT48L3NwYW4+Lgpwcm9qZWN0cy9zZS9oaWx0aS9kb2MvY29t
+b29uaWNzLWVudGVycHJpc2Vjb3B5L3VzZXItZ3VpZGUvZG9jL01ha2VmaWxlOiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvaGlsdGkvZG9jL2NvbW9vbmljcy1lbnRl
+cnByaXNlY29weS91c2VyLWd1aWRlL2RvYy9pbnRyb2R1Y3Rpb24ueG1sOiAgICAgaXMgY29weXJp
+Z2h0ZWQgKGMpIDIwMDcgYnkgPGVtcGhhc2lzPkFUSVggR21iSDwvZW1waGFzaXM+Lgpwcm9qZWN0
+cy9zZS9oaWx0aS9kb2MvY29tb29uaWNzLWVudGVycHJpc2Vjb3B5L3VzZXItZ3VpZGUvZG9jL2Fi
+b3V0LWdlbi54bWw6ICAgICBpcyBjb3B5cmlnaHRlZCAoYykgMjAwNyBieSA8ZW1waGFzaXM+QVRJ
+WCBHbWJIPC9lbXBoYXNpcz4uCnByb2plY3RzL3NlL2hpbHRpL2RvYy9jb21vb25pY3MtZW50ZXJw
+cmlzZWNvcHkvdXNlci1ndWlkZS9pbnRlcm5hbC9NYWtlZmlsZTojIENvcHlyaWdodCAoYykgMjAw
+MSBBVElYIEdtYkguCnByb2plY3RzL3NlL2hpbHRpL2RvYy9jb21vb25pY3MtZW50ZXJwcmlzZWNv
+cHkvdXNlci1ndWlkZS9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJI
+Lgpwcm9qZWN0cy9zZS9oaWx0aS9kb2MvY29tb29uaWNzLWVudGVycHJpc2Vjb3B5L3VzZXItZ3Vp
+ZGUvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9o
+aWx0aS9kb2MvY29tb29uaWNzLWVudGVycHJpc2Vjb3B5L3VzZXItZ3VpZGUvTWFrZWZpbGUucmxz
+OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvbGhzL01ha2VmaWxl
+LnNmeDojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2xocy9NYWtl
+ZmlsZS1nbG9iYWwubWs6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9z
+ZS9saHMvaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJv
+amVjdHMvc2UvbGhzL3Byb2plY3QtcGxhbi5tcnByb2plY3Q6PHByb2plY3QgbmFtZT0iSVAtVGVj
+aCAyMDA0IFBsYW51bmcgZiYjeEZDO3IgQVRJWCBpbnRlcm4iIGNvbXBhbnk9IkFUSVggR21iSCIg
+bWFuYWdlcj0iTWFyYyBHcmltbWUiIHBoYXNlPSIiIHByb2plY3Qtc3RhcnQ9IjIwMDQwNzE5VDAw
+MDAwMFoiIG1ycHJvamVjdC12ZXJzaW9uPSIyIiBjYWxlbmRhcj0iMSI+CnByb2plY3RzL3NlL2xo
+cy9kb2MvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9z
+ZS9saHMvZG9jL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnBy
+b2plY3RzL3NlL2xocy9pbnRlcm5hbC9wcm9qZWN0LXBsYW4ubXJwcm9qZWN0Ojxwcm9qZWN0IG5h
+bWU9IklQLVRlY2ggMjAwNCBQbGFudW5nIGYmI3hGQztyIEFUSVggaW50ZXJuIiBjb21wYW55PSJB
+VElYIEdtYkgiIG1hbmFnZXI9Ik1hcmMgR3JpbW1lIiBwaGFzZT0iIiBwcm9qZWN0LXN0YXJ0PSIy
+MDA0MDcxOVQwMDAwMDBaIiBtcnByb2plY3QtdmVyc2lvbj0iMiIgY2FsZW5kYXI9IjEiPgpwcm9q
+ZWN0cy9zZS9saHMvaW50ZXJuYWwvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgpwcm9qZWN0cy9zZS9saHMvaW50ZXJuYWwvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvbGhzL01ha2VmaWxlLmluYzojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2xocy9NYWtlZmlsZTojIENvcHlyaWdo
+dCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2xocy9NYWtlZmlsZS5ybHM6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS90ZW1wbGF0ZXMvTWFrZWZpbGUu
+c2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGVtcGxhdGVz
+L01ha2VmaWxlLWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2pl
+Y3RzL3NlL3RlbXBsYXRlcy9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpwcm9qZWN0cy9zZS90ZW1wbGF0ZXMvZG9jL01ha2VmaWxlOiMgQ29weXJpZ2h0IChj
+KSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGVtcGxhdGVzL2RvYy9NYWtlZmlsZS5ybHM6
+IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS90ZW1wbGF0ZXMvaW50
+ZXJuYWwvcHJvamVjdC1wbGFuLm1ycHJvamVjdDo8cHJvamVjdCBuYW1lPSJJUC1UZWNoIDIwMDQg
+UGxhbnVuZyBmJiN4RkM7ciBBVElYIGludGVybiIgY29tcGFueT0iQVRJWCBHbWJIIiBtYW5hZ2Vy
+PSJNYXJjIEdyaW1tZSIgcGhhc2U9IiIgcHJvamVjdC1zdGFydD0iMjAwNDA3MTlUMDAwMDAwWiIg
+bXJwcm9qZWN0LXZlcnNpb249IjIiIGNhbGVuZGFyPSIxIj4KcHJvamVjdHMvc2UvdGVtcGxhdGVz
+L2ludGVybmFsL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVj
+dHMvc2UvdGVtcGxhdGVzL2ludGVybmFsL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAw
+MSBBVElYIEdtYkguCnByb2plY3RzL3NlL3RlbXBsYXRlcy9NYWtlZmlsZS5pbmM6IyBDb3B5cmln
+aHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS90ZW1wbGF0ZXMvTWFrZWZpbGU6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS90ZW1wbGF0ZXMvTWFrZWZp
+bGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGl3YWcv
+TWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2Uv
+dGl3YWcvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+cHJvamVjdHMvc2UvdGl3YWcvaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KcHJvamVjdHMvc2UvdGl3YWcvZG9jL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAy
+MDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGl3YWcvZG9jL01ha2VmaWxlLnJsczojIENvcHly
+aWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL3Rpd2FnL2ludGVybmFsL01ha2Vm
+aWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvdGl3YWcvaW50
+ZXJuYWwvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVj
+dHMvc2UvdGl3YWcvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4K
+cHJvamVjdHMvc2UvdGl3YWcvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJI
+Lgpwcm9qZWN0cy9zZS90aXdhZy9NYWtlZmlsZS5ybHM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpwcm9qZWN0cy9zZS9saW51eHRhZzIwMDMvTWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvbGludXh0YWcyMDAzL01ha2VmaWxlLWds
+b2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2xpbnV4
+dGFnMjAwMy9pbWFnZXMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpw
+cm9qZWN0cy9zZS9saW51eHRhZzIwMDMvZG9jL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KcHJvamVjdHMvc2UvbGludXh0YWcyMDAzL2RvYy9NYWtlZmlsZS5ybHM6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9saW51eHRhZzIwMDMvaW50
+ZXJuYWwvcHJvamVjdC1wbGFuLm1ycHJvamVjdDo8cHJvamVjdCBuYW1lPSJQcm9qZWt0cGxhbiBW
+b3JsYWdlIiBjb21wYW55PSJBVElYIEdtYkgiIG1hbmFnZXI9IiIgcGhhc2U9IiIgcHJvamVjdC1z
+dGFydD0iMjAwMzA2MjRUMDAwMDAwWiIgbXJwcm9qZWN0LXZlcnNpb249IjIiIGNhbGVuZGFyPSIx
+Ij4KcHJvamVjdHMvc2UvbGludXh0YWcyMDAzL2ludGVybmFsL01ha2VmaWxlOiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvbGludXh0YWcyMDAzL2ludGVybmFsL01h
+a2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2xp
+bnV4dGFnMjAwMy9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpw
+cm9qZWN0cy9zZS9saW51eHRhZzIwMDMvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJ
+WCBHbWJILgpwcm9qZWN0cy9zZS9saW51eHRhZzIwMDMvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0
+IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvaXAtdGVjaC9NYWtlZmlsZS5zZng6IyBD
+b3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pcC10ZWNoL01ha2VmaWxl
+LWdsb2JhbC5tazojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2lw
+LXRlY2gvaW1hZ2VzL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJv
+amVjdHMvc2UvaXAtdGVjaC9kb2MvTWFrZWZpbGUuc2Z4OiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KcHJvamVjdHMvc2UvaXAtdGVjaC9kb2MvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29w
+eXJpZ2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvc2UvaXAtdGVjaC9kb2MvcHJvamVj
+dC1kb2Muc2dtOiAgICAgIDxjb3JwYXV0aG9yPkFUSVggR21iSDwvY29ycGF1dGhvcj4KcHJvamVj
+dHMvc2UvaXAtdGVjaC9kb2MvcHJvamVjdC1kb2Muc2dtOgkgIEZpcm1lbiBBVElYIEdtYkggdW5k
+IElQLVRlY2ggQUcgYmVzdGltbXQgdW5kIGplZ2xpY2hlciBadWdyaWZmIGR1cmNoCnByb2plY3Rz
+L3NlL2lwLXRlY2gvZG9jL01ha2VmaWxlLmluYzojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCnByb2plY3RzL3NlL2lwLXRlY2gvZG9jL01ha2VmaWxlOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KcHJvamVjdHMvc2UvaXAtdGVjaC9kb2MvYW5hbHlzZS1pc3AtMjAwNC9NYWtl
+ZmlsZTojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2lwLXRlY2gv
+ZG9jL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdtYkguCnByb2plY3Rz
+L3NlL2lwLXRlY2gvaW50ZXJuYWwvMjAwNC1wbGFudW5nL2RvYy9NYWtlZmlsZS5zZng6IyBDb3B5
+cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pcC10ZWNoL2ludGVybmFsLzIw
+MDQtcGxhbnVuZy9kb2MvTWFrZWZpbGUtZ2xvYmFsLm1rOiMgQ29weXJpZ2h0IChjKSAyMDAxIEFU
+SVggR21iSC4KcHJvamVjdHMvc2UvaXAtdGVjaC9pbnRlcm5hbC8yMDA0LXBsYW51bmcvZG9jL3By
+b2plY3QtcGxhbi5tcnByb2plY3Q6PHByb2plY3QgbmFtZT0iSVAtVGVjaCAyMDA0IFBsYW51bmcg
+ZiYjeEZDO3IgQVRJWCBpbnRlcm4iIGNvbXBhbnk9IkFUSVggR21iSCIgbWFuYWdlcj0iTWFyYyBH
+cmltbWUiIHBoYXNlPSIiIHByb2plY3Qtc3RhcnQ9IjIwMDQwNzE2VDAwMDAwMFoiIG1ycHJvamVj
+dC12ZXJzaW9uPSIyIiBjYWxlbmRhcj0iMSI+CnByb2plY3RzL3NlL2lwLXRlY2gvaW50ZXJuYWwv
+MjAwNC1wbGFudW5nL2RvYy9NYWtlZmlsZS5pbmM6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBH
+bWJILgpwcm9qZWN0cy9zZS9pcC10ZWNoL2ludGVybmFsLzIwMDQtcGxhbnVuZy9kb2MvTWFrZWZp
+bGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9pcC10ZWNoL2lu
+dGVybmFsLzIwMDQtcGxhbnVuZy9kb2MvTWFrZWZpbGUucmxzOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KcHJvamVjdHMvc2UvaXAtdGVjaC9pbnRlcm5hbC8yMDA0LXBsYW51bmcvZG9j
+L3NubXB0dC9zbm1wdHQybmFnaW9zLnBsOiMgQXV0aG9yOiBNYXJjIEdyaW1tZSA8Z3JpbW1lQGF0
+aXguZGU+LCAyMDA0IChjKTIwMDQgQVRJWCBHbWJICnByb2plY3RzL3NlL2lwLXRlY2gvaW50ZXJu
+YWwvTWFrZWZpbGU6IyBDb3B5cmlnaHQgKGMpIDIwMDEgQVRJWCBHbWJILgpwcm9qZWN0cy9zZS9p
+cC10ZWNoL2ludGVybmFsL01ha2VmaWxlLnJsczojIENvcHlyaWdodCAoYykgMjAwMSBBVElYIEdt
+YkguCnByb2plY3RzL3NlL2lwLXRlY2gvTWFrZWZpbGUuaW5jOiMgQ29weXJpZ2h0IChjKSAyMDAx
+IEFUSVggR21iSC4KcHJvamVjdHMvc2UvaXAtdGVjaC9NYWtlZmlsZTojIENvcHlyaWdodCAoYykg
+MjAwMSBBVElYIEdtYkguCnByb2plY3RzL3NlL2lwLXRlY2gvTWFrZWZpbGUucmxzOiMgQ29weXJp
+Z2h0IChjKSAyMDAxIEFUSVggR21iSC4KcHJvamVjdHMvY29tLm9vbmljcy9uYXNoZWFkL2RvYy9w
+cm9qZWN0cGxhbi9vcGVuc291cmNlLWRpc3RyaWJ1dGlvbi5tcnByb2plY3Q6PHByb2plY3QgbmFt
+ZT0iUGxhbm51bmcgT3BlbnNvdXJjZSBOYXNoZWFkIiBjb21wYW55PSJBVElYIEdtYkgiIG1hbmFn
+ZXI9Ik1hcmMgR3JpbW1lIiBwaGFzZT0iVm9yYmVyZWl0dW5nIiBwcm9qZWN0LXN0YXJ0PSIyMDA0
+MDQxOVQwMDAwMDBaIiBtcnByb2plY3QtdmVyc2lvbj0iMiIgY2FsZW5kYXI9IjEiPgo=
+</data>        
+
+          </attachment>
+      
+
+    </bug>
+    <bug>
+          <bug_id>168</bug_id>
+          
+          <creation_ts>2007-12-12 10:59</creation_ts>
+          <short_desc>localclone fails in RHEL5</short_desc>
+          <delta_ts>2008-09-15 11:43:01</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>comoonics-software</product>
+          <component>comoonics-enterprisecopy</component>
+          <version>software-comoonics-4.2</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>RHEL5</op_sys>
+          <bug_status>CLOSED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>minor</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Mark Hlawatschek">mark@atix.de</reporter>
+          <assigned_to name="Reiner Rottmann">reiner@atix.de</assigned_to>
+          <cc>reiner@atix.de</cc>
+          <qa_contact name="Marc Grimme">marc@atix.de</qa_contact>
+          <cf_releasenotes>localclone: with GFS it was failing fixed with new parameter.</cf_releasenotes>
+
+      
+
+      
+          <flag name="comoonics-pre-4.4"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="Production-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="QA-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2007-12-12 10:59:47</bug_when>
+            <thetext>Description of problem:
+the mount of the destination gfs filesystem fails with
+/sbin/mount.gfs: error 17 mounting /dev/mapper/vg_lilr202_srC-lv_sharedroot on /cluster/shared/var/lib/com-ec/dest
+
+dmesg:
+kobject_add failed for lilr202:lt_sharedroot with -EEXIST, don&apos;t try to register things with the same name in the same directory.
+
+Call Trace:
+ [&lt;ffffffff8032f0fa&gt;] kobject_add+0x16e/0x199
+ [&lt;ffffffff88368578&gt;] :gfs:fill_super+0x0/0x6ac
+ [&lt;ffffffff8032f23d&gt;] kobject_register+0x20/0x3a
+ [&lt;ffffffff88368578&gt;] :gfs:fill_super+0x0/0x6ac
+ [&lt;ffffffff883689ea&gt;] :gfs:fill_super+0x472/0x6ac
+ [&lt;ffffffff80261310&gt;] __down_write_nested+0x35/0x9a
+ [&lt;ffffffff802c300d&gt;] kmem_cache_zalloc+0x62/0x80
+ [&lt;ffffffff802c8ac0&gt;] get_sb_bdev+0x10a/0x164
+ [&lt;ffffffff802c2f9b&gt;] __kmalloc+0x8f/0x9f
+ [&lt;ffffffff802c845d&gt;] vfs_kern_mount+0x93/0x11a
+ [&lt;ffffffff802c8526&gt;] do_kern_mount+0x36/0x4d
+ [&lt;ffffffff802d1b1f&gt;] do_mount+0x68c/0x6fc
+ [&lt;ffffffff88356479&gt;] :gfs:gfs_glock_dq+0x15c/0x16b
+ [&lt;ffffffff8836b923&gt;] :gfs:gfs_private_nopage+0x8a/0x9f
+ [&lt;ffffffff80208e30&gt;] __handle_mm_fault+0x668/0xf4d
+ [&lt;ffffffff80261869&gt;] _spin_lock_irqsave+0x9/0x14
+ [&lt;ffffffff8020a945&gt;] get_page_from_freelist+0x1ef/0x391
+ [&lt;ffffffff8020ee87&gt;] __alloc_pages+0x65/0x2b4
+ [&lt;ffffffff8022a857&gt;] iput+0x4b/0x84
+ [&lt;ffffffff8024add7&gt;] sys_mount+0x8a/0xcd
+ [&lt;ffffffff8025d2f1&gt;] tracesys+0xa7/0xb2
+
+
+Version-Release number of selected component (if applicable):
+
+root@lilr202a:~# rpm -qa | grep gfs
+kmod-gfs-0.1.19-7.el5
+kmod-gfs-xen-0.1.19-7.el5
+gfs2-utils-0.1.38-1.el5
+kmod-gfs-0.1.19-6.el5
+gfs-utils-0.1.12-1.el5
+
+comoonics-bootimage-listfiles-1.3-4.el5
+comoonics-cs-xml-0.5-1
+comoonics-bootimage-compat-0.1-1
+comoonics-bootimage-initscripts-1.3-4.el5
+comoonics-bootimage-extras-xen-0.1-2
+comoonics-bootimage-fenceclient-ilo-0.1-18
+comoonics-bootimage-fenceacksv-0.3-1
+comoonics-fenceacksv-py-0.1-1
+comoonics-fenceacksv-plugins-py-0.1-1
+comoonics-cs-py-0.1-47
+comoonics-pythonosfix-py-0.1-1
+comoonics-cdsl-py-0.2-3
+comoonics-ec-py-0.1-27
+comoonics-cs-xsl-ec-0.5-17
+comoonics-bootimage-1.3-21
+comoonics-cluster-py-0.1-5
+
+How reproducible:
+Always
+
+Steps to Reproduce:
+1. com-ec localclone
+2.
+3.
+  
+Actual results:
+localclone fails at mount of destination device
+
+Expected results:
+localclone should succeed
+
+Additional info: 
+
+I opened a redhat bugzilla to adress this issue:
+https://bugzilla.redhat.com/show_bug.cgi?id=421161</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2007-12-12 13:27:53</bug_when>
+            <thetext>Idea to workaround/solve the issue:
+when mounting with lockproto=lock_unlock, also use the parameter locktable=&lt;randomnumber&gt;. </thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-01-23 13:32:47</bug_when>
+            <thetext>in order to work around the gfs bug, the com-ec way of solving this issue, is to add the mount option locktable to the xml file. The locktable value should be some kind of random value.
+
+&lt;mountpoint name=&apos;/&apos;&gt;
+  &lt;option value=&apos;lock_nolock&apos; name=&apos;lockproto&apos;/&gt;
+  &lt;option value=&apos;dfgsafg&apos; name=&apos;locktable&apos;/&gt;
+&lt;/mountpoint&gt;
+
+This leads to a change in the copysets.xsl file:
+
+Index: copysets.xsl
+===================================================================
+RCS file: /usr/ATIX/CVSROOT/nashead2004/management/comoonics-clustersuite/xsl/copysets.xsl,v
+retrieving revision 1.8
+diff -u -r1.8 copysets.xsl
+--- copysets.xsl	7 Aug 2007 15:20:48 -0000	1.8
++++ copysets.xsl	23 Jan 2008 12:32:02 -0000
+@@ -429,6 +429,7 @@
+         			&lt;xsl:choose&gt;
+         				&lt;xsl:when test=&quot;$fstype=&apos;gfs&apos;&quot;&gt;
+         					&lt;option value=&quot;lock_nolock&quot; name=&quot;lockproto&quot;/&gt;
++        					&lt;option value=&quot;hdfhgg&quot; name=&quot;locktable&quot;/&gt;
+ 						&lt;/xsl:when&gt;
+       				&lt;/xsl:choose&gt;
+         			&lt;/mountpoint&gt;
+
+</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-01-23 14:02:35</bug_when>
+            <thetext>OK, the last patch was only half the truth, here&apos;s the new one:
+
+Index: copysets.xsl
+===================================================================
+RCS file: /usr/ATIX/CVSROOT/nashead2004/management/comoonics-clustersuite/xsl/copysets.xsl,v
+retrieving revision 1.8
+diff -u -r1.8 copysets.xsl
+--- copysets.xsl	7 Aug 2007 15:20:48 -0000	1.8
++++ copysets.xsl	23 Jan 2008 13:00:28 -0000
+@@ -429,6 +429,7 @@
+         			&lt;xsl:choose&gt;
+         				&lt;xsl:when test=&quot;$fstype=&apos;gfs&apos;&quot;&gt;
+         					&lt;option value=&quot;lock_nolock&quot; name=&quot;lockproto&quot;/&gt;
++        					&lt;option value=&quot;hdfhgg&quot; name=&quot;locktable&quot;/&gt;
+ 						&lt;/xsl:when&gt;
+       				&lt;/xsl:choose&gt;
+         			&lt;/mountpoint&gt;
+@@ -495,6 +496,7 @@
+         			&lt;filesystem clustername=&quot;{$dclustername}&quot; type=&quot;gfs&quot;/&gt;
+         			&lt;mountpoint name=&quot;{$dmountpoint}&quot;&gt;
+           				&lt;option value=&quot;lock_nolock&quot; name=&quot;lockproto&quot;/&gt;
++        				&lt;option value=&quot;jhdshf&quot; name=&quot;locktable&quot;/&gt;
+         			&lt;/mountpoint&gt;
+   				&lt;/xsl:otherwise&gt;
+ 			&lt;/xsl:choose&gt;
+</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-01-23 15:00:49</bug_when>
+            <thetext>This solution is confirmed by QA.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-01-23 15:09:05</bug_when>
+            <thetext>patch added to cvs to make its way into the next release of comoonics-cs-xsl-ec</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-01-24 11:29:41</bug_when>
+            <thetext>will be fixed in comoonics-cs-xsl-ec-0.5-18
+Please QA and close.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-01-31 08:41:48</bug_when>
+            <thetext>QA was successful.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-10 16:30:12</bug_when>
+            <thetext>closed</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+    <bug>
+          <bug_id>188</bug_id>
+          
+          <creation_ts>2008-01-23 11:59</creation_ts>
+          <short_desc>LVM cache file changed in RHEL 5 and com-ec archive clone fails</short_desc>
+          <delta_ts>2008-09-15 11:41:23</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>comoonics-software</product>
+          <component>comoonics-enterprisecopy</component>
+          <version>unspecified</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>Linux</op_sys>
+          <bug_status>CLOSED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>blocker</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Reiner Rottmann">reiner@atix.de</reporter>
+          <assigned_to name="Reiner Rottmann">reiner@atix.de</assigned_to>
+          <cc>marc@atix.de</cc>
+    
+    <cc>mark@atix.de</cc>
+    
+    <cc>reiner@atix.de</cc>
+          <qa_contact name="Reiner Rottmann">reiner@atix.de</qa_contact>
+          <cf_releasenotes>ComLVM: changed the code so that everything works with new location of cache files</cf_releasenotes>
+
+      
+
+      
+          <flag name="comoonics-pre-4.4"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="Production-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="QA-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-01-23 11:59:09</bug_when>
+            <thetext>Description of problem:
+RHEL 5 U1 QA discovered that archive clone is not possible. The following error
+message is displayed:
+
+
+-------------------com-ec : ERROR Error occured during execution of enterprisecopy axqa02rc-local-clone in set copy-rootdisk-lvm. Errormessage: LVM could not read lvm cache file.--------------------
+2008-01-23 11:34:52,342 root DEBUG Traceback (most recent call last):
+  File &quot;/usr/bin/com-ec&quot;, line 191, in ?
+    ecopy.doAllsets()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComEnterpriseCopy.py&quot;, line 112, in doAllsets
+    self.currentset.doCopy()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyset.py&quot;, line 94, in doCopy
+    self.prepareSource()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyset.py&quot;, line 127, in prepareSource
+    self.source.prepareAsSource()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyObject.py&quot;, line 35, in prepareAsSource
+    self.getVolumeGroup().init_from_disk()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 744, in init_from_disk
+    LinuxVolumeManager.has_lvm()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 60, in has_lvm
+    raise RuntimeError(&quot;LVM could not read lvm cache file&quot;)
+RuntimeError: LVM could not read lvm cache file
+
+-------------------com-ec : INFO Undoing 4 sets--------------------
+
+This error is a result of a changed LVM cache location in RHEL 5.
+
+The cache file was relocated from /etc/lvm/.cache to /etc/lvm/cache/.cache
+
+The exception is raided in the following source code:
+
+/usr/lib/python2.4/site-packages/comoonics/ComLVM.py
+     59         if not os.access(&quot;/etc/lvm/.cache&quot;, os.R_OK):
+     60             raise RuntimeError(&quot;LVM could not read lvm cache file&quot;)
+     61
+
+
+Version-Release number of selected component (if applicable):
+release candidate
+
+How reproducible:
+always
+
+Steps to Reproduce:
+1.com-ec -d -a -x /opt/atix/comoonics-cs/xsl/localclone.xsl archive-clone.xml
+2.
+3.
+
+Actual results:
+fails
+
+
+Expected results:
+succeeds
+
+Additional info: 
+
+A symlink has been created as a quick workaround to further text com-ec archive clone.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-01-23 15:27:23</bug_when>
+            <thetext>the following patch should add RHEL5 lvm cache file to the verification...
+
+Index: ComLVM.py
+===================================================================
+RCS file: /usr/ATIX/CVSROOT/nashead2004/management/comoonics-clustersuite/python/lib/comoonics/ComLVM.py,v
+retrieving revision 1.8
+diff -u -r1.8 ComLVM.py
+--- ComLVM.py	22 Aug 2007 14:13:40 -0000	1.8
++++ ComLVM.py	23 Jan 2008 14:25:50 -0000
+@@ -56,7 +56,7 @@
+         if not (os.access(CMD_LVM, os.X_OK)) and (os.access(&quot;/sbin/lvm&quot;, os.X_OK)):
+             CMD_LVM=&quot;/sbin/lvm&quot;
+ 
+-        if not os.access(&quot;/etc/lvm/.cache&quot;, os.R_OK):
++        if not os.access(&quot;/etc/lvm/.cache&quot;, os.R_OK) and not os.access(&quot;/etc/lvm/cache/.cache&quot;, os.R_OK):
+             raise RuntimeError(&quot;LVM could not read lvm cache file&quot;)
+ 
+         f = open(&quot;/proc/devices&quot;, &quot;r&quot;)
+</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-01-23 18:04:46</bug_when>
+            <thetext>QA tests showed that the patch fixes the error caused by a relocated lvm cache file in RHEL5.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-01-23 18:26:56</bug_when>
+            <thetext>Bug cannot be closed yet!!
+QA tests have to be done with the released packages.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-01-24 10:55:09</bug_when>
+            <thetext>Patch in cvs</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-01-24 11:27:17</bug_when>
+            <thetext>will be fixed in comoonics-cs-py-0.1-48
+Please QA and close.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-01-31 08:47:02</bug_when>
+            <thetext>QA was successful.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-10 16:26:49</bug_when>
+            <thetext>closed</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+    <bug>
+          <bug_id>199</bug_id>
+          
+          <creation_ts>2008-02-27 09:52</creation_ts>
+          <short_desc>com-ec fails when creating non clustered volume groups</short_desc>
+          <delta_ts>2008-09-10 16:34:32</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>comoonics-software</product>
+          <component>comoonics-enterprisecopy</component>
+          <version>software-comoonics-4.3</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>Linux</op_sys>
+          <bug_status>CLOSED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>blocker</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Mark Hlawatschek">mark@atix.de</reporter>
+          <assigned_to name="Reiner Rottmann">reiner@atix.de</assigned_to>
+          <cc>marc@atix.de</cc>
+          
+          
+
+      
+
+      
+          <flag name="comoonics-4.4"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="QA-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-02-27 09:52:36</bug_when>
+            <thetext>Description of problem:
+com-ec fails when creating non clustered volume groups
+
+Version-Release number of selected component (if applicable):
+comoonics-bootimage-fenceclient-vmware-0.1-4
+comoonics-cs-py-0.1-47
+comoonics-ec-py-0.1-27
+comoonics-bootimage-initscripts-1.3-3.el4
+comoonics-bootimage-extras-dm-multipath-0.1-1
+comoonics-db-py-0.1-9
+comoonics-bootimage-extras-nfs-0.1-1
+comoonics-cdsl-py-0.2-3
+comoonics-cs-xml-0.5-1
+comoonics-cs-0.5-30
+comoonics-bootimage-fenceclient-ilo-0.1-18
+comoonics-backup-py-0.1-2
+comoonics-pythonosfix-py-0.1-1
+comoonics-bootimage-extras-rdac-multipath-0.1-1
+comoonics-cmdb-py-0.1-23
+comoonics-cs-rgmanager-extras-0.5-25
+comoonics-cluster-py-0.1-5
+comoonics-bootimage-listfiles-1.3-3.el4
+comoonics-backup-legato-py-0.1-5
+comoonics-bootimage-extras-iscsi-0.1-1
+comoonics-bootimage-extras-xen-0.1-2
+comoonics-scsi-py-0.1-1
+comoonics-cs-xsl-ec-0.5-17
+comoonics-bootimage-1.3-21
+comoonics-bootimage-fenceacksv-0.3-1
+comoonics-bootimage-compat-0.1-1
+comoonics-bootimage-extras-network-0.1-1
+comoonics-bootimage-fenceclient-ilomp-0.1-1
+comoonics-fenceacksv-py-0.1-1
+comoonics-fenceacksv-plugins-py-0.1-1
+
+How reproducible:
+always
+
+Steps to Reproduce:
+1. create non clustered volume group
+  
+Actual results:
+2008-02-27 10:47:11,241 ComSystem DEBUG /usr/sbin/lvm vgchange -cn vg_lilr278_sr
+/usr/sbin/lvm vgchange -cn vg_lilr278_sr (y*,n,c)
+-------------------com-ec : ERROR Error occured during execution of enterprisecopy test.xml in set copy-lvm-root. Errormessage: running vgchange of vg_lilr278_sr failed: 5, File descriptor 3 left open
+  /dev/cdrom: open failed: Read-only file system
+  Volume group &quot;vg_lilr278_sr&quot; is already not clustered.--------------------
+2008-02-27 10:47:17,467 root DEBUG Traceback (most recent call last):
+  File &quot;/usr/bin/com-ec&quot;, line 191, in ?
+    ecopy.doAllsets()
+  File &quot;/usr/lib/python2.3/site-packages/comoonics/enterprisecopy/ComEnterpriseCopy.py&quot;, line 112, in doAllsets
+    self.currentset.doCopy()
+  File &quot;/usr/lib/python2.3/site-packages/comoonics/enterprisecopy/ComLVMCopyset.py&quot;, line 108, in doCopy
+    self.dest.vg.create()
+  File &quot;/usr/lib/python2.3/site-packages/comoonics/ComLVM.py&quot;, line 844, in create
+    self.notclustered()
+  File &quot;/usr/lib/python2.3/site-packages/comoonics/ComLVM.py&quot;, line 811, in notclustered
+    raise RuntimeError(&quot;running vgchange of %s failed: %u, %s&quot; % (str(self.getAttribute(&quot;name&quot;)), rc &gt;&gt; 8, rv))
+RuntimeError: running vgchange of vg_lilr278_sr failed: 5, File descriptor 3 left open
+  /dev/cdrom: open failed: Read-only file system
+  Volume group &quot;vg_lilr278_sr&quot; is already not clustered
+
+
+Expected results:
+ no error
+
+Additional info: 
+
+com-ec xml file:
+&lt;enterprisecopy&gt;
+  &lt;copyset type=&apos;lvm&apos; name=&apos;copy-lvm-root&apos;&gt;
+    &lt;source type=&apos;backup&apos;&gt;
+      &lt;metadata&gt;
+        &lt;archive name=&apos;/root/meta-clone.tar&apos; format=&apos;tar&apos; type=&apos;file&apos; compression=&apos;none&apos;&gt;
+          &lt;file name=&apos;./lvm-root.xml&apos;/&gt;
+        &lt;/archive&gt;
+      &lt;/metadata&gt;
+    &lt;/source&gt;
+    &lt;destination type=&apos;lvm&apos;&gt;
+      &lt;volumegroup name=&apos;vg_lilr278_sr&apos;&gt;
+        &lt;physicalvolume name=&apos;/dev/sda&apos;/&gt;
+      &lt;/volumegroup&gt;
+    &lt;/destination&gt;
+  &lt;/copyset&gt;
+&lt;/enterprisecopy&gt;
+
+meta-data xml:
+# cat lvm-root.xml
+&lt;volumegroup free=&apos;0&apos; name=&apos;vg_lilr000_sr&apos; numlvs=&apos;2&apos; attrs=&apos;wz--n-&apos; numpvs=&apos;1&apos; serial=&apos;0&apos; size=&apos;51196&apos;&gt;
+  &lt;physicalvolume attr=&apos;a-&apos; size=&apos;51196&apos; name=&apos;/dev/sda&apos; free=&apos;0&apos; format=&apos;lvm2&apos;/&gt;
+  &lt;physicalvolume attr=&apos;a-&apos; size=&apos;51196&apos; name=&apos;/dev/sdd&apos; free=&apos;0&apos; format=&apos;lvm2&apos;/&gt;
+  &lt;logicalvolume origin=&apos;&apos; size=&apos;300&apos; name=&apos;lv_sharedroot&apos; attrs=&apos;-wi-ao&apos;/&gt;
+  &lt;logicalvolume origin=&apos;&apos; size=&apos;100&apos; name=&apos;lv_sharedvar&apos; attrs=&apos;-wi-a-&apos;/&gt;
+&lt;/volumegroup&gt;</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-02-27 12:05:34</bug_when>
+            <thetext>should be fixed in comoonics-cs-py-0.1-52 please qa Reiner.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-06-25 10:38:04</bug_when>
+            <thetext>Passed Qa.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-10 16:34:32</bug_when>
+            <thetext>closed</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+    <bug>
+          <bug_id>235</bug_id>
+          
+          <creation_ts>2008-06-23 14:55</creation_ts>
+          <short_desc>vgchange fails during com-ec localclone: Can&apos;t deactivate volume group &apos;sharedroot&apos; volumegroup</short_desc>
+          <delta_ts>2008-09-10 16:02:01</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>1</classification_id>
+          <classification>Unclassified</classification>
+          <product>comoonics-software</product>
+          <component>comoonics-enterprisecopy</component>
+          <version>software-comoonics-4.3</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>Linux</op_sys>
+          <bug_status>CLOSED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          
+          
+          <priority>P5</priority>
+          <bug_severity>blocker</bug_severity>
+          <target_milestone>---</target_milestone>
+          
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Reiner Rottmann">reiner@atix.de</reporter>
+          <assigned_to name="Reiner Rottmann">reiner@atix.de</assigned_to>
+          <cc>marc@atix.de</cc>
+    
+    <cc>mark@atix.de</cc>
+          <qa_contact name="Reiner Rottmann">reiner@atix.de</qa_contact>
+          
+
+      
+
+      
+          <flag name="comoonics-4.4"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <flag name="QA-Ready"
+                status="+"
+                setter="marc@atix.de"
+          />
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-06-23 14:55:28</bug_when>
+            <thetext>Description of problem:
+com-ec can&apos;t deactivate the volume group where the lV_sharedroot volume resides.
+
+localclone.xml is verified to work in previous QA tests.
+
+Output of com-ec -d -x /opt/atix/comoonics-cs/xsl/localclone.xml /etc/comoonics/enterprisecopy/axqa02rc-localclone.xml
+
+
+2008-06-23 14:38:17,246 comoonics.LVM DEBUG resolveName: setting name from /dev/sdg =&gt; /dev/sdg.
+2008-06-23 14:38:17,247 LVMCopyset DEBUG Copying volumegroup vg_axqa02rc_srC
+2008-06-23 14:38:17,248 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdg
+2008-06-23 14:38:17,274 ComSystem DEBUG /usr/sbin/lvm pvcreate -f -v -y /dev/sdg
+2008-06-23 14:38:17,370 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdg
+2008-06-23 14:38:17,640 ComSystem DEBUG /usr/sbin/lvm vgdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC
+2008-06-23 14:38:17,936 comoonics.LVM DEBUG checkAttribute(c, 5)==
+2008-06-23 14:38:17,937 ComSystem DEBUG /usr/sbin/lvm vgcreate --clustered n vg_axqa02rc_srC /dev/sdg
+2008-06-23 14:38:18,557 ComSystem DEBUG /usr/sbin/lvm vgdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC
+2008-06-23 14:38:18,788 ComSystem DEBUG /usr/sbin/lvm vgchange -ay vg_axqa02rc_srC
+2008-06-23 14:38:18,911 ComSystem DEBUG /usr/sbin/lvm vgmknodes vg_axqa02rc_srC
+2008-06-23 14:38:19,028 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC/lv_sharedroot
+2008-06-23 14:38:19,156 ComSystem DEBUG /usr/sbin/lvm lvcreate -L 9996M -n lv_sharedroot vg_axqa02rc_srC
+2008-06-23 14:38:19,545 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC/lv_sharedroot
+2008-06-23 14:38:19,671 ComSystem DEBUG /usr/sbin/lvm vgchange -an vg_axqa02rc_sr
+-------------------com-ec : ERROR Error occured during execution of enterprisecopy axqa02rc-local-clone in set copy-rootdisk-lvm. Errormessage: running vgchange of vg_axqa02rc_sr failed: 5,   Can&apos;t deactivate volume group &quot;vg_axqa02rc_sr&quot; with 1 open logical volume(s).--------------------
+2008-06-23 14:38:19,817 root DEBUG Traceback (most recent call last):
+  File &quot;/usr/bin/com-ec&quot;, line 190, in ?
+    ecopy.doAllsets()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComEnterpriseCopy.py&quot;, line 112, in doAllsets
+    self.currentset.doCopy()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyset.py&quot;, line 121, in doCopy
+    self.postSource()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyset.py&quot;, line 134, in postSource
+    self.source.cleanupSource()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyObject.py&quot;, line 67, in cleanupSource
+    self.vg.deactivate()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 833, in deactivate
+    raise RuntimeError(&quot;running vgchange of %s failed: %u, %s&quot; % (str(self.getAttribute(&quot;name&quot;)), rc &gt;&gt; 8, rv))
+RuntimeError: running vgchange of vg_axqa02rc_sr failed: 5,   Can&apos;t deactivate volume group &quot;vg_axqa02rc_sr&quot; with 1 open logical volume(s)
+
+-------------------com-ec : INFO Undoing 5 sets--------------------
+
+
+Version-Release number of selected component (if applicable):
+# rpm -qa | grep -e &quot;comoonics\|gfs\|cman\|fence\|rgmanager&quot;|sort
+cman-2.0.84-2.el5
+comoonics-bootimage-1.3-33
+comoonics-bootimage-fenceacksv-0.3-1
+comoonics-bootimage-initscripts-1.3-6.el5
+comoonics-bootimage-listfiles-1.3-6.el5
+comoonics-cdsl-py-0.2-11
+comoonics-cluster-py-0.1-13
+comoonics-cs-py-0.1-54
+comoonics-cs-xml-0.5-1
+comoonics-cs-xsl-ec-0.5-19
+comoonics-ec-py-0.1-36
+comoonics-pythonosfix-py-0.1-1
+gfs2-utils-0.1.44-1.el5
+gfs-utils-0.1.17-1.el5
+kmod-gfs-0.1.23-5.el5
+rgmanager-2.0.38-2.el5
+SysVinit-comoonics-2.86-14.atix.1
+
+# cat /etc/redhat-release
+Red Hat Enterprise Linux Server release 5.2 (Tikanga)
+
+How reproducible:
+always
+
+Steps to Reproduce:
+1. com-ec -d  -x /opt/atix/comoonics-cs/xsl/localclone.xsl axqa02rc-localclone.xml
+  
+Actual results:
+com-ec localclone fails because the volumegroup that contains the active lv_sharedroot can&apos;t be deactivated during /usr/sbin/lvm vgchange -an vg_axqa02rc_sr
+
+Why should vg_axqa02rc_sr be disabled at all?
+
+Expected results:
+com-ec localclone works as expected.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-06-24 17:40:22</bug_when>
+            <thetext>the error may be caused by 
+
+ComCopyObject:
+    def cleanupSource(self):
+        if self.activated:
+            self.vg.deactivate()
+
+ComLVM:
+    def deactivate(self):
+        &quot;&quot;&quot;
+        Deactivate volume groups by running vgchange -an.
+        &quot;&quot;&quot;
+
+        LinuxVolumeManager.has_lvm()
+        (rc, rv) = ComSystem.execLocalStatusOutput(CMD_LVM+&apos; vgchange -an &apos;+str(self.getAttribute(&quot;name&quot;)))
+
+        if rc &gt;&gt; 8 != 0:
+            raise RuntimeError(&quot;running vgchange of %s failed: %u, %s&quot; % (str(self.getAttribute(&quot;name&quot;)), rc &gt;&gt; 8, rv))
+
+This is funny, because self.activated defaults to False and will only be changed if the volume group is activated by com-ec. 
+</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-06-24 17:57:35</bug_when>
+            <thetext>As requested, her an in-depth printout of the error:
+
+[reiner@mobilix-08 ~]$ n1
+reverse mapping checking getaddrinfo for realsv6.collocation.atix [192.168.11.6] failed - POSSIBLE BREAK-IN ATTEMPT!
+Last login: Tue Jun 24 09:20:50 2008 from mobilix-08.gallien.atix
+[root@axqa02rc_1 ~]# cd /etc/comoonics/enterprisecopy/
+[root@axqa02rc_1 enterprisecopy]# com-ec -d -x /opt/atix/comoonics-cs/xsl/localclone.xsl axqa02rc-localclone.xml
+DEBUG:comoonics.XMLConfigParser:_parseSection(loggers, (&apos;logger&apos;,)): subsection, logger, &lt;Element Node at 2b65f826a050: Name=&apos;logger&apos; with 2 attributes and 3 children&gt;
+DEBUG:comoonics.XMLConfigParser:_parseSection(logger, (&apos;logger&apos;,)): subsection, logger, &lt;Element Node at 2b65f826ce18: Name=&apos;logger&apos; with 3 attributes and 0 children&gt;
+DEBUG:comoonics.XMLConfigParser:_parseSection(logger, (&apos;logger&apos;,)): com-ec-&gt;attribute: propagate: 0
+DEBUG:comoonics.XMLConfigParser:_parseSection(logger, (&apos;logger&apos;,)): com-ec-&gt;attribute: name: com-ec
+DEBUG:comoonics.XMLConfigParser:_parseSection(logger, (&apos;logger&apos;,)): com-ec-&gt;attribute: handlers: comhandler2
+DEBUG:comoonics.XMLConfigParser:_parseSection(logger, (&apos;logger&apos;,)): root-&gt;attribute: name: root
+DEBUG:comoonics.XMLConfigParser:_parseSection(logger, (&apos;logger&apos;,)): root-&gt;attribute: handlers: comhandler1
+DEBUG:comoonics.XMLConfigParser:_parseSection(handlers, (&apos;handler&apos;,)): subsection, handler, &lt;Element Node at 2b65f8270950: Name=&apos;handler&apos; with 3 attributes and 5 children&gt;
+DEBUG:comoonics.XMLConfigParser:_parseSection(handler): properties: Classtype: Properties
+Transient attributes: document = None, properties = {u&apos;stream&apos;: &lt;comoonics.ComProperties.Property object at 0x1ea38f10&gt;}, element = &lt;Element Node at 2b65f8273098: Name=&apos;properties&apos; with 0 attributes and 3 children&gt;,
+Elementname: properties, persistent Attributes:
+DEBUG:comoonics.XMLConfigParser:_parseSection(handler, (&apos;handler&apos;,)): comhandler1-&gt;attribute: formatter: comform01
+DEBUG:comoonics.XMLConfigParser:_parseSection(handler, (&apos;handler&apos;,)): comhandler1-&gt;attribute: name: comhandler1
+DEBUG:comoonics.XMLConfigParser:_parseSection(handler, (&apos;handler&apos;,)): comhandler1-&gt;attribute: class: StreamHandler
+DEBUG:comoonics.XMLConfigParser:_parseSection(handlers, (&apos;handler&apos;,)): subsection, handler, &lt;Element Node at 2b65f8277bd8: Name=&apos;handler&apos; with 3 attributes and 5 children&gt;
+DEBUG:comoonics.XMLConfigParser:_parseSection(handler): properties: Classtype: Properties
+Transient attributes: document = None, properties = {u&apos;stream&apos;: &lt;comoonics.ComProperties.Property object at 0x1ea38550&gt;}, element = &lt;Element Node at 2b65f827a320: Name=&apos;properties&apos; with 0 attributes and 3 children&gt;,
+Elementname: properties, persistent Attributes:
+DEBUG:comoonics.XMLConfigParser:_parseSection(handler, (&apos;handler&apos;,)): comhandler2-&gt;attribute: formatter: comform02
+DEBUG:comoonics.XMLConfigParser:_parseSection(handler, (&apos;handler&apos;,)): comhandler2-&gt;attribute: name: comhandler2
+DEBUG:comoonics.XMLConfigParser:_parseSection(handler, (&apos;handler&apos;,)): comhandler2-&gt;attribute: class: StreamHandler
+DEBUG:comoonics.XMLConfigParser:_parseSection(formatters, (&apos;formatter&apos;,)): subsection, formatter, &lt;Element Node at 2b65f827fd88: Name=&apos;formatter&apos; with 1 attributes and 3 children&gt;
+DEBUG:comoonics.XMLConfigParser:_parseSection(formatter, (&apos;formatter&apos;,)): comform01-&gt;attribute: name: comform01
+DEBUG:comoonics.XMLConfigParser:_parseSection(formatters, (&apos;formatter&apos;,)): subsection, formatter, &lt;Element Node at 1e83e5a8: Name=&apos;formatter&apos; with 1 attributes and 5 children&gt;
+DEBUG:comoonics.XMLConfigParser:_parseSection(formatter, (&apos;formatter&apos;,)): comform02-&gt;attribute: name: comform02
+DEBUG:comoonics.XMLConfigParser:apply_logger qualname: com-ec
+DEBUG:comoonics.ComLog:handlers: comhandler1,comhandler2
+DEBUG:comoonics.ComLog:handlers[comhandler1]=&lt;logging.StreamHandler instance at 0x1ea39fc8&gt;
+DEBUG:comoonics.ComLog:handlers[comhandler2]=&lt;logging.StreamHandler instance at 0x1ea39d40&gt;
+/usr/lib/python2.4/site-packages/comoonics/ComDisk.py:366: UserWarning: Could not import SCSIWWIDResolver and FCTransportResolver. Limited functionality for HostDisks might be available.
+  warnings.warn(&quot;Could not import SCSIWWIDResolver and FCTransportResolver. Limited functionality for HostDisks might be available.&quot;)
+2008-06-24 17:46:38,417 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComPartitionCopyObject.PartitionCopyObject&apos;&gt;
+2008-06-24 17:46:38,418 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:38,418 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComPartitionCopyObject.PartitionCopyObject&apos;&gt;
+2008-06-24 17:46:38,419 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:38,587 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComFilesystemCopyObject.FilesystemCopyObject&apos;&gt;
+2008-06-24 17:46:38,588 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:38,589 FilesystemCopyObject DEBUG __init__: fs: &lt;Element Node at 1e84ecb0: Name=&apos;device&apos; with 2 attributes and 5 children&gt;, device: &lt;Element Node at 1e850ab8: Name=&apos;filesystem&apos; with 1 attributes and 0 children&gt;
+2008-06-24 17:46:38,590 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComFilesystemCopyObject.FilesystemCopyObject&apos;&gt;
+2008-06-24 17:46:38,591 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:38,592 FilesystemCopyObject DEBUG __init__: fs: &lt;Element Node at 1e855050: Name=&apos;device&apos; with 2 attributes and 5 children&gt;, device: &lt;Element Node at 1e856e18: Name=&apos;filesystem&apos; with 1 attributes and 0 children&gt;
+2008-06-24 17:46:38,615 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:38,618 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComPartitionCopyObject.PartitionCopyObject&apos;&gt;
+2008-06-24 17:46:38,619 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:38,619 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComPartitionCopyObject.PartitionCopyObject&apos;&gt;
+2008-06-24 17:46:38,620 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:38,648 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComLVMCopyObject.LVMCopyObject&apos;&gt;
+2008-06-24 17:46:38,648 comoonics.LVM DEBUG createing volumegroup volumegroup/vg_axqa02rc_sr from element
+2008-06-24 17:46:38,649 ComSystem DEBUG /usr/sbin/lvm pvscan | grep &quot;[[:blank:]]vg_axqa02rc_sr[[:blank:]]&quot;
+2008-06-24 17:46:39,801 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComLVMCopyObject.LVMCopyObject&apos;&gt;
+2008-06-24 17:46:39,803 comoonics.LVM DEBUG createing volumegroup volumegroup/vg_axqa02rc_srC from element
+2008-06-24 17:46:39,804 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdg
+2008-06-24 17:46:39,842 ComSystem DEBUG /usr/sbin/lvm pvscan | grep &quot;[[:blank:]]vg_axqa02rc_srC[[:blank:]]&quot;
+2008-06-24 17:46:40,438 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComFilesystemCopyObject.FilesystemCopyObject&apos;&gt;
+2008-06-24 17:46:40,440 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:40,441 FilesystemCopyObject DEBUG __init__: fs: &lt;Element Node at 1e879f80: Name=&apos;device&apos; with 3 attributes and 5 children&gt;, device: &lt;Element Node at 1e930758: Name=&apos;filesystem&apos; with 1 attributes and 0 children&gt;
+2008-06-24 17:46:40,442 comoonics.enterprisecopy.ComCopyObject.CopyObject DEBUG Returning new object &lt;class &apos;comoonics.enterprisecopy.ComFilesystemCopyObject.FilesystemCopyObject&apos;&gt;
+2008-06-24 17:46:40,443 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:40,444 FilesystemCopyObject DEBUG __init__: fs: &lt;Element Node at 1e938cf8: Name=&apos;device&apos; with 2 attributes and 5 children&gt;, device: &lt;Element Node at 1e93ab00: Name=&apos;filesystem&apos; with 2 attributes and 0 children&gt;
+2008-06-24 17:46:40,473 DataObject DEBUG found refid destrootfs
+2008-06-24 17:46:40,481 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:40,496 comoonics.enterprisecopy.ComFilesystemModificationset.FilesystemModificationset DEBUG Modifications: 1
+2008-06-24 17:46:40,497 comoonics.enterprisecopy.ComFilesystemModificationset.FilesystemModificationset DEBUG Filesystemodificationset CWD: /etc/comoonics/enterprisecopy
+2008-06-24 17:46:40,520 DataObject DEBUG found refid destbootfs
+2008-06-24 17:46:40,528 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:40,549 comoonics.enterprisecopy.ComFilesystemModificationset.FilesystemModificationset DEBUG Modifications: 8
+2008-06-24 17:46:40,549 comoonics.enterprisecopy.ComFilesystemModificationset.FilesystemModificationset DEBUG Filesystemodificationset CWD: /etc/comoonics/enterprisecopy
+-------------------com-ec : INFO Start of enterprisecopy axqa02rc-local-clone--------------------
+-------------------com-ec : INFO Executing all sets 8--------------------
+2008-06-24 17:46:40,550 comoonics.enterprisecopy.ComEnterpriseCopy INFO Executing copyset PartitionCopyset(copy-bootdisk:partition)
+2008-06-24 17:46:40,591 comoonics.LVM DEBUG Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 328, in isValidLVPath
+    (vgname, lvname)=LogicalVolume.splitLVPath(path)
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 354, in splitLVPath
+    raise LogicalVolume.LVMInvalidLVPathException(&quot;Path %s is not a valid LVM Path&quot; %(path))
+LVMInvalidLVPathException: u&apos;Path /dev/sda is not a valid LVM Path&apos;
+
+2008-06-24 17:46:40,592 comoonics.ComDisk.HostDisk DEBUG initFromDisk()
+2008-06-24 17:46:41,217 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:46:41,223 comoonics.LVM DEBUG Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 328, in isValidLVPath
+    (vgname, lvname)=LogicalVolume.splitLVPath(path)
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 354, in splitLVPath
+    raise LogicalVolume.LVMInvalidLVPathException(&quot;Path %s is not a valid LVM Path&quot; %(path))
+LVMInvalidLVPathException: u&apos;Path /dev/sdf is not a valid LVM Path&apos;
+
+/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComPartitionCopyObject.py:57: RuntimeWarning: tempnam is a potential security risk to your program
+  __tmp=os.tempnam(&quot;/tmp&quot;)
+2008-06-24 17:46:41,224 ComSystem DEBUG /sbin/sfdisk -l /dev/sdf
+2008-06-24 17:46:41,283 ComSystem DEBUG /sbin/sfdisk -d /dev/sdf &gt; /tmp/fileG50Y2I
+2008-06-24 17:46:41,297 comoonics.ComDisk.HostDisk DEBUG savePartitionTable( /tmp/fileG50Y2I):
+
+2008-06-24 17:46:41,866 Partition DEBUG found size in Tag :2040192
+2008-06-24 17:46:41,866 PartedHelper DEBUG end_sector_to_cyl 127 &gt; 254? False
+2008-06-24 17:46:41,867 comoonics.ComDisk.HostDisk DEBUG creating partition: size: 2040254
+2008-06-24 17:46:41,872 comoonics.ComDisk.HostDisk DEBUG ComHostDisk: checking for multipath devices
+2008-06-24 17:46:41,875 ComSystem DEBUG /sbin/dmsetup table /dev/sdf --target=multipath 2&gt;/dev/null | grep multipath &amp;&gt;/dev/null
+2008-06-24 17:46:51,932 comoonics.enterprisecopy.ComEnterpriseCopy INFO Executing copyset FilesystemCopyset(copy-bootdisk-filesystem:filesystem)
+2008-06-24 17:46:51,932 FilesystemCopyObject DEBUG prepareAsSource: Name /dev/sda1 options:
+2008-06-24 17:46:51,933 comoonics.LVM DEBUG Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 328, in isValidLVPath
+    (vgname, lvname)=LogicalVolume.splitLVPath(path)
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 354, in splitLVPath
+    raise LogicalVolume.LVMInvalidLVPathException(&quot;Path %s is not a valid LVM Path&quot; %(path))
+LVMInvalidLVPathException: u&apos;Path /dev/sda1 is not a valid LVM Path&apos;
+
+2008-06-24 17:46:51,968 comoonics.ComDisk.HostDisk DEBUG is mounted: ^/dev/sda1 /var/lib/com-ec/source
+2008-06-24 17:46:51,994 ComSystem DEBUG /bin/mount -t ext3 -o defaults /dev/sda1 /var/lib/com-ec/source
+2008-06-24 17:46:52,308 ComFileSystem DEBUG mount:/bin/mount -t ext3 -o defaults /dev/sda1 /var/lib/com-ec/source:
+2008-06-24 17:46:52,312 FilesystemCopyObject DEBUG prepareAsDest: Name Classtype: FilesystemCopyObject
+Transient attributes: umountfs = False, document = &lt;XML Document at 2b65f8253638&gt;, requirements = [], __journal__ = [], element = &lt;Element Node at 1e853bd8: Name=&apos;destination&apos; with 1 attributes and 3 children&gt;, filesystem = Classtype: ext3FileSystem
+Transient attributes: checked = 1, name = ext3, linuxnativefs = 1, element = &lt;Element Node at 2b65f8d51b00: Name=&apos;filesystem&apos; with 1 attributes and 0 children&gt;, maxSizeMB = 8388608, cmd_fsck = /sbin/e2fsck -y, partedFileSystemType = None, cmd_mkfs = /sbin/mkfs -t ext3 , document = &lt;XML Document at 2b65f8253638&gt;, formattable = 1, properties = None, maxLabelChars = 16,
+Elementname: filesystem, persistent Attributes: type = ext3, , device = Classtype: Device
+Transient attributes: devicename = None, document = &lt;XML Document at 2b65f8253638&gt;, properties = None, element = &lt;Element Node at 1e855050: Name=&apos;device&apos; with 2 attributes and 5 children&gt;,
+Elementname: device, persistent Attributes: id = destbootfs, name = /dev/sdf1, , mountpoint = Classtype: MountPoint
+Transient attributes: document = &lt;XML Document at 2b65f8253638&gt;, properties = None, element = &lt;Element Node at 1e858248: Name=&apos;mountpoint&apos; with 1 attributes and 0 children&gt;,
+Elementname: mountpoint, persistent Attributes: name = /var/lib/com-ec/dest, , __undomap__ = {&apos;ext3FileSystem.mount&apos;: &apos;umountDir&apos;, &apos;Device.lvm_vg_activate&apos;: &apos;lvm_vg_deactivate&apos;}, properties = None,
+Elementname: destination, persistent Attributes: type = filesystem,  options:
+2008-06-24 17:46:52,313 comoonics.LVM DEBUG Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 328, in isValidLVPath
+    (vgname, lvname)=LogicalVolume.splitLVPath(path)
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 354, in splitLVPath
+    raise LogicalVolume.LVMInvalidLVPathException(&quot;Path %s is not a valid LVM Path&quot; %(path))
+LVMInvalidLVPathException: u&apos;Path /dev/sdf1 is not a valid LVM Path&apos;
+
+2008-06-24 17:46:52,313 ComSystem DEBUG /sbin/mkfs -t ext3  /dev/sdf1
+2008-06-24 17:46:52,867 ComFileSystem DEBUG formatDevice: /sbin/mkfs -t ext3  /dev/sdf1: mke2fs 1.39 (29-May-2006)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+127744 inodes, 255024 blocks
+12751 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=264241152
+8 block groups
+32768 blocks per group, 32768 fragments per group
+15968 inodes per group
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376
+
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+This filesystem will be automatically checked every 22 mounts or
+180 days, whichever comes first.  Use tune2fs -c or -i to override.
+2008-06-24 17:46:52,871 ComSystem DEBUG /bin/mount -t ext3 -o defaults /dev/sdf1 /var/lib/com-ec/dest
+2008-06-24 17:46:52,900 ComFileSystem DEBUG mount:/bin/mount -t ext3 -o defaults /dev/sdf1 /var/lib/com-ec/dest:
+2008-06-24 17:46:52,901 comoonics.enterprisecopy.ComFilesystemCopyset.FilesystemCopyset DEBUG doCopy: instance(self.source: &lt;class &apos;comoonics.enterprisecopy.ComFilesystemCopyObject.FilesystemCopyObject&apos;&gt;), instance(self.dest: &lt;class &apos;comoonics.enterprisecopy.ComFilesystemCopyObject.FilesystemCopyObject&apos;&gt;)
+2008-06-24 17:46:52,901 comoonics.enterprisecopy.ComFilesystemCopyset.FilesystemCopyset DEBUG doCopy: isinstance(&lt;class &apos;comoonics.enterprisecopy.ComFilesystemCopyObject.FilesystemCopyObject&apos;&gt;, PathCopyObject): False
+2008-06-24 17:46:52,902 comoonics.enterprisecopy.ComFilesystemCopyset.FilesystemCopyset DEBUG doCopy: isinstance(&lt;class &apos;comoonics.enterprisecopy.ComFilesystemCopyObject.FilesystemCopyObject&apos;&gt;, PathCopyObject): False
+2008-06-24 17:46:52,902 ComSystem DEBUG /usr/bin/rsync --archive --update --one-file-system --delete /var/lib/com-ec/source/ /var/lib/com-ec/dest/
+2008-06-24 17:47:22,102 FilesystemCopyObject DEBUG cleanupSource()
+2008-06-24 17:47:22,103 JournaledObject DEBUG Journalentry: mount, &lt;class &apos;comoonics.ComFileSystem.ext3FileSystem&apos;&gt;
+2008-06-24 17:47:22,103 JournaledObject DEBUG Undomethod: umountDir([&lt;comoonics.ComMountpoint.MountPoint object at 0x2b65f84b6150&gt;])
+2008-06-24 17:47:22,103 ComSystem DEBUG /bin/umount /var/lib/com-ec/source
+2008-06-24 17:47:22,257 ComFileSystem DEBUG umount: /bin/umount /var/lib/com-ec/source:
+2008-06-24 17:47:22,259 FilesystemCopyObject DEBUG cleanupDest()
+2008-06-24 17:47:22,259 JournaledObject DEBUG Journalentry: mount, &lt;class &apos;comoonics.ComFileSystem.ext3FileSystem&apos;&gt;
+2008-06-24 17:47:22,259 JournaledObject DEBUG Undomethod: umountDir([&lt;comoonics.ComMountpoint.MountPoint object at 0x2b65f84be550&gt;])
+2008-06-24 17:47:22,260 ComSystem DEBUG /bin/umount /var/lib/com-ec/dest
+2008-06-24 17:47:23,452 ComFileSystem DEBUG umount: /bin/umount /var/lib/com-ec/dest:
+2008-06-24 17:47:23,454 comoonics.enterprisecopy.ComEnterpriseCopy INFO Executing copyset BootloaderCopyset(copy-bootdisk-sector:bootloader)
+2008-06-24 17:47:23,455 comoonics.LVM DEBUG Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 328, in isValidLVPath
+    (vgname, lvname)=LogicalVolume.splitLVPath(path)
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 354, in splitLVPath
+    raise LogicalVolume.LVMInvalidLVPathException(&quot;Path %s is not a valid LVM Path&quot; %(path))
+LVMInvalidLVPathException: u&apos;Path /dev/sdf is not a valid LVM Path&apos;
+
+/usr/lib/python2.4/site-packages/comoonics/ComBootDisk.py:43: RuntimeWarning: tempnam is a potential security risk to your program
+  __tmp=os.tempnam(self.__tmp)
+2008-06-24 17:47:23,456 ComSystem DEBUG /sbin/grub --batch 2&gt;/dev/null &lt;&lt;EOF | egrep &quot;(hd[0-9]+,[0-9]+)&quot; 1&gt;/tmp/fileRTwxMe
+        device (hd0) /dev/sdf
+        find /grub/stage2
+        quit
+        EOF
+
+2008-06-24 17:47:24,358 comoonics.ComDisk.HostDisk DEBUG Found grub loader on  (hd0,0)
+
+2008-06-24 17:47:24,359 ComSystem DEBUG grub --batch 2&gt;/dev/null &lt;&lt;EOF | grep &quot;succeeded&quot; &gt; /dev/null
+        device (hd0) /dev/sdf
+        root  (hd0,0)
+
+        setup (hd0)
+        quit
+        EOF
+
+2008-06-24 17:47:24,609 comoonics.enterprisecopy.ComEnterpriseCopy INFO Executing copyset PartitionCopyset(copy-rootdisk:partition)
+2008-06-24 17:47:24,610 comoonics.LVM DEBUG Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 328, in isValidLVPath
+    (vgname, lvname)=LogicalVolume.splitLVPath(path)
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 354, in splitLVPath
+    raise LogicalVolume.LVMInvalidLVPathException(&quot;Path %s is not a valid LVM Path&quot; %(path))
+LVMInvalidLVPathException: u&apos;Path /dev/sdc is not a valid LVM Path&apos;
+
+2008-06-24 17:47:24,611 comoonics.ComDisk.HostDisk DEBUG initFromDisk()
+2008-06-24 17:47:24,654 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:47:24,655 comoonics.LVM DEBUG Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 328, in isValidLVPath
+    (vgname, lvname)=LogicalVolume.splitLVPath(path)
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 354, in splitLVPath
+    raise LogicalVolume.LVMInvalidLVPathException(&quot;Path %s is not a valid LVM Path&quot; %(path))
+LVMInvalidLVPathException: u&apos;Path /dev/sdg is not a valid LVM Path&apos;
+
+2008-06-24 17:47:24,655 ComSystem DEBUG /sbin/sfdisk -l /dev/sdg
+2008-06-24 17:47:25,781 comoonics.ComDisk.HostDisk DEBUG ComHostDisk: checking for multipath devices
+2008-06-24 17:47:25,782 ComSystem DEBUG /sbin/dmsetup table /dev/sdg --target=multipath 2&gt;/dev/null | grep multipath &amp;&gt;/dev/null
+2008-06-24 17:47:35,788 comoonics.enterprisecopy.ComEnterpriseCopy INFO Executing copyset LVMCopyset(copy-rootdisk-lvm:lvm)
+2008-06-24 17:47:35,789 ComSystem DEBUG /usr/sbin/lvm vgdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_sr
+2008-06-24 17:47:36,076 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : --options pv_name,vg_name | grep vg_axqa02rc_sr
+2008-06-24 17:47:36,430 comoonics.LVM DEBUG pv is /dev/sdc in vg vg_axqa02rc_sr
+2008-06-24 17:47:36,431 comoonics.LVM DEBUG createing volumegroup vg_axqa02rc_sr from new element
+2008-06-24 17:47:36,432 ComSystem DEBUG /usr/sbin/lvm pvscan | grep &quot;[[:blank:]]vg_axqa02rc_sr[[:blank:]]&quot;
+2008-06-24 17:47:37,183 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdc
+2008-06-24 17:47:37,367 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdc
+2008-06-24 17:47:37,529 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdc
+2008-06-24 17:47:37,682 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : --options vg_name,lv_name vg_axqa02rc_sr
+2008-06-24 17:47:37,806 comoonics.LVM DEBUG vg_axqa02rc_sr, lv_sharedroot
+2008-06-24 17:47:37,806 comoonics.LVM DEBUG lv is vg_axqa02rc_sr/lv_sharedroot
+2008-06-24 17:47:37,808 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_sr/lv_sharedroot
+2008-06-24 17:47:37,933 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_sr/lv_sharedroot
+2008-06-24 17:47:38,056 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_sr/lv_sharedroot
+2008-06-24 17:47:38,179 comoonics.LVM DEBUG checkAttribute(a, 4)==
+2008-06-24 17:47:38,180 ComSystem DEBUG /usr/sbin/lvm vgchange -ay vg_axqa02rc_sr
+2008-06-24 17:47:38,361 ComSystem DEBUG /usr/sbin/lvm vgmknodes vg_axqa02rc_sr
+2008-06-24 17:47:38,477 LVMCopyset DEBUG Updating metadata on Classtype: LVMCopyObject
+Transient attributes: requirements = [], vg = Classtype: VolumeGroup
+Transient attributes: pvs = {u&apos;/dev/sdg&apos;: &lt;comoonics.ComLVM.PhysicalVolume object at 0x2b65f8b1af10&gt;}, lvs = {}, ondisk = False, element = &lt;Element Node at 1e872d88: Name=&apos;volumegroup&apos; with 1 attributes and 3 children&gt;, document = &lt;XML Document at 2b65f8253638&gt;, properties = None,
+Elementname: volumegroup, persistent Attributes: name = vg_axqa02rc_srC, , activated = False, element = &lt;Element Node at 1e871950: Name=&apos;destination&apos; with 1 attributes and 3 children&gt;, document = &lt;XML Document at 2b65f8253638&gt;, properties = None,
+Elementname: destination, persistent Attributes: type = lvm,
+2008-06-24 17:47:38,477 LVMCopyObject DEBUG 0 logical volumes cloning all from source
+2008-06-24 17:47:38,480 comoonics.LVM DEBUG createing volumegroup volumegroup/vg_axqa02rc_srC from element
+2008-06-24 17:47:38,481 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC/lv_sharedroot
+2008-06-24 17:47:38,781 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdg
+2008-06-24 17:47:38,811 ComSystem DEBUG /usr/sbin/lvm pvscan | grep &quot;[[:blank:]]vg_axqa02rc_srC[[:blank:]]&quot;
+2008-06-24 17:47:39,408 comoonics.ComDisk.HostDisk DEBUG __init__
+2008-06-24 17:47:39,409 comoonics.LVM DEBUG Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 328, in isValidLVPath
+    (vgname, lvname)=LogicalVolume.splitLVPath(path)
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 354, in splitLVPath
+    raise LogicalVolume.LVMInvalidLVPathException(&quot;Path %s is not a valid LVM Path&quot; %(path))
+LVMInvalidLVPathException: u&apos;Path /dev/sdg is not a valid LVM Path&apos;
+
+2008-06-24 17:47:39,410 comoonics.LVM DEBUG resolveName: setting name from /dev/sdg =&gt; /dev/sdg.
+2008-06-24 17:47:39,411 LVMCopyset DEBUG Copying volumegroup vg_axqa02rc_srC
+2008-06-24 17:47:39,412 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdg
+2008-06-24 17:47:39,437 ComSystem DEBUG /usr/sbin/lvm pvcreate -f -v -y /dev/sdg
+2008-06-24 17:47:39,531 ComSystem DEBUG /usr/sbin/lvm pvdisplay -C --noheadings --units b --nosuffix --separator : /dev/sdg
+2008-06-24 17:47:39,803 ComSystem DEBUG /usr/sbin/lvm vgdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC
+2008-06-24 17:47:40,102 comoonics.LVM DEBUG checkAttribute(c, 5)==
+2008-06-24 17:47:40,103 ComSystem DEBUG /usr/sbin/lvm vgcreate --clustered n vg_axqa02rc_srC /dev/sdg
+2008-06-24 17:47:40,798 ComSystem DEBUG /usr/sbin/lvm vgdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC
+2008-06-24 17:47:41,032 ComSystem DEBUG /usr/sbin/lvm vgchange -ay vg_axqa02rc_srC
+2008-06-24 17:47:41,161 ComSystem DEBUG /usr/sbin/lvm vgmknodes vg_axqa02rc_srC
+2008-06-24 17:47:41,280 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC/lv_sharedroot
+2008-06-24 17:47:41,410 ComSystem DEBUG /usr/sbin/lvm lvcreate -L 9996M -n lv_sharedroot vg_axqa02rc_srC
+2008-06-24 17:47:41,880 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings --units b --nosuffix --separator : vg_axqa02rc_srC/lv_sharedroot
+2008-06-24 17:47:42,006 ComSystem DEBUG /usr/sbin/lvm vgchange -an vg_axqa02rc_sr
+-------------------com-ec : ERROR Error occured during execution of enterprisecopy axqa02rc-local-clone in set copy-rootdisk-lvm. Errormessage: running vgchange of vg_axqa02rc_sr failed: 5,   Can&apos;t deactivate volume group &quot;vg_axqa02rc_sr&quot; with 1 open logical volume(s).--------------------
+2008-06-24 17:47:42,158 root DEBUG Traceback (most recent call last):
+  File &quot;/usr/bin/com-ec&quot;, line 190, in ?
+    ecopy.doAllsets()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComEnterpriseCopy.py&quot;, line 112, in doAllsets
+    self.currentset.doCopy()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyset.py&quot;, line 121, in doCopy
+    self.postSource()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyset.py&quot;, line 134, in postSource
+    self.source.cleanupSource()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/enterprisecopy/ComLVMCopyObject.py&quot;, line 67, in cleanupSource
+    self.vg.deactivate()
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 833, in deactivate
+    raise RuntimeError(&quot;running vgchange of %s failed: %u, %s&quot; % (str(self.getAttribute(&quot;name&quot;)), rc &gt;&gt; 8, rv))
+RuntimeError: running vgchange of vg_axqa02rc_sr failed: 5,   Can&apos;t deactivate volume group &quot;vg_axqa02rc_sr&quot; with 1 open logical volume(s)
+
+-------------------com-ec : INFO Undoing 5 sets--------------------
+2008-06-24 17:47:42,159 comoonics.enterprisecopy.ComEnterpriseCopy DEBUG name: None, donesets: sets: [&lt;comoonics.enterprisecopy.ComPartitionCopyset.PartitionCopyset object at 0x1ea45150&gt;, &lt;comoonics.enterprisecopy.ComFilesystemCopyset.FilesystemCopyset object at 0x2b65f848d1d0&gt;, &lt;comoonics.enterprisecopy.ComBootloaderCopyset.BootloaderCopyset object at 0x2b65f8b1a190&gt;, &lt;comoonics.enterprisecopy.ComPartitionCopyset.PartitionCopyset object at 0x2b65f8b1a4d0&gt;, &lt;comoonics.enterprisecopy.ComLVMCopyset.LVMCopyset object at 0x2b65f8b1a890&gt;]
+2008-06-24 17:47:42,159 comoonics.enterprisecopy.ComEnterpriseCopy INFO Undoing copyset LVMCopyset(copy-rootdisk-lvm:lvm)
+2008-06-24 17:47:42,159 JournaledObject DEBUG Journalentry: create, &lt;class &apos;comoonics.ComLVM.LogicalVolume&apos;&gt;
+2008-06-24 17:47:42,160 JournaledObject DEBUG Undomethod: remove(None)
+2008-06-24 17:47:42,161 ComSystem DEBUG /usr/sbin/lvm lvremove -f vg_axqa02rc_srC/lv_sharedroot
+2008-06-24 17:47:42,460 JournaledObject DEBUG Journalentry: activate, &lt;class &apos;comoonics.ComLVM.VolumeGroup&apos;&gt;
+2008-06-24 17:47:42,461 JournaledObject DEBUG Undomethod: deactivate(None)
+2008-06-24 17:47:42,462 ComSystem DEBUG /usr/sbin/lvm vgchange -an vg_axqa02rc_srC
+2008-06-24 17:47:42,576 JournaledObject DEBUG Journalentry: create, &lt;class &apos;comoonics.ComLVM.VolumeGroup&apos;&gt;
+2008-06-24 17:47:42,576 JournaledObject DEBUG Undomethod: remove(None)
+2008-06-24 17:47:42,578 ComSystem DEBUG /usr/sbin/lvm vgchange -an vg_axqa02rc_srC
+2008-06-24 17:47:42,695 ComSystem DEBUG /usr/sbin/lvm vgremove vg_axqa02rc_srC
+2008-06-24 17:47:42,945 JournaledObject DEBUG Journalentry: create, &lt;class &apos;comoonics.ComLVM.PhysicalVolume&apos;&gt;
+2008-06-24 17:47:42,946 JournaledObject DEBUG Undomethod: remove(None)
+2008-06-24 17:47:42,947 ComSystem DEBUG /usr/sbin/lvm pvremove -ff /dev/sdg
+2008-06-24 17:47:43,194 comoonics.enterprisecopy.ComEnterpriseCopy INFO Undoing copyset PartitionCopyset(copy-rootdisk:partition)
+2008-06-24 17:47:43,194 JournaledObject DEBUG Journalentry: noPartitionTable, &lt;class &apos;comoonics.ComDisk.HostDisk&apos;&gt;
+2008-06-24 17:47:43,195 JournaledObject DEBUG Undomethod: deletePartitionTable(None)
+2008-06-24 17:47:43,195 ComSystem DEBUG /bin/dd if=/dev/zero of=/dev/sdg bs=512 count=2 &gt;/dev/null 2&gt;&amp;1
+2008-06-24 17:47:43,247 ComSystem DEBUG /sbin/sfdisk -R /dev/sdg &gt;/dev/null 2&gt;&amp;1
+2008-06-24 17:47:43,282 comoonics.enterprisecopy.ComEnterpriseCopy INFO Undoing copyset BootloaderCopyset(copy-bootdisk-sector:bootloader)
+2008-06-24 17:47:43,283 comoonics.enterprisecopy.ComEnterpriseCopy INFO Undoing copyset FilesystemCopyset(copy-bootdisk-filesystem:filesystem)
+2008-06-24 17:47:43,283 FilesystemCopyObject DEBUG cleanupSource()
+2008-06-24 17:47:43,283 FilesystemCopyObject DEBUG cleanupDest()
+2008-06-24 17:47:43,284 comoonics.enterprisecopy.ComEnterpriseCopy INFO Undoing copyset PartitionCopyset(copy-bootdisk:partition)
+2008-06-24 17:47:43,284 JournaledObject DEBUG Journalentry: savePartitionTable, &lt;class &apos;comoonics.ComDisk.HostDisk&apos;&gt;
+2008-06-24 17:47:43,284 JournaledObject DEBUG Undomethod: restorePartitionTable(/tmp/fileG50Y2I)
+2008-06-24 17:47:43,284 ComSystem DEBUG /sbin/sfdisk --force /dev/sdf &lt; /tmp/fileG50Y2I
+2008-06-24 17:47:49,403 comoonics.ComDisk.HostDisk DEBUG restorePartitionTable( /tmp/fileG50Y2I):
+ Checking that no-one is using this disk right now ...
+OK
+
+Disk /dev/sdf: 254 cylinders, 255 heads, 63 sectors/track
+Old situation:
+Units = cylinders of 8225280 bytes, blocks of 1024 bytes, counting from 0
+
+   Device Boot Start     End   #cyls    #blocks   Id  System
+/dev/sdf1   *      0+    126     127-   1020096   83  Linux
+/dev/sdf2          0       -       0          0    0  Empty
+/dev/sdf3          0       -       0          0    0  Empty
+/dev/sdf4          0       -       0          0    0  Empty
+New situation:
+Units = sectors of 512 bytes, counting from 0
+
+   Device Boot    Start       End   #sectors  Id  System
+/dev/sdf1   *        63   1959929    1959867  83  Linux
+/dev/sdf2             0         -          0   0  Empty
+/dev/sdf3             0         -          0   0  Empty
+/dev/sdf4             0         -          0   0  Empty
+Successfully wrote the new partition table
+
+Re-reading the partition table ...
+
+If you created or changed a DOS partition, /dev/foo7, say, then use dd(1)
+to zero the first 512 bytes:  dd if=/dev/zero of=/dev/foo7 bs=512 count=1
+(See fdisk(8).)
+-------------------com-ec : INFO Errors during execution of enterprisecopy axqa02rc-local-clone.--------------------
+</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-06-24 20:56:25</bug_when>
+            <thetext>com-ec is trying to activate the volumegroup vg_axqa02rc_sr, although it is already active. Thus, com-ec is trying to deactivate the volumegroup again, failing.
+
+2008-06-24 17:47:37,806 comoonics.LVM DEBUG vg_axqa02rc_sr, lv_sharedroot
+2008-06-24 17:47:37,806 comoonics.LVM DEBUG lv is vg_axqa02rc_sr/lv_sharedroot
+2008-06-24 17:47:37,808 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings
+--units b --nosuffix --separator : vg_axqa02rc_sr/lv_sharedroot
+2008-06-24 17:47:37,933 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings
+--units b --nosuffix --separator : vg_axqa02rc_sr/lv_sharedroot
+2008-06-24 17:47:38,056 ComSystem DEBUG /usr/sbin/lvm lvdisplay -C --noheadings
+--units b --nosuffix --separator : vg_axqa02rc_sr/lv_sharedroot
+2008-06-24 17:47:38,179 comoonics.LVM DEBUG checkAttribute(a, 4)==
+2008-06-24 17:47:38,180 ComSystem DEBUG /usr/sbin/lvm vgchange -ay
+vg_axqa02rc_sr
+</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-06-24 21:29:21</bug_when>
+            <thetext>The problem occurs in line 404 of ComLVM:
+  File &quot;/usr/lib/python2.4/site-packages/comoonics/ComLVM.py&quot;, line 404, in init_from_disk
+    (lvname, vgname, attrs, size, origin, snap, move, log, copy) = line.strip().split(&apos;:&apos;)
+ValueError: too many values to unpack
+
+lvdisplay returns 10 values. The split command only accepts 9. 
+This seems to be an &quot;abi compatible&quot; change in rhel5.2 :-/ 
+</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-06-24 22:01:18</bug_when>
+            <thetext>This patch should fix the problem. In cvs as 1.15
+
+
+### Eclipse Workspace Patch 1.0
+#P Comoonics Clustersuite
+Index: python/lib/comoonics/ComLVM.py
+===================================================================
+RCS file: /usr/ATIX/CVSROOT/nashead2004/management/comoonics-clustersuite/python/lib/comoonics/ComLVM.py,v
+retrieving revision 1.14
+diff -u -r1.14 ComLVM.py
+--- python/lib/comoonics/ComLVM.py	29 Feb 2008 15:24:55 -0000	1.14
++++ python/lib/comoonics/ComLVM.py	24 Jun 2008 19:58:40 -0000
+@@ -399,13 +399,22 @@
+             self.ondisk=False
+             raise RuntimeError(&quot;running lvdisplay of %s failed: %u, %s, %s&quot; % (str(self.parentvg.getAttribute(&quot;name&quot;))+&quot;/&quot;+str(self.getAttribute(&quot;name&quot;)), rc,rv, stderr))
+ 
++        #FIXME
++        # an exception should be thrown, if lvdisplay output has changed the syntax.
++        # do we really need the for loop ?
+         for line in rv:
+             try:
+-                (lvname, vgname, attrs, size, origin, snap, move, log, copy) = line.strip().split(&apos;:&apos;)
++                if line.count(&quot;:&quot;) == 8:
++                    (lvname, vgname, attrs, size, origin, snap, move, log, copy) = line.strip().split(&apos;:&apos;)
++                else:
++                    #This is for newer lvm implementations.
++                    (lvname, vgname, attrs, size, origin, snap, move, log, copy, convert) = line.strip().split(&apos;:&apos;)
+                 self.setAttribute(&quot;attrs&quot;, attrs)
+                 self.setAttribute(&quot;size&quot;, long(math.floor(long(size) / (1024 * 1024))))
+                 self.setAttribute(&quot;origin&quot;, origin)
+             except:
++                #FIXME
++                # this should be fixed to get an exception if the values cannot be parsed.
+                 continue
+ 
+         if not ComSystem.isSimulate():
+### Eclipse Workspace Patch 1.0
+#P Comoonics Clustersuite
+Index: python/lib/comoonics/ComLVM.py
+===================================================================
+RCS file: /usr/ATIX/CVSROOT/nashead2004/management/comoonics-clustersuite/python/lib/comoonics/ComLVM.py,v
+retrieving revision 1.14
+diff -u -r1.14 ComLVM.py
+--- python/lib/comoonics/ComLVM.py	29 Feb 2008 15:24:55 -0000	1.14
++++ python/lib/comoonics/ComLVM.py	24 Jun 2008 19:58:40 -0000
+@@ -399,13 +399,22 @@
+             self.ondisk=False
+             raise RuntimeError(&quot;running lvdisplay of %s failed: %u, %s, %s&quot; % (str(self.parentvg.getAttribute(&quot;name&quot;))+&quot;/&quot;+str(self.getAttribute(&quot;name&quot;)), rc,rv, stderr))
+ 
++        #FIXME
++        # an exception should be thrown, if lvdisplay output has changed the syntax.
++        # do we really need the for loop ?
+         for line in rv:
+             try:
+-                (lvname, vgname, attrs, size, origin, snap, move, log, copy) = line.strip().split(&apos;:&apos;)
++                if line.count(&quot;:&quot;) == 8:
++                    (lvname, vgname, attrs, size, origin, snap, move, log, copy) = line.strip().split(&apos;:&apos;)
++                else:
++                    #This is for newer lvm implementations.
++                    (lvname, vgname, attrs, size, origin, snap, move, log, copy, convert) = line.strip().split(&apos;:&apos;)
+                 self.setAttribute(&quot;attrs&quot;, attrs)
+                 self.setAttribute(&quot;size&quot;, long(math.floor(long(size) / (1024 * 1024))))
+                 self.setAttribute(&quot;origin&quot;, origin)
+             except:
++                #FIXME
++                # this should be fixed to get an exception if the values cannot be parsed.
+                 continue
+ 
+         if not ComSystem.isSimulate():
+</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Mark Hlawatschek">mark@atix.de</who>
+            <bug_when>2008-06-24 22:45:04</bug_when>
+            <thetext>Shoud be fixed in comoonics-cs-py-0.1-55
+@Reiner: Please QA</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Reiner Rottmann">reiner@atix.de</who>
+            <bug_when>2008-06-25 10:17:54</bug_when>
+            <thetext>Verified by QA. Works as intended.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <who name="Marc Grimme">marc@atix.de</who>
+            <bug_when>2008-09-10 16:02:01</bug_when>
+            <thetext>updated to be closed.</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+
+</bugzilla>
